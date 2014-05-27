@@ -2014,12 +2014,11 @@ bool DPiqlIngestMainWindow::writeTransactionReport( int transactionId, vector<in
         error << ERRerror << "Failed to write file list" << endl;
         return false;
     }
-    xml << endl;
     xml << "</transaction>" << endl;
 
     // Write to file
     string reportFilename = "transaction_report_" + transactionStr + ".xml";
-    DPath outFilePath( m_DataDir.directory(), reportFilename );
+    DPath outFilePath( m_ReportsDir.directory(), reportFilename );
     ofstream outFile( outFilePath.path().c_str(), std::iostream::binary | std::iostream::out );
     outFile << xml.str();
     if ( !outFile.good() )

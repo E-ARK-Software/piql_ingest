@@ -146,11 +146,13 @@ bool DMetadataItemGroupList::write( std::ostream& out, bool header ) const
 {
     ERROR_F( "DMetadataItemGroupList::write" );
 
+    const string baseIndentation = header ? "" : "    ";
+
     if ( header )
     {
         out << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" << endl;
     }
-    out << "<metadata>";
+    out << baseIndentation << "<metadata>" << endl;
     for ( unsigned int i = 0; i < m_MetadataGroupList.size(); i++ )
     {
         if ( !m_MetadataGroupList[i].write(out) )
@@ -159,7 +161,7 @@ bool DMetadataItemGroupList::write( std::ostream& out, bool header ) const
             return false;
         }
     }
-    out << "</metadata>";
+    out << baseIndentation << "</metadata>" << endl;
 
     return true;
 }

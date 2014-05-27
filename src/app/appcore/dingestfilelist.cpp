@@ -422,11 +422,13 @@ bool DIngestFileList::write( std::ostream& out, bool header ) const
 {
     ERROR_F( "DIngestFileList::write" );
 
+    const string baseIndentation = header ? "" : "  ";
+
     if (header)
     {
         out << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" << endl;
     }
-    out << "<files>";
+    out << baseIndentation << "<files>" << endl;
     for ( unsigned int i = 0; i < m_FileList.size(); i++ )
     {
         if ( !m_FileList[i].write(out, false) )
@@ -435,7 +437,7 @@ bool DIngestFileList::write( std::ostream& out, bool header ) const
             return false;
         }
     }
-    out << "</files>";
+    out << baseIndentation << "</files>" << endl;
 
     return true;
 }

@@ -296,21 +296,23 @@ bool DIngestFile::write( std::ostream& out, bool header ) const
 {
     ERROR_F("DIngestFile::write");
 
+    const string baseIndentation = header ? "" : "   ";
+
     if ( header )
     {
         out << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" << endl;
     }
-    out << "<file>";
-    out << "<filename><![CDATA[" << m_FileName << "]]></filename>";
-    out << "<id>" << m_Id << "</id>";
-    out << "<parentId>" << m_ParentId << "</parentId>";
-    out << "<type>" << m_Type << "</type>";
+    out << baseIndentation << "<file>" << endl;
+    out << baseIndentation << " <filename><![CDATA[" << m_FileName << "]]></filename>" << endl;
+    out << baseIndentation << " <id>" << m_Id << "</id>" << endl;
+    out << baseIndentation << " <parentId>" << m_ParentId << "</parentId>" << endl;
+    out << baseIndentation << " <type>" << m_Type << "</type>" << endl;
     if ( !m_MetadataGroupList.write(out, false) )
     {
         error << ERRerror << "Failed to write metadata group list" << endl;
         return false;
     }
-    out << "</file>";
+    out << baseIndentation << "</file>" << endl;
 
     return true;
 }
