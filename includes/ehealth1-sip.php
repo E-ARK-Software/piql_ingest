@@ -192,6 +192,13 @@ class Ehealth1SipPatient
             }
             else
             {
+                // Create directory if needed
+                if (!is_dir(dirname($destination)) && !mkdir(dirname($destination), 0777, true))
+                {
+                    return false;
+                }
+
+                // Copy file
                 if (!copy($source, $destination))
                 {
                     return false;
