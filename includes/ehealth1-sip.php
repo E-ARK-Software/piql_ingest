@@ -412,6 +412,12 @@ class Ehealth1Sip
 
     private function generatePackageMetadata($outputDirectory)
     {
+        // Do not generate file if no metadata is added
+        if (count($this->m_PackageMetadata) == 0)
+        {
+            return true;
+        }
+
         $metadata = "";
         $metadata .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         $metadata .= " <metadata>\n";
