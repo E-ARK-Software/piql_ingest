@@ -1,5 +1,10 @@
 <?php
 include(__DIR__ . '/../includes/ehealth1-sip.php');
+include(__DIR__ . '/../includes/general-functions.php');
+
+define("ARCHIVE_TYPE_ZIP", "ZIP");
+define("ARCHIVE_TYPE_TAR", "TAR");
+define("ARCHIVE_TYPE_NONE", "NONE");
 
 // Help text
 if ($argc != 3)
@@ -23,6 +28,7 @@ if (!is_dir($schemaDirectory))
 }
 
 $outputDir = './';
+$archiveType = ARCHIVE_TYPE_ZIP;
 
 // Get ID of informationpackage
 $parts = explode("_", basename($informationPackageDirectory));
@@ -162,5 +168,64 @@ if (!$sip->produceSip($outPath, $outputDir))
     return 1;
 }
 
-echo "Wrote SIP to $outPath" . PHP_EOL;
+$archivePath = '';
+if ($archiveType == ARCHIVE_TYPE_ZIP)
+{
+    $archivePath = "{$outPath}.zip";
+    $zip = new ZipArchive;
+    if($zip->open($archivePath, ZipArchive::CREATE) === true)
+    {
+        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($outPath));
+        foreach ($rii as $file)
+        {
+            $filePath = $file->getPathname();
+            $relativeFilePath = basename($outPath) . "/" . substr($filePath, strlen($outPath)+1);
+
+            if (!$file->isDir())
+            {
+                if (!$zip->addFile($filePath, $relativeFilePath))
+                {
+                    echo "Failed to add SIP to archive: {$outPath}" . PHP_EOL;
+                    exit(1);
+                }
+            }
+        }
+
+        if (!$zip->close())
+        {
+            echo "Failed to close archive: {$archivePath}" . PHP_EOL;
+            exit(1);
+        }
+    }
+
+    if (!deleteFromDisk($outPath, true))
+    {
+        echo "Failed to delete SIP: {$outPath}" . PHP_EOL;
+        exit(1);
+    }
+}
+else if ($archiveType == ARCHIVE_TYPE_TAR)
+{
+    $archivePath = "{$outPath}.tar";
+    $tar = PharData();
+    $tar->buildFromDirectory($outPath);
+
+    if (!deleteFromDisk($outPath, true))
+    {
+        echo "Failed to delete SIP: {$outPath}" . PHP_EOL;
+        exit(1);
+    }
+}
+else if ($archiveType == ARCHIVE_TYPE_NONE)
+{
+    // Keep output as is
+    $archivePath = $outPath;
+}
+else
+{
+    echo "Archive type is invalid: {$achiveType}" . PHP_EOL;
+    exit(1);
+}
+
+echo "Wrote SIP to $archivePath" . PHP_EOL;
 ?>
