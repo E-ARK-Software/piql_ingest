@@ -1,0 +1,25 @@
+<?php
+// sorting_order constants did not exist prior to PHP 5.4.0
+if (!defined("SCANDIR_SORT_ASCENDING"))
+{
+    define("SCANDIR_SORT_ASCENDING", 0);
+}
+
+define("OUTPUT_ARCHIVE_FORMAT_TAR", "TAR");
+define("OUTPUT_ARCHIVE_FORMAT_ZIP", "ZIP");
+
+define("OUTPUT_FORMAT_BAGIT_V1", "BAGIT_V1");
+define("OUTPUT_FORMAT_BAGIT_V097", "BAGIT_V097");
+define("OUTPUT_FORMAT_DATAONLY", "DATAONLY");
+
+define("FILE_ITEM_TYPE_FILE", "file");
+define("FILE_ITEM_TYPE_DIRECTORY", "directory");
+
+define("COMMIT_ACK_METHOD_SHA1_V1", "SHA1_V1");
+define("COMMIT_ACK_METHOD_NONE", "NONE");
+
+define("FILE_SEND_METHOD_SFTP", "SFTP");
+
+define("METADATA_OUTPUT_FORMAT_DUBLINCORE_CSV", "DUBLINCORE_CSV");
+define("METADATA_OUTPUT_FORMAT_NONE", "NONE");
+?>

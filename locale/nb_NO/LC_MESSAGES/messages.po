@@ -1,0 +1,40 @@
+# NORWEGIAN BOKMÅL TRANSLATION FOR PHP SCRIPTS.
+# Copyright (C) 2019 PIQL
+# FIRST AUTHOR <simen.fjeldolsen@piql.com>, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2019-02-16 20:33+0100\n"
+"Last-Translator: Simen Fjeld-Olsen <simen.fjeldolsen@piql.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: includes/general-functions.php:8
+msgid "Error in script. Check logs."
+msgstr "Feil i skript. Se logger."
+
+#: commit-transaction.php:286 commit-transaction.php:680
+msgid "Sending to server"
+msgstr "Sender til serveren"
+
+#: commit-transaction.php:308
+msgid "Preparing data"
+msgstr "Forbereder dataene"
+
+#: commit-transaction.php:616
+msgid "Creating archive"
+msgstr "Oppretter arkiv"
+
+#: commit-transaction.php:725
+msgid "Verifying transfer"
+msgstr "Verifiserer overføring"
+
+#: commit-transaction.php:778
+msgid "Sending acknowledgement"
+msgstr "Sender bekreftelse"
+
+#: commit-transaction.php:850
+msgid "Done"
+msgstr "Utført"

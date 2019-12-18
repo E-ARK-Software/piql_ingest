@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0.0\n"
+"Report-Msgid-Bugs-To: support@piql.com \n"
+"POT-Creation-Date: 2019-02-15 12:02+0100\n"
+"PO-Revision-Date: 2019-02-15 12:07+1\n"
+"Last-Translator: Matti Wennberg <matti.wennberg@piql.com>\n"
+"Language-Team: sv <support@piql.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: includes/general-functions.php:8
+msgid "Error in script. Check logs."
+msgstr "Fel i skript. Kontrollera loggar."
+
+#: commit-transaction.php:286 commit-transaction.php:680
+msgid "Sending to server"
+msgstr "Skickar till server"
+
+#: commit-transaction.php:308
+msgid "Preparing data"
+msgstr "Förbereder data"
+
+#: commit-transaction.php:616
+msgid "Creating archive"
+msgstr "Skapar arkiv"
+
+#: commit-transaction.php:725
+msgid "Verifying transfer"
+msgstr "Verifierar överföring"
+
+#: commit-transaction.php:778
+msgid "Sending acknowledgement"
+msgstr "Skickar bekräftelse"
+
+#: commit-transaction.php:850
+msgid "Done"
+msgstr "Klar"

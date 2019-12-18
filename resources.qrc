@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="images">
+    <file>src/gui/resources/banner_right.png</file>
+    <file>src/gui/resources/banner.png</file>
+    <file>src/gui/resources/icon_16x16.png</file>
+    <file>src/gui/resources/icon_32x32.ico</file>
+    <file>src/gui/resources/navigate_button_end.svg</file>
+    <file>src/gui/resources/navigate_button_start.svg</file>
+    <file>src/gui/resources/navigate_button_next.svg</file>
+    <file>src/gui/resources/navigate_button_previous.svg</file>
+    <file>src/gui/resources/commit_button.png</file>
+  </qresource>
+</RCC>
