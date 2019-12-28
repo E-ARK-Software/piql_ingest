@@ -1,10 +1,10 @@
 Installation Instructions
 
 Windows:
-1. The project requires an installed cross-platform QT framework. 
+1. The project requires an installed cross-platform QT framework (version 5.1.1). 
    If this framework is not installed, then you need to install it. 
    Official website: https://www.qt.io/
-2. The project requires the boost library. 
+2. The project requires the boost library version 1.72.0. 
    If necessary, you need download and install the latest version of this library. 
    Official website: https://www.boost.org/
 3. It is necessary to download the project sources from the repository 
