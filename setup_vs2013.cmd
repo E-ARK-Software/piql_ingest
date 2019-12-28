@@ -1,13 +1,12 @@
 @echo off
 
-set QTDIR=c:\Qt\5.5\Src\qtbase\
-set CV_BOOST_INCLUDE="..\..\cmu_112\thirdparty\w32\boost_1_60_0"
-set CV_BOOST_LIBS="..\..\cmu_112\thirdparty\w32\boost_1_60_0\stage\lib"
+set QTDIR=thirdparty\QT_5_5_1\qtbase-5.5.1
+set CV_BOOST_INCLUDE="thirdparty\boost_1_72_0"
+set CV_BOOST_LIBS="thirdparty\boost_1_72_0\stage\lib"
 
 rem PATH setup
 
 set path=%QTDIR%\bin;%path%
-set path=%path%;%CYGWIN%
 
 pushd "%VS120COMNTOOLS%"\..\..\vc\
 call vcvarsall.bat"" x86
@@ -32,5 +31,12 @@ echo CV_BOOST_INCLUDE=%CV_BOOST_INCLUDE%
 echo CV_BOOST_LIBS=%CV_BOOST_LIBS%
 echo =========================================================================
 echo.
+
+echo =========================================================================
+echo Install additional tools
+echo =========================================================================
+echo.
+
+call install-tools.cmd
 
 cmd /k
