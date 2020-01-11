@@ -1,5 +1,0 @@
-QMAKE_PRL_BUILD_DIR = D:/Work/MyProjects/SVN/CMU_112/base/common
-QMAKE_PRO_INPUT = common.pro
-QMAKE_PRL_TARGET = common
-QMAKE_PRL_CONFIG = lex yacc exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin incremental_off windows warn_on release link_prl incremental flat precompile_header autogen_precompile_source debug_and_release debug_and_release_target embed_manifest_dll embed_manifest_exe c++11 rtti no_plugin_manifest qpa win32 msvc copy_dir_files release ReleaseBuild Release build_pass warn_on thread windows debug_and_release stl exceptions no_lflags_merge staticlib create_prl release ReleaseBuild Release build_pass have_target static staticlib exclusive_builds no_autoqmake
-QMAKE_PRL_LIBS =
