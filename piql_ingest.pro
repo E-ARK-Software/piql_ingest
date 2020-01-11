@@ -136,13 +136,13 @@ INCLUDEPATH       =   inc \
 
 DEPENDPATH       +=   $$INCLUDEPATH
 
-unix:LIBS        +=   thirdparty/common/lib/$$CURBUILD/libcommon.a \
-                      thirdparty/service_tools/lib/$$PLATFORM/$$CURBUILD/libst_rec_common_base.a \
-                      thirdparty/qt_tools/lib/$$CURBUILD/libqtools.a                      
+unix:LIBS        +=   thirdparty/common/$$CURBUILD/libcommon.a \
+                      thirdparty/service_tools/$$CURBUILD/libst_rec_common_base.a \
+                      thirdparty/qt_tools/$$CURBUILD/libqtools.a                      
 
-win32:LIBS        =   thirdparty/common/lib/$$CURBUILD/common.lib \
-                      thirdparty/service_tools/lib/$$PLATFORM/$$CURBUILD/st_rec_common_base.lib \
-                      thirdparty/qt_tools/lib/$$CURBUILD/qtools.lib
+win32:LIBS        =   thirdparty/common/$$CURBUILD/common.lib \
+                      thirdparty/service_tools/$$CURBUILD/st_rec_common_base.lib \
+                      thirdparty/qt_tools/$$CURBUILD/qtools.lib
 
 # Library dependency checking
 PRE_TARGETDEPS   +=   $$LIBS
