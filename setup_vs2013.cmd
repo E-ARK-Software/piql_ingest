@@ -1,12 +1,6 @@
 @echo off
 
-set QTDIR=thirdparty\QT_5_5_1\qtbase-5.5.1
-set CV_BOOST_INCLUDE="thirdparty\boost_1_72_0"
-set CV_BOOST_LIBS="thirdparty\boost_1_72_0\stage\lib"
-
-rem PATH setup
-
-set path=%QTDIR%\bin;%path%
+call setup_paths.cmd
 
 pushd "%VS120COMNTOOLS%"\..\..\vc\
 call vcvarsall.bat"" x86
