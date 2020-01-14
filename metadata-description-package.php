@@ -299,6 +299,5 @@ $metadataTemplate->addGroup($conditionsOfAccessAndUseGroup);
 $metadataTemplate->addGroup($alliedMaterialsGroup);
 $metadataTemplate->addGroup($noteGroup);
 
-
-include_once("includes/metadata-description-footer.php");
+include_once("includes/metadata-description-package-footer.php");
 ?>

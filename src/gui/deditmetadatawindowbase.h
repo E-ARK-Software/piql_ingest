@@ -113,7 +113,6 @@ private:
     void CreateDropDownInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
     void CreateDateTimeInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
     bool eventFilter(QObject* object, QEvent* event);
-    void navigateStart();
 
 private slots:
     void formValueEdited(QString);

@@ -441,7 +441,7 @@ if (pathinfo($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME) == "commit-transaction"
     $filePath = "";
     $fileName = "";
     $fileNameBase = "";
-    $metadataTemplate = new MetadataTemplate();
+    $packageMetadataTemplate = new MetadataTemplate();
 }
 else
 {
@@ -517,6 +517,6 @@ else
     //
     
     // Create template
-    $metadataTemplate = new MetadataTemplate();
+    $packageMetadataTemplate = new MetadataTemplate();
 }
 ?>

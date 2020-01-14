@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Edit package metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger metadata for pakke</translation>
     </message>
 </context>
 <context>
@@ -292,7 +292,7 @@
     </message>
     <message>
         <source>Edit package metadata dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger metadata for pakke dialog</translation>
     </message>
     <message>
         <source>%1</source>
@@ -300,11 +300,11 @@
     </message>
     <message>
         <source>Failed to write package metadata</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke skrive metadata for pakke</translation>
     </message>
     <message>
         <source>Package metadata editing has been canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakke metadata editering er kansellert</translation>
     </message>
 </context>
 <context>

@@ -204,9 +204,6 @@ void DEditMetadataWindowBase::ConstructorSetup(const std::string& phpBinPath)
     mainLayout->addWidget(m_StackedWidget);
     setLayout(mainLayout);
 
-    // Update dialog
-    navigateStart();
-
     // Resize dialog
     if (m_Forms.size())
     {
@@ -1077,22 +1074,6 @@ bool DEditMetadataWindowBase::eventFilter( QObject* object, QEvent* event )
     }
 
     return QDialog::eventFilter( object, event );
-}
-
-
-//----------------------------------------------------------------------------
-/*!
- *  \brief Start button pressed.
- *
- *  Start button pressed.
- */
-
-void DEditMetadataWindowBase::navigateStart()
-{
-    ERROR_F( "DEditMetadataWindowBase::navigateStart" );
-
-    m_CurrentForm = 0;
-    showForm();
 }
 
 

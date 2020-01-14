@@ -43,6 +43,7 @@ private slots:
     void saveButtonPressed();
     void navigatePrevious();
     void navigateNext();
+    void navigateStart();
     void navigateEnd();
 
 private:

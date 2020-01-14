@@ -430,3 +430,17 @@ void DEditMetadataWindowFile::navigateEnd()
     m_CurrentForm = m_Forms.size() - 1;
     showForm();
 }
+
+//----------------------------------------------------------------------------
+/*! \fn     DEditMetadataWindowFile::navigateEnd()
+ *
+ *  Start button pressed.
+ */
+
+void DEditMetadataWindowFile::navigateStart()
+{
+    ERROR_F( "DEditMetadataWindowFile::navigateStart" );
+
+    m_CurrentForm = 0;
+    showForm();
+}

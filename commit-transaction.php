@@ -15,6 +15,7 @@ include_once("includes/metadata-parser.php");
 include_once("includes/general-functions.php");
 include_once("includes/script-context.php");
 include_once("metadata-description.php");
+include_once("metadata-description-package.php");
 include_once("config.php");
 
 // Setup
@@ -157,6 +158,13 @@ if (count($metadataList) == 0)
     exitWithError("Metadata list is empty");
 }
 
+// Get package metadata
+if (!$scriptContext->valueAsString($packageMetadata, "PackageMetadata"))
+{
+    // Package metadata is not mandatory
+    $packageMetadata = "";
+}
+
 // Functions
 //
 
@@ -232,7 +240,7 @@ function createMetadata($metadataListIn, $metadataFileOut, $fileNameList, $metad
         }
         
         // Get output order
-        $fondPosition = 2;
+        $fondPosition = -1;
         if ($configuration->exists("MetadataCsvFondPosition"))
         {
             $fondPosition = $configuration->getValue("MetadataCsvFondPosition");
@@ -311,8 +319,154 @@ $communicator->sendProgress(0, gettext("Preparing data"));
 $archiveFiles = array();
 {
     // Create package files
-    // Create package files
-    if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_BAGIT_V097)
+    if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
+    {
+        // Create a SIP compliant to the NHA 'other' SIP package type
+        //
+        // SIP structure:
+        // UUID/
+        //   other/
+        //     20190607_576540014215_00001_1.jpg
+        //     20190607_576540014215_00001_1.xml
+        //   metadata/
+        //     checksum.md5
+        //     metadata.csv
+
+        $checksumPaths = array();
+
+        // Get info from package metadata
+        $metadataParser = new MetadataParser();
+        if (!$metadataParser->readString($packageMetadata, $errorMessage))
+        {
+            exitWithError($errorMessage);
+        }
+        if (!$metadataParser->getValue("avleveringsidentifikator", 0, $avleveringsidentifikator) ||
+            !$metadataParser->getValue("avleveringsbeskrivelse", 0, $avleveringsbeskrivelse) ||
+            !$metadataParser->getValue("avtaleidentifikator", 0, $avtaleidentifikator) ||
+            !$metadataParser->getValue("avtaledato", 0, $avtaledato) ||
+            !$metadataParser->getValue("avtalebeskrivelse", 0, $avtalebeskrivelse) ||
+            !$metadataParser->getValue("virksomhetsnavn", 0, $virksomhetsnavn) ||
+            !$metadataParser->getValue("foretaksnavn", 0, $foretaksnavn) ||
+            !$metadataParser->getValue("organisasjonsnummer", 0, $organisasjonsnummer))
+        {
+            exitWithError("Failed to read values from metadata");
+        }
+
+        // Create SIP root dir
+        $sipPath = $tempDirectoryPath . "/" . guidv4(openssl_random_pseudo_bytes(16));
+        if (!mkdir($sipPath))
+        {
+            exitWithError("Failed to create directory: $sipPath");
+        }
+
+        // Create metadata dir
+        $metadataPath = $sipPath . "/metadata";
+        if (!mkdir($metadataPath))
+        {
+            exitWithError("Failed to create directory: $metadataPath");
+        }
+
+        // Create other dir
+        $otherPath = $sipPath . "/other";
+        if (!mkdir($otherPath))
+        {
+            exitWithError("Failed to create directory: $otherPath");
+        }
+
+        // Create journal dir
+        $journalPath = $otherPath . "/journal";
+        if (!mkdir($journalPath))
+        {
+            exitWithError("Failed to create directory: $journalPath");
+        }
+
+        // Create objects dir
+        $objectsPath = $otherPath . "/objekter";
+        if (!mkdir($objectsPath))
+        {
+            exitWithError("Failed to create directory: $objectsPath");
+        }
+
+        // Create AVLXML
+        $avlxmlPath = $otherPath . "/journal/avlxml.xml";
+        array_push($checksumPaths, "other/journal/avlxml.xml");
+        $text = "";
+        $text .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . PHP_EOL;
+        $text .= "<avlxml xmlns=\"http://www.arkivverket.no/standarder/nha/avlxml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.arkivverket.no/standarder/nha/avlxml avlxml.xsd\">" . PHP_EOL;
+        $text .= "        <avlxmlversjon>2.16.578.1.39.100.5.2.2</avlxmlversjon>" . PHP_EOL;
+        $text .= "        <avleveringsidentifikator>" . htmlspecialchars($avleveringsidentifikator) . "</avleveringsidentifikator>" . PHP_EOL;
+        $text .= "        <avleveringsbeskrivelse>" . htmlspecialchars($avleveringsbeskrivelse) . "</avleveringsbeskrivelse>" . PHP_EOL;
+        $text .= "        <arkivskaper>NHA</arkivskaper>" . PHP_EOL;
+        $text .= "        <avtale>" . PHP_EOL;
+        $text .= "                <avtaleidentifikator>" . htmlspecialchars($avtaleidentifikator) . "</avtaleidentifikator>" . PHP_EOL;
+        $text .= "                <avtaledato>" . htmlspecialchars($avtaledato) . "</avtaledato>" . PHP_EOL;
+        $text .= "                <avtalebeskrivelse>" . htmlspecialchars($avtalebeskrivelse) . "</avtalebeskrivelse>" . PHP_EOL;
+        $text .= "                <virksomhet>" . PHP_EOL;
+        $text .= "                        <virksomhetsnavn>" . htmlspecialchars($virksomhetsnavn) . "</virksomhetsnavn>" . PHP_EOL;
+        $text .= "                        <foretaksnavn>" . htmlspecialchars($foretaksnavn) . "</foretaksnavn>" . PHP_EOL;
+        $text .= "                        <organisasjonsnummer>" . htmlspecialchars($organisasjonsnummer) . "</organisasjonsnummer>" . PHP_EOL;
+        $text .= "                </virksomhet>" . PHP_EOL;
+        $text .= "        </avtale>" . PHP_EOL;
+        $text .= "</avlxml>" . PHP_EOL;
+        if (file_put_contents($avlxmlPath, $text) === false)
+        {
+            exitWithError("Failed to write to file: " . $avlxmlPath);
+        }
+
+        // Create metadata file
+        $fileNames = array();
+        for ($i = 0; $i < count($filePathList); $i++)
+        {
+            array_push($fileNames, basename($filePathList[$i]));
+        }
+        $metadataOut = "$metadataPath/metadata.csv";
+        if (!createMetadata($metadataList, $metadataOut, $fileNames, $metadataTemplate, $configuration))
+        {
+            exitWithError("Failed to create metadata file");
+        }
+
+        // Fetch objects
+        for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
+        {
+            // Get file info
+            $filePath = $filePathList[$fileIndex];
+            $fileItemType = $fileItemTypeList[$fileIndex];
+
+            if ($fileItemType != FILE_ITEM_TYPE_FILE)
+            {
+                exitWithError("Invalid file item type: " . $fileItemType);
+            }
+
+            $destination = $objectsPath . "/" . basename($filePath);
+            if (!copy($filePath, $destination))
+            {
+                exitWithError("Failed to copy file $filePath to $destination");
+            }
+            array_push($checksumPaths, "other/objekter/" . basename($filePath));
+        }
+
+        // Create checksum file
+        $checksumFilePath = $metadataPath . "/checksum.md5";
+        foreach ($checksumPaths as $relativePath)
+        {
+            $absolutePath = $sipPath . "/" . $relativePath;
+
+            $md5sum = md5_file($absolutePath);
+            if ($md5sum === false)
+            {
+                exitWithError("Failed to calculate checksum for file: " . $absolutePath);
+            }
+
+            if (file_put_contents($checksumFilePath, $md5sum . "  " . $relativePath . PHP_EOL, FILE_APPEND | LOCK_EX) === false)
+            {
+                exitWithError("Failed to write to file: " . $checksumFilePath);
+            }
+        }
+
+        // Setup path for SIP to be archived
+        array_push($archiveFiles, basename($sipPath));
+    }
+    else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_BAGIT_V097)
     {
         // Create a SIP in bagit format
         // - One or multiple files per SIP
@@ -769,7 +923,62 @@ else
 
 // Send acknowledgement
 logInfo("Using commit method: " . $configuration->getValue("CommitAckMethod"));
-if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_SHA1_V1)
+if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_NHA_OTHER)
+{
+    // Send acknowledgement in as basename.md5
+    // File name example: document.md5
+    // File content example: 14b68e4f906cf498f9c5e3d51dc7c9f0  document.mft
+
+    $communicator->sendProgress(100, gettext("Sending acknowledgement"));
+    $checksum = md5_file($zipFilePath);
+    if (strlen($checksum) != 32)
+    {
+        exitWithError("Wrong checksum on local side: $checksum");
+    }
+
+    $remoteChecksumFile = $remoteFile;
+    while (substr($remoteChecksumFile, strlen($remoteChecksumFile) - 1, 1) != ".")
+    {
+        if (strlen($remoteChecksumFile) == 0)
+        {
+            exitWithError("Failed to assign name to remote checksum file");
+        }
+        $remoteChecksumFile = substr($remoteChecksumFile, 0, strlen($remoteChecksumFile) - 1);
+    }
+    $remoteChecksumFile .= "md5";
+
+    $localChecksumFile = "$tempDirectoryPath/$fileNameBase.md5";
+    file_put_contents($localChecksumFile, "$checksum  " . substr(basename($zipFilePath), 0, strlen(basename($zipFilePath)) - 3) . "tar" . "\n");
+
+    for ($i = 0; true; $i++)
+    {
+        if ($i > $configuration->getValue("SenderMaxRetries"))
+        {
+            exitWithError("Failed to verify upload");
+        }
+        
+        if ($i > 0)
+        {
+            sleep($configuration->getValue("SenderFailDelay"));
+        }
+        
+        // Reconnect to server
+        if (($i > 0 || !isset($fileSender)) && !createFileSender($fileSender, $configuration, $logger, ""))
+        {
+            logError("Failed to create file sender");
+            continue;
+        }
+    
+        if (!$fileSender->send($localChecksumFile, $remoteChecksumFile))
+        {
+            logError("Failed to send file with file sender: " . $fileSender->name());
+            continue;
+        }
+        
+        break;
+    }
+}
+else if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_SHA1_V1)
 {
     // Send acknowledgement in as basename.sha1
     // File name example: document.sha1

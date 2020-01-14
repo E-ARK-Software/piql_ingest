@@ -1,9 +1,9 @@
 <?php
-date_default_timezone_set('Europe/Kiev');
+date_default_timezone_set('Europe/Oslo');
 $configuration = new Configuration();
-$configuration->add("SshHostname", "127.0.0.1");
-$configuration->add("SshUsername", "ivancopc");
-$configuration->add("SshPassword", "12345");
+$configuration->add("SshHostname", "");
+$configuration->add("SshUsername", "");
+$configuration->add("SshPassword", "");
 $configuration->add("SshDestinationDir", "");
 $configuration->add("SshPort", 22);
 $configuration->add("VerifyUploadChecksum", false);

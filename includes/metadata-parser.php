@@ -199,6 +199,20 @@ class MetadataParser
         return true;
     }
 
+    public function getValue($key, $fileIndex, &$value)
+    {
+        for ($i = 0; $i < count($this->m_MetadataItems); $i++)
+        {
+            if ($this->m_MetadataItems[$i]->fileIndex() == $fileIndex && $this->m_MetadataItems[$i]->key() == $key)
+            {
+                $value = $this->m_MetadataItems[$i]->value();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function writeDublinCoreCsvToFile($metadataFileOut, $fileNameList, $outputOrder, $fondPosition)
     {
         // For Archivematica to process correctly, possitions of the first
@@ -287,9 +301,9 @@ class MetadataParser
             {
                 $value .=  $metadataItems[$i]->value();
             }
-            
+
             // Validate value
-            if ($currFileMetadataIndex != 0 && $currFileMetadataIndex != $fondPosition)
+            if ($fondPosition >= 0 && $currFileMetadataIndex != 0 && $currFileMetadataIndex != $fondPosition)
             {
                 // All values except filename, title and AtoM fond are shared and must be identical for all files
                 if ($metadataItems[$currFileMetadataIndex]->value() != $metadataItems[$i]->value())
