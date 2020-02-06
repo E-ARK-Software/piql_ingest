@@ -187,6 +187,8 @@ void DEditMetadataWindowPackage::saveButtonPressed()
 {
     ERROR_F( "DEditMetadataWindow::saveButtonPressed" );
 
+    DMetadataItemGroupList metadataGroupList;
+    
     // Fetch metadata
     DMetadataItemGroup group;
     int currentGroupIndex = -1;
@@ -196,7 +198,7 @@ void DEditMetadataWindowPackage::saveButtonPressed()
         {
             if (currentGroupIndex >= 0)
             {
-                m_MetadataGroupList.addGroup(group);
+                metadataGroupList.addGroup(group);
             }
             group = DMetadataItemGroup(m_Forms[0].m_GuiItems[j].m_GroupName);
             currentGroupIndex = m_Forms[0].m_GuiItems[j].m_GroupIndex;
@@ -258,7 +260,9 @@ void DEditMetadataWindowPackage::saveButtonPressed()
             }
         }
     }
-    m_MetadataGroupList.addGroup(group);
+    metadataGroupList.addGroup(group);
 
+    m_MetadataGroupList = metadataGroupList;
+    
     accept();
 }

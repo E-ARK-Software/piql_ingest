@@ -301,6 +301,8 @@ function sendProgressCallback($bytesSent, $bytesTotal)
 $platforms = new Platforms();
 $platforms->addSupported(PLATFORM_CENTOS6);
 $platforms->addSupported(PLATFORM_CENTOS7);
+$platforms->addSupported(PLATFORM_RHEL7);
+$platforms->addSupported(PLATFORM_RHEL8);
 $platforms->addSupported(PLATFORM_WINDOWS7);
 $platforms->addSupported(PLATFORM_WINDOWS8);
 $platforms->addSupported(PLATFORM_WINDOWS10);
@@ -390,25 +392,25 @@ $archiveFiles = array();
         // Create AVLXML
         $avlxmlPath = $otherPath . "/journal/avlxml.xml";
         array_push($checksumPaths, "other/journal/avlxml.xml");
-        $text = "";
-        $text .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . PHP_EOL;
-        $text .= "<avlxml xmlns=\"http://www.arkivverket.no/standarder/nha/avlxml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.arkivverket.no/standarder/nha/avlxml avlxml.xsd\">" . PHP_EOL;
-        $text .= "        <avlxmlversjon>2.16.578.1.39.100.5.2.2</avlxmlversjon>" . PHP_EOL;
-        $text .= "        <avleveringsidentifikator>" . htmlspecialchars($avleveringsidentifikator) . "</avleveringsidentifikator>" . PHP_EOL;
-        $text .= "        <avleveringsbeskrivelse>" . htmlspecialchars($avleveringsbeskrivelse) . "</avleveringsbeskrivelse>" . PHP_EOL;
-        $text .= "        <arkivskaper>NHA</arkivskaper>" . PHP_EOL;
-        $text .= "        <avtale>" . PHP_EOL;
-        $text .= "                <avtaleidentifikator>" . htmlspecialchars($avtaleidentifikator) . "</avtaleidentifikator>" . PHP_EOL;
-        $text .= "                <avtaledato>" . htmlspecialchars($avtaledato) . "</avtaledato>" . PHP_EOL;
-        $text .= "                <avtalebeskrivelse>" . htmlspecialchars($avtalebeskrivelse) . "</avtalebeskrivelse>" . PHP_EOL;
-        $text .= "                <virksomhet>" . PHP_EOL;
-        $text .= "                        <virksomhetsnavn>" . htmlspecialchars($virksomhetsnavn) . "</virksomhetsnavn>" . PHP_EOL;
-        $text .= "                        <foretaksnavn>" . htmlspecialchars($foretaksnavn) . "</foretaksnavn>" . PHP_EOL;
-        $text .= "                        <organisasjonsnummer>" . htmlspecialchars($organisasjonsnummer) . "</organisasjonsnummer>" . PHP_EOL;
-        $text .= "                </virksomhet>" . PHP_EOL;
-        $text .= "        </avtale>" . PHP_EOL;
-        $text .= "</avlxml>" . PHP_EOL;
-        if (file_put_contents($avlxmlPath, $text) === false)
+        $avlxml = "";
+        $avlxml .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . PHP_EOL;
+        $avlxml .= "<avlxml xmlns=\"http://www.arkivverket.no/standarder/nha/avlxml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.arkivverket.no/standarder/nha/avlxml avlxml.xsd\">" . PHP_EOL;
+        $avlxml .= "        <avlxmlversjon>2.16.578.1.39.100.5.2.2</avlxmlversjon>" . PHP_EOL;
+        $avlxml .= "        <avleveringsidentifikator>" . htmlspecialchars($avleveringsidentifikator) . "</avleveringsidentifikator>" . PHP_EOL;
+        $avlxml .= "        <avleveringsbeskrivelse>" . htmlspecialchars($avleveringsbeskrivelse) . "</avleveringsbeskrivelse>" . PHP_EOL;
+        $avlxml .= "        <arkivskaper>NHA</arkivskaper>" . PHP_EOL;
+        $avlxml .= "        <avtale>" . PHP_EOL;
+        $avlxml .= "                <avtaleidentifikator>" . htmlspecialchars($avtaleidentifikator) . "</avtaleidentifikator>" . PHP_EOL;
+        $avlxml .= "                <avtaledato>" . htmlspecialchars($avtaledato) . "</avtaledato>" . PHP_EOL;
+        $avlxml .= "                <avtalebeskrivelse>" . htmlspecialchars($avtalebeskrivelse) . "</avtalebeskrivelse>" . PHP_EOL;
+        $avlxml .= "                <virksomhet>" . PHP_EOL;
+        $avlxml .= "                        <virksomhetsnavn>" . htmlspecialchars($virksomhetsnavn) . "</virksomhetsnavn>" . PHP_EOL;
+        $avlxml .= "                        <foretaksnavn>" . htmlspecialchars($foretaksnavn) . "</foretaksnavn>" . PHP_EOL;
+        $avlxml .= "                        <organisasjonsnummer>" . htmlspecialchars($organisasjonsnummer) . "</organisasjonsnummer>" . PHP_EOL;
+        $avlxml .= "                </virksomhet>" . PHP_EOL;
+        $avlxml .= "        </avtale>" . PHP_EOL;
+        $avlxml .= "</avlxml>" . PHP_EOL;
+        if (file_put_contents($avlxmlPath, $avlxml) === false)
         {
             exitWithError("Failed to write to file: " . $avlxmlPath);
         }
@@ -465,6 +467,32 @@ $archiveFiles = array();
 
         // Setup path for SIP to be archived
         array_push($archiveFiles, basename($sipPath));
+
+        // Create AVLXML item on server
+        $serverAddress = $configuration->getValue("ProductionServerAddress");
+        $url="http://$serverAddress/api/v1/prod/avlxml";
+        $ch = curl_init("$url");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // TODO REMOVE ME!
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // TODO REMOVE ME!
+        curl_setopt($ch, CURLOPT_POST, 1);
+        $avlxml=json_encode($avlxml);
+        $post = [
+            'data' => "{\"xml\": $avlxml, \"validate\" : \"0\", \"indextype\" : \"\", \"avlxmltype\" : \"3\" }",
+        ];
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        $data = curl_exec($ch);
+        if (!$data)
+        {
+            exitWithError("Failed to register avlxml in server");
+        }
+        $response = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+        curl_close($ch);
+        if ( "$response" != "201" )
+        {
+            exitWithError("Got error response from production server: $response");
+        }
     }
     else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_BAGIT_V097)
     {
@@ -779,7 +807,7 @@ if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR
         $archiveFilesStr .= "\"" . normalizeFilePath($archiveFiles[$i]) . "\" ";
     }
 
-    if ($platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
+    if ($platform == PLATFORM_RHEL7 || $platform == PLATFORM_RHEL8 || $platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
     {
         $command = "cd $tempDirectoryPath && tar -cf \"$archiveFileName\" $archiveFilesStr";
     }
@@ -806,7 +834,7 @@ else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMA
         $archiveFilesStr .= "\"" . $archiveFiles[$i] . "\" ";
     }
 
-    if ($platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
+    if ($platform == PLATFORM_RHEL7 || $platform == PLATFORM_RHEL8 || $platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
     {
         $command = "cd $tempDirectoryPath && zip -r \"$archiveFileName\" $archiveFilesStr";
     }
@@ -976,6 +1004,31 @@ if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_NHA_OTHER)
         }
         
         break;
+    }
+
+    // Set status on server
+    $serverAddress = $configuration->getValue("ProductionServerAddress");
+    $url="http://$serverAddress/api/v1/prod/avlxml/$avleveringsidentifikator/status";
+    $ch = curl_init("$url");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // TODO REMOVE ME!
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // TODO REMOVE ME!
+    curl_setopt($ch, CURLOPT_POST, 1);
+    $post = [
+        'data' => "{\"status\": \"10\" }",
+    ];
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+    $data = curl_exec($ch);
+    if (!$data)
+    {
+        exitWithError("Failed to register status in server");
+    }
+    $response = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+    curl_close($ch);
+    if ( "$response" != "200" )
+    {
+        exitWithError("Got error response from production server: $response");
     }
 }
 else if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_SHA1_V1)

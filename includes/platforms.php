@@ -1,6 +1,8 @@
 <?php
 define("PLATFORM_CENTOS6", "CENTOS6");
 define("PLATFORM_CENTOS7", "CENTOS7");
+define("PLATFORM_CENTOS7", "RHEL7");
+define("PLATFORM_CENTOS7", "RHEL8");
 define("PLATFORM_WINDOWS7", "WINDOWS7");
 define("PLATFORM_WINDOWS8", "WINDOWS8");
 define("PLATFORM_WINDOWS10", "WINDOWS10");
@@ -51,6 +53,17 @@ class Platforms
             else if ($ret == 0 && strpos($output, "CentOS Linux release 7") !== false)
             {
                 $platform = PLATFORM_CENTOS7;
+            }
+            else if ($ret == 0 && strpos($output, "Red Hat Enterprise Linux") !== false)
+            {
+                if ($ret == 0 && strpos($output, "VERSION_ID=\"7.") !== false)
+                {
+                    $platform = PLATFORM_RHEL7;
+                }
+                else if ($ret == 0 && strpos($output, "VERSION_ID=\"8.") !== false)
+                {
+                    $platform = PLATFORM_RHEL8;
+                }
             }
         }
         else if (strtoupper(substr($os, 0, 3)) === 'WIN')

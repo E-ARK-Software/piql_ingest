@@ -72,6 +72,8 @@ if (!file_exists($tempDirectoryPath) || !is_dir($tempDirectoryPath))
 $platforms = new Platforms();
 $platforms->addSupported(PLATFORM_CENTOS6);
 $platforms->addSupported(PLATFORM_CENTOS7);
+$platforms->addSupported(PLATFORM_RHEL7);
+$platforms->addSupported(PLATFORM_RHEL8);
 $platforms->addSupported(PLATFORM_WINDOWS7);
 $platforms->addSupported(PLATFORM_WINDOWS8);
 $platforms->addSupported(PLATFORM_WINDOWS10);
