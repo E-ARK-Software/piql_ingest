@@ -292,12 +292,12 @@ $noteGroup->addItem($item);
 // Add groups
 //
 
-$metadataTemplate->addGroup($identityStatementGroup);
-$metadataTemplate->addGroup($contextGroup);
-$metadataTemplate->addGroup($contentAndStructureGroup);
-$metadataTemplate->addGroup($conditionsOfAccessAndUseGroup);
-$metadataTemplate->addGroup($alliedMaterialsGroup);
-$metadataTemplate->addGroup($noteGroup);
+$packageMetadataTemplate->addGroup($identityStatementGroup);
+$packageMetadataTemplate->addGroup($contextGroup);
+$packageMetadataTemplate->addGroup($contentAndStructureGroup);
+$packageMetadataTemplate->addGroup($conditionsOfAccessAndUseGroup);
+$packageMetadataTemplate->addGroup($alliedMaterialsGroup);
+$packageMetadataTemplate->addGroup($noteGroup);
 
 include_once("includes/metadata-description-package-footer.php");
 ?>
