@@ -128,21 +128,21 @@ OBJECTS_DIR       =   obj/$$PLATFORM/$$CURBUILD
 MOC_DIR           =   obj/$$PLATFORM/$$CURBUILD
 
 INCLUDEPATH       =   inc \
-                      thirdparty/common/inc \
-                      thirdparty/service_tools/inc \
-                      thirdparty/qt_tools/inc \
+                      src/libs/common/inc \
+                      src/libs/service_tools/inc \
+                      src/libs/qt_tools/inc \
                       thirdparty/tclap-1.2.1/include \
                       $$INCLUDE_BOOST()
 
 DEPENDPATH       +=   $$INCLUDEPATH
 
-unix:LIBS        +=   thirdparty/common/$$CURBUILD/libcommon.a \
-                      thirdparty/service_tools/$$CURBUILD/libst_rec_common_base.a \
-                      thirdparty/qt_tools/$$CURBUILD/libqtools.a                      
+unix:LIBS        +=   lib/$$CURBUILD/libcommon.a \
+                      lib/$$CURBUILD/libst_rec_common_base.a \
+                      lib/$$CURBUILD/libqtools.a                      
 
-win32:LIBS        =   thirdparty/common/$$CURBUILD/common.lib \
-                      thirdparty/service_tools/$$CURBUILD/st_rec_common_base.lib \
-                      thirdparty/qt_tools/$$CURBUILD/qtools.lib
+win32:LIBS        =   lib/$$CURBUILD/common.lib \
+                      lib/$$CURBUILD/st_rec_common_base.lib \
+                      lib/$$CURBUILD/qtools.lib
 
 # Library dependency checking
 PRE_TARGETDEPS   +=   $$LIBS
