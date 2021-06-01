@@ -30,13 +30,6 @@ else
     return 1
 fi
 
-# Setup servers
-if [ "$CV_SERVER_TROIKA" == "" ] ; then export CV_SERVER_TROIKA=192.168.10.51 ; fi
-if [ "$CV_SERVER_TESTAMU1" == "" ] ; then export CV_SERVER_TESTAMU1=testamu1.piql.com ; fi
-if [ "$CV_SERVER_TESTAMU2" == "" ] ; then export CV_SERVER_TESTAMU2=testamu2.piql.com ; fi
-if [ "$CV_SERVER_TESTAMU3" == "" ] ; then export CV_SERVER_TESTAMU3=testamu3.piql.com ; fi
-if [ "$CV_SERVER_TESTAMU4" == "" ] ; then export CV_SERVER_TESTAMU4=testamu4.piql.com ; fi
-
 # Setup Qt
 PATH=$QTDIR/bin:$PATH
 LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
@@ -52,6 +45,13 @@ if [ "$CV_INSTALLERS" == "" ] ; then
 fi
 export CV_RELEASES=$PWD/../releases
 export CV_FWTRUNK=$PWD/../fwtrunk
+
+# Thirdparty setup
+if [ "$CV_THIRDPARTY_DIR" == "" ] ; then
+    export CV_THIRDPARTY=/var/lib/cv_thirdparty
+else
+    export CV_THIRDPARTY=$CV_THIRDPARTY_DIR
+fi
 
 if [ "$CV_BOOST_ROOT" == "" ] ; then
     export CV_BOOST_ROOT="$CV_THIRDPARTY/boost_1_60_0"
