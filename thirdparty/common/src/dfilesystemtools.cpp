@@ -197,8 +197,8 @@ bool DFileSystemTools::compareFiles(const std::string& fileA, const std::string&
     fileDescriptorA = open(fileA.c_str(), D_OM_RDONLY);
     fileDescriptorB = open(fileB.c_str(), D_OM_RDONLY);
 #else
-    fileDescriptorA = open(fileA.c_str(), _O_RDONLY);
-    fileDescriptorB = open(fileB.c_str(), _O_RDONLY);
+    fileDescriptorA = open(fileA.c_str(), O_RDONLY);
+    fileDescriptorB = open(fileB.c_str(), O_RDONLY);
 #endif
 
     if (fileDescriptorA == -1 || fileDescriptorB == -1)
