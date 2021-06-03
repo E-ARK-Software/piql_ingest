@@ -131,7 +131,7 @@ INCLUDEPATH       =   inc \
                       src/libs/common/inc \
                       src/libs/service_tools/inc \
                       src/libs/qt_tools/inc \
-                      thirdparty/tclap-1.2.1/include \
+                      $$INCLUDE_TCLAP() \
                       $$INCLUDE_BOOST()
 
 DEPENDPATH       +=   $$INCLUDEPATH

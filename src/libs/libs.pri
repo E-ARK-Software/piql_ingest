@@ -7,6 +7,10 @@
 #
 ##############################################################################
 
+!include ($$(CV_ROOT)/piql_ingest.pri) {
+    error( "No piql_ingest.pri file found" )
+}
+
 contains( CURBUILD, debug ) {
     DESTDIR = $$(CV_ROOT)/lib/debug
     OBJECTS_DIR = obj/$$PLATFORM/debug
