@@ -23,12 +23,3 @@ contains( CURBUILD, release ) {
     # Optimize for speed
     win32:QMAKE_CXXFLAGS_RELEASE += /O2 /Ob2 /Oi /Ot /Oy
 }
-
-## Function to get TCLAP includes
-defineReplace(INCLUDE_TCLAP) {
-    # INCLUDES is a local variable for this function
-    INCLUDES=
-
-    INCLUDES       +=   $$(CV_THIRDPARTY)/tclap-1.2.1/include
-    return( $$INCLUDES )
-}
