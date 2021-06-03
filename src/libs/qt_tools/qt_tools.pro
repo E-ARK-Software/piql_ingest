@@ -7,6 +7,10 @@
 #
 ##############################################################################
 
+!include ($$(CV_ROOT)/src/libs/libs.pri) {
+    error( "No libs.pri file found" )
+}
+
 TEMPLATE            =   lib
 TARGET              =   qtools
 QT                 +=   widgets

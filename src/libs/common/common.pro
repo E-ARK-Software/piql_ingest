@@ -7,6 +7,10 @@
 #
 ##############################################################################
 
+!include ($$(CV_ROOT)/src/libs/libs.pri) {
+    error( "No libs.pri file found" )
+}
+
 ## Function to get BOOST includes
 defineReplace(INCLUDE_BOOST) {
     win32 {

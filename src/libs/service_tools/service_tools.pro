@@ -7,6 +7,10 @@
 #
 ##############################################################################
 
+!include ($$(CV_ROOT)/src/libs/libs.pri) {
+    error( "No libs.pri file found" )
+}
+
 TEMPLATE                    =   lib
 
 TARGET                      =   st_rec_common_base
@@ -20,7 +24,7 @@ CONFIG                     +=   qt
 
 INCLUDEPATH                 =   inc \
                                 ../common/inc \
-                                ../tclap-1.2.1/include
+                                $$INCLUDE_TCLAP()
 
 ##  HEADER FILES  ##
 HEADERS                     =   inc/cmd_util_base.h
