@@ -5,13 +5,20 @@ class FileTransferSsh extends FileTransferBase
     private $m_Username = "";
     private $m_Password = "";
     private $m_Port;
+    private $m_PubkeyFile = "";
+    private $m_PrivkeyFile = "";
+    private $m_PrivkeyPassword = "";
     private $m_Connection = NULL;
+    private $m_ProgressCallbackFunction = "";
 
-    public function __construct($hostname, $username, $password, $port=22)
+    public function __construct($hostname, $username, $password, $pubkeyFile, $privkeyFile, $privkeyPassword, $port=22)
     {
         $this->m_Hostname = $hostname;
         $this->m_Username = $username;
         $this->m_Password = $password;
+        $this->m_PubkeyFile = $pubkeyFile;
+        $this->m_PrivkeyFile = $privkeyFile;
+        $this->m_PrivkeyPassword = $privkeyPassword;
         $this->m_Port = $port;
     }
 
@@ -23,14 +30,28 @@ class FileTransferSsh extends FileTransferBase
     public function connect()
     {
         // Create connection
-        $this->m_Connection = ssh2_connect($this->m_Hostname, $this->m_Port);
+        $this->m_Connection = ssh2_connect($this->m_Hostname, $this->m_Port, array('hostkey'=>'ssh-rsa'));
         if (!$this->m_Connection)
         {
             return false;
         }
 
         // Authenticate
-        if (!ssh2_auth_password($this->m_Connection, $this->m_Username, $this->m_Password))
+        if (strlen($this->m_Username) > 0 && strlen($this->m_Password) > 0)
+        {
+            if (!ssh2_auth_password($this->m_Connection, $this->m_Username, $this->m_Password))
+            {
+                return false;
+            }
+        }
+        else if (strlen($this->m_PubkeyFile) > 0 && strlen($this->m_PrivkeyFile) > 0)
+        {
+            if (!ssh2_auth_pubkey_file($this->m_Connection, $this->m_Username, $this->m_PubkeyFile, $this->m_PrivkeyFile, $this->m_PrivkeyPassword))
+            {
+                return false;
+            }
+        }
+        else
         {
             return false;
         }
@@ -58,7 +79,10 @@ class FileTransferSsh extends FileTransferBase
 
         if (strlen($this->m_Password) == 0)
         {
-            return false;
+            if (strlen($this->m_PubkeyFile) == 0 || strlen($this->m_PrivkeyFile) == 0)
+            {
+                return false;
+            }
         }
 
         if (!is_numeric($this->m_Port))
@@ -106,6 +130,11 @@ class FileTransferSsh extends FileTransferBase
         $returnCode = intval($matches[2]);
 
         return true;
+    }
+
+    public function setProgressCallback($callbackFunctionName)
+    {
+        $this->m_ProgressCallbackFunction = $callbackFunctionName;
     }
 }
 ?>
