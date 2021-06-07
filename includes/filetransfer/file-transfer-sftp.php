@@ -1,13 +1,13 @@
 <?php
-if (file_exists("includes/thirdparty/phpseclib1.0.6/Net/SFTP.php")) // W32
+if (file_exists("includes/thirdparty/phpseclib/Net/SFTP.php")) // W32
 {
-    set_include_path("includes/thirdparty/phpseclib1.0.6" . PATH_SEPARATOR . get_include_path());
-    include_once("includes/thirdparty/phpseclib1.0.6/Net/SFTP.php");
+    set_include_path("includes/thirdparty/phpseclib" . PATH_SEPARATOR . get_include_path());
+    include_once("includes/thirdparty/phpseclib/Net/SFTP.php");
 }
 else // Mac
 {
     set_include_path(dirname(__FILE__)."/..".PATH_SEPARATOR.get_include_path());
-    include('thirdparty/phpseclib1.0.6/Net/SFTP.php');
+    include('thirdparty/phpseclib/Net/SFTP.php');
 }
 
 //echo get_include_path() . PHP_EOL;
