@@ -17,6 +17,11 @@ system(lrelease piql_ingest.pro)
 system(lrelease locale/sv_SE/qt_sv_SE.ts)
 system(lrelease locale/nb_NO/qt_nb_NO.ts)
 
+# Get php resources
+system(mkdir -p thirdparty)
+system(mkdir -p thirdparty/phpseclib)
+system(cp -r $$(CV_PHPSECLIB_ROOT)/* thirdparty/phpseclib/.) 
+
 QT               +=   xml widgets gui core svg
 TEMPLATE          =   app
 CONFIG           +=   console qt no_lflags_merge debug_and_release
