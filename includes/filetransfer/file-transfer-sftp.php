@@ -1,8 +1,8 @@
 <?php
-if (file_exists("includes/thirdparty/phpseclib/Net/SFTP.php")) // W32
+if (file_exists("thirdparty/phpseclib/Net/SFTP.php")) // W32
 {
-    set_include_path("includes/thirdparty/phpseclib" . PATH_SEPARATOR . get_include_path());
-    include_once("includes/thirdparty/phpseclib/Net/SFTP.php");
+    set_include_path("thirdparty/phpseclib" . PATH_SEPARATOR . get_include_path());
+    include_once("thirdparty/phpseclib/Net/SFTP.php");
 }
 else // Mac
 {
@@ -43,7 +43,7 @@ class FileTransferSftp extends FileTransferBase
         {
             return false;
         }
-        else 
+        else
         {
             return true;
         }
