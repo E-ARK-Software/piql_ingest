@@ -122,6 +122,69 @@ function createFileSender(&$fileSender, $configuration, $logger, $progressCallba
             $fileSender->setProgressCallback($progressCallback);
         }
     }
+    else if ($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SSH)
+    {
+        $username = "";
+        $password = "";
+        $pubkeyFile = "";
+        $privkeyFile = "";
+        $privkeyPassword = "";
+        if ($configuration->exists("SshUsername"))
+        {
+            $username = $configuration->getValue("SshUsername");
+        }
+        if ($configuration->exists("SshPassword"))
+        {
+            $password = $configuration->getValue("SshPassword");
+        }
+        if ($configuration->exists("SshPubkeyFile"))
+        {
+            $pubkeyFile = $configuration->getValue("SshPubkeyFile");
+        }
+        if ($configuration->exists("SshPrivkeyFile"))
+        {
+            $privkeyFile = $configuration->getValue("SshPrivkeyFile");
+        }
+        if ($configuration->exists("SshPrivkeyPassword"))
+        {
+            $privkeyPassword = $configuration->getValue("SshPrivkeyPassword");
+        }
+
+        // Create file sender
+        $fileSender = new FileTransferSsh(
+            $configuration->getValue("SshHostname"),
+            $username,
+            $password,
+            $pubkeyFile,
+            $privkeyFile,
+            $privkeyPassword,
+            $configuration->getValue("SshPort"));
+        if ($fileSender == NULL)
+        {
+            $logger->logError("Failed to create file sender" . $fileSender->name());
+            return false;
+        }
+
+        if (!$fileSender->validate())
+        {
+            $logger->logError("Failed to validate file sender: " . $fileSender->name());
+            return false;
+        }
+        if (!$fileSender->connect())
+        {
+            $logger->logError("Failed to connect with file sender: " . $fileSender->name());
+            return false;
+        }
+
+        if (strlen($progressCallback) == 0)
+        {
+            $fileSender->setProgressCallback(function($bytesSent, $bytesTotal){});
+        }
+        else
+        {
+            $fileSender->setProgressCallback($progressCallback);
+        }
+    }
     else
     {
         $logger->logError("Invalid file send method: " . $configuration->getValue("FileSendMethod"));
