@@ -664,6 +664,10 @@ $archiveFiles = array();
                 
                 // Create root directory
                 $dataRootDir = "$tempDirectoryPath/$fileNameBase";
+                if (file_exists($dataRootDir))
+                {
+                    exitWithError("Directory already exists: {$dataRootDir}");
+                }
                 if (!mkdir($dataRootDir, 0777, false))
                 {
                     exitWithError("Failed to create data root directory: $dataRootDir");
@@ -671,6 +675,10 @@ $archiveFiles = array();
                 
                 // Create metadata directory
                 $metadataDir = "$dataRootDir/metadata";
+                if (file_exists($metadataDir))
+                {
+                    exitWithError("Directory already exists: {$metadataDir}");
+                }
                 if (!mkdir($metadataDir, 0777, false))
                 {
                     exitWithError("Failed to create metadata directory");
