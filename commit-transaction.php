@@ -326,13 +326,17 @@ $archiveFiles = array();
         // Create a SIP compliant to the NHA 'other' SIP package type
         //
         // SIP structure:
-        // UUID/
-        //   other/
-        //     20190607_576540014215_00001_1.jpg
-        //     20190607_576540014215_00001_1.xml
-        //   metadata/
+        //   {UUID}/
+        //    OTHER/
+        //     journal/
+        //       avlxml.xml
+        //       {SUBMISSION_AGREEMENT}
+        //     objekter/
+        //       {PAYLOAD}
+        //    metadata/
         //     checksum.md5
         //     metadata.csv
+        //     identifiers.json
 
         $checksumPaths = array();
 
