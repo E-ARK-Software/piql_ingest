@@ -296,22 +296,22 @@ function sendProgressCallback($bytesSent, $bytesTotal)
 
 function isSubmissionAgreement($path)
 {
-    $filename = basename($path);
+    $fileName = basename($path);
 
     // Check file extension
-    if (strtolower(pathinfo($filename, PATHINFO_EXTENSION)) != 'pdf')
+    if (strtolower(pathinfo($fileName, PATHINFO_EXTENSION)) != 'pdf')
     {
         return false;
     }
 
-    // Check that filename starts with "SA-"
-    if (substr($filename, 0, 3) != 'SA-')
+    // Check that fileName starts with "SA-"
+    if (substr($fileName, 0, 3) != 'SA-')
     {
         return false;
     }
 
     // Validate OID
-    $oid = substr($filename, 3, strlen($filename) - 7);
+    $oid = substr($fileName, 3, strlen($fileName) - 7);
     if (strlen($oid) < 1)
     {
         return false;
