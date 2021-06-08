@@ -1028,7 +1028,7 @@ if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_NHA_OTHER)
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // TODO REMOVE ME!
     curl_setopt($ch, CURLOPT_POST, 1);
     $post = [
-        'data' => "{\"status\": \"10\" }",
+        'data' => "{\"operation\": \"sip-ingest-other\", \"result\": \"ok\", \"description\": \"\" }",
     ];
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
     $data = curl_exec($ch);
