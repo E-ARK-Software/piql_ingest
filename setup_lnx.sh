@@ -53,6 +53,10 @@ else
     export CV_THIRDPARTY=$CV_THIRDPARTY_DIR
 fi
 
+if [ "$CV_PHPSECLIB_ROOT" == "" ] ; then
+    export CV_PHPSECLIB_ROOT="$CV_THIRDPARTY/archivator/client_tools/piql_ingest/phpseclib_1_0_6"
+fi
+
 if [ "$CV_BOOST_ROOT" == "" ] ; then
     export CV_BOOST_ROOT="$CV_THIRDPARTY/boost_1_60_0"
 fi
