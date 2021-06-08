@@ -126,9 +126,9 @@ function createFileSender(&$fileSender, $configuration, $logger, $progressCallba
     {
         $username = "";
         $password = "";
-        $pubkeyFile = "";
-        $privkeyFile = "";
-        $privkeyPassword = "";
+        $publicKeyFile = "";
+        $privateKeyFile = "";
+        $privateKeyPassword = "";
         if ($configuration->exists("SshUsername"))
         {
             $username = $configuration->getValue("SshUsername");
@@ -139,15 +139,15 @@ function createFileSender(&$fileSender, $configuration, $logger, $progressCallba
         }
         if ($configuration->exists("SshPubkeyFile"))
         {
-            $pubkeyFile = $configuration->getValue("SshPubkeyFile");
+            $publicKeyFile = $configuration->getValue("SshPubkeyFile");
         }
         if ($configuration->exists("SshPrivkeyFile"))
         {
-            $privkeyFile = $configuration->getValue("SshPrivkeyFile");
+            $privateKeyFile = $configuration->getValue("SshPrivkeyFile");
         }
         if ($configuration->exists("SshPrivkeyPassword"))
         {
-            $privkeyPassword = $configuration->getValue("SshPrivkeyPassword");
+            $privateKeyPassword = $configuration->getValue("SshPrivkeyPassword");
         }
 
         // Create file sender
@@ -155,9 +155,9 @@ function createFileSender(&$fileSender, $configuration, $logger, $progressCallba
             $configuration->getValue("SshHostname"),
             $username,
             $password,
-            $pubkeyFile,
-            $privkeyFile,
-            $privkeyPassword,
+            $publicKeyFile,
+            $privateKeyFile,
+            $privateKeyPassword,
             $configuration->getValue("SshPort"));
         if ($fileSender == NULL)
         {
