@@ -37,7 +37,7 @@ TARGET            =   $$(CV_ROOT)/piql_ingest
 OBJECTS_DIR       =   obj/$$PLATFORM/$$CURBUILD
 MOC_DIR           =   obj/$$PLATFORM/$$CURBUILD
 
-INCLUDEPATH       =   core \
+INCLUDEPATH       =   appcore \
                       gui \
                       ../libs/common/inc \
                       ../libs/service_tools/inc \
@@ -81,38 +81,38 @@ FORMS             =   gui/dpiqlingestmainwindow.ui \
 
 RESOURCES         =   resources.qrc
 
-SOURCES           =   core/piql_ingest.cpp \
-                      core/piql_ingest_config.cpp \
-                      core/dingestfilelist.cpp \
-                      core/dingestfile.cpp \
-                      core/dmetadatatemplateitem.cpp \
-                      core/dmetadatatemplateitemlist.cpp \
-                      core/dmetadatatemplateitemgroup.cpp \
-                      core/dmetadatatemplateitemgrouplist.cpp \
-                      core/dmetadatatemplate.cpp \
-                      core/dmetadataitemlist.cpp \
-                      core/dmetadataitem.cpp \
-                      core/dmetadataitemgrouplist.cpp \
-                      core/dmetadataitemgroup.cpp \
-                      core/dphputils.cpp \
+SOURCES           =   appcore/piql_ingest.cpp \
+                      appcore/piql_ingest_config.cpp \
+                      appcore/dingestfilelist.cpp \
+                      appcore/dingestfile.cpp \
+                      appcore/dmetadatatemplateitem.cpp \
+                      appcore/dmetadatatemplateitemlist.cpp \
+                      appcore/dmetadatatemplateitemgroup.cpp \
+                      appcore/dmetadatatemplateitemgrouplist.cpp \
+                      appcore/dmetadatatemplate.cpp \
+                      appcore/dmetadataitemlist.cpp \
+                      appcore/dmetadataitem.cpp \
+                      appcore/dmetadataitemgrouplist.cpp \
+                      appcore/dmetadataitemgroup.cpp \
+                      appcore/dphputils.cpp \
                       $$GUI_SOURCES
 
-HEADERS           =   core/piql_ingest_config.h \
-                      core/dingestfilelist.h \
-                      core/dingestfile.h \
-                      core/dmetadatatemplateitem.h \
-                      core/dmetadatatemplateitemlist.h \
-                      core/dmetadatatemplateitemgroup.h \
-                      core/dmetadatatemplateitemgrouplist.h \
-                      core/dmetadatatemplate.h \
-                      core/dmetadataitemlist.h \
-                      core/dmetadataitem.h \
-                      core/dmetadataitemgrouplist.h \
-                      core/dmetadataitemgroup.h \
-                      core/dphputils.h \
+HEADERS           =   appcore/piql_ingest_config.h \
+                      appcore/dingestfilelist.h \
+                      appcore/dingestfile.h \
+                      appcore/dmetadatatemplateitem.h \
+                      appcore/dmetadatatemplateitemlist.h \
+                      appcore/dmetadatatemplateitemgroup.h \
+                      appcore/dmetadatatemplateitemgrouplist.h \
+                      appcore/dmetadatatemplate.h \
+                      appcore/dmetadataitemlist.h \
+                      appcore/dmetadataitem.h \
+                      appcore/dmetadataitemgrouplist.h \
+                      appcore/dmetadataitemgroup.h \
+                      appcore/dphputils.h \
                       $$GUI_HEADERS
 
-macx:ICON=src/gui/resources/icon_32x32.icns
+macx:ICON=resources/icon_32x32.icns
 macx:QMAKE_EXTRA_TARGETS += createicons
-macx:PRE_TARGETDEPS      += src/gui/resources/icon_32x32.icns
-win32:RC_ICONS=src/gui/resources/icon_32x32.ico
+macx:PRE_TARGETDEPS      += resources/icon_32x32.icns
+win32:RC_ICONS=resources/icon_32x32.ico
