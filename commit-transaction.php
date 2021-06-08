@@ -1074,7 +1074,7 @@ else
 }
 
 // Send acknowledgement
-logInfo("Using commit method: " . $configuration->getValue("CommitAckMethod"));
+logInfo("Using commit ack method: " . $configuration->getValue("CommitAckMethod"));
 if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_NHA_OTHER)
 {
     // Send acknowledgement in as basename.md5
