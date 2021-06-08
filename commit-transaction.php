@@ -294,6 +294,39 @@ function sendProgressCallback($bytesSent, $bytesTotal)
     $communicator->sendProgress($percent, gettext("Sending to server"));
 }
 
+function isSubmissionAgreement($path)
+{
+    $filename = basename($path);
+
+    // Check file extension
+    if (strtolower(pathinfo($filename, PATHINFO_EXTENSION)) != 'pdf')
+    {
+        return false;
+    }
+
+    // Check that filename starts with "SA-"
+    if (substr($filename, 0, 3) != 'SA-')
+    {
+        return false;
+    }
+
+    // Validate OID
+    $oid = substr($filename, 3, strlen($filename) - 7);
+    if (strlen($oid) < 1)
+    {
+        return false;
+    }
+    for ($i = 0; $i < strlen($oid); $i++)
+    {
+        if ($oid[$i] != '.' && !is_numeric($oid[$i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 // Commit instructions
 //
 
@@ -419,14 +452,63 @@ $archiveFiles = array();
             exitWithError("Failed to write to file: " . $avlxmlPath);
         }
 
+        // Add submission agreement
+        $submissionAgreements = 0;
+        for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
+        {
+            // Get file info
+            $filePath = $filePathList[$fileIndex];
+            $fileItemType = $fileItemTypeList[$fileIndex];
+
+            // Skip files that are not submission agreements
+            if (!isSubmissionAgreement($filePath))
+            {
+                continue;
+            }
+
+            // Copy file
+            $submissionAgreementPath = $otherPath . "/journal/" . basename($filePath);
+            array_push($checksumPaths, "other/journal/" . basename($filePath));
+            if (!copy($filePath, $submissionAgreementPath))
+            {
+                exitWithError("Failed to copy file $filePath to $submissionAgreementPath");
+            }
+            $submissionAgreements++;
+        }
+        if ($submissionAgreements < 1)
+        {
+            exitWithError("Failed to find submission agreement");
+        }
+        if ($submissionAgreements > 1)
+        {
+            exitWithError("Found more than one submission agreement");
+        }
+
+        // Remove submission agreement metadata
+        $tmpMetadataList = $metadataList;
+        $tmpFileNames = $fileNames;
+        for ($i = 0; $i < count($fileNames); $i++)
+        {
+            if (!isSubmissionAgreement($fileNames[$i]))
+            {
+                array_push($tmpFileNames, $fileNames[$i]);
+                array_push($tmpMetadataList, $metadataList[$i]);
+            }
+        }
+
         // Create metadata file
-        $fileNames = array();
+        $tmpFileNames = array();
+        $tmpMetadataList = array();
         for ($i = 0; $i < count($filePathList); $i++)
         {
-            array_push($fileNames, basename($filePathList[$i]));
+            if (!isSubmissionAgreement($filePathList[$i]))
+            {
+                array_push($tmpFileNames, basename($filePathList[$i]));
+                array_push($tmpMetadataList, $metadataList[$i]);
+            }
         }
         $metadataOut = "$metadataPath/metadata.csv";
-        if (!createMetadata($metadataList, $metadataOut, $fileNames, $metadataTemplate, $configuration))
+        if (!createMetadata($tmpMetadataList, $metadataOut, $tmpFileNames, $metadataTemplate, $configuration))
         {
             exitWithError("Failed to create metadata file");
         }
@@ -437,6 +519,12 @@ $archiveFiles = array();
             // Get file info
             $filePath = $filePathList[$fileIndex];
             $fileItemType = $fileItemTypeList[$fileIndex];
+
+            // Skip submission agreement
+            if (isSubmissionAgreement($filePath))
+            {
+                continue;
+            }
 
             if ($fileItemType != FILE_ITEM_TYPE_FILE)
             {
@@ -463,7 +551,7 @@ $archiveFiles = array();
                 exitWithError("Failed to calculate checksum for file: " . $absolutePath);
             }
 
-            if (file_put_contents($checksumFilePath, $md5sum . "  " . $relativePath . PHP_EOL, FILE_APPEND | LOCK_EX) === false)
+            if (file_put_contents($checksumFilePath, $md5sum . "  " . $relativePath . "\n", FILE_APPEND | LOCK_EX) === false)
             {
                 exitWithError("Failed to write to file: " . $checksumFilePath);
             }
