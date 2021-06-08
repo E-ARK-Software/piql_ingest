@@ -83,19 +83,6 @@ defineReplace(INCLUDE_BOOST) {
     }
 }
 
-## Function to get BOOST includes
-defineReplace(INCLUDE_BOOST) {
-    win32 {
-        return ( $$(CV_BOOST_INCLUDE) )
-    }
-
-    !win32 {
-       _INCLUDE        = $$(CV_BOOST_INCLUDE)
-       macx:_INCLUDE  += $$(CV_BOOST_INCLUDE)/boost
-       return( $$_INCLUDE )
-    }
-}
-
 ## Function to get BOOST libs
 # Must be used after PRE_TARGETDEPS, or it will fail on win32
 defineReplace(LINK_BOOST) {
