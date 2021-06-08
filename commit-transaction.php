@@ -926,19 +926,19 @@ $zipFilePath = "$tempDirectoryPath/$archiveFileName";
 $command = "";
 if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR)
 {
-    $archiveFilesStr = "";
+    $archiveFilesString = "";
     for ($i = 0; $i < count($archiveFiles); $i++)
     {
-        $archiveFilesStr .= "\"" . normalizeFilePath($archiveFiles[$i]) . "\" ";
+        $archiveFilesString .= "\"" . normalizeFilePath($archiveFiles[$i]) . "\" ";
     }
 
     if ($platform == PLATFORM_RHEL7 || $platform == PLATFORM_RHEL8 || $platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
     {
-        $command = "cd $tempDirectoryPath && tar -cf \"$archiveFileName\" $archiveFilesStr";
+        $command = "cd $tempDirectoryPath && tar -cf \"$archiveFileName\" $archiveFilesString";
     }
     else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
     {
-        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/tar.exe\" cf \"$archiveFileName\" $archiveFilesStr";
+        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/tar.exe\" cf \"$archiveFileName\" $archiveFilesString";
     }
     else
     {
@@ -953,19 +953,19 @@ if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR
 }
 else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_ZIP)
 {
-    $archiveFilesStr = "";
+    $archiveFilesString = "";
     for ($i = 0; $i < count($archiveFiles); $i++)
     {
-        $archiveFilesStr .= "\"" . $archiveFiles[$i] . "\" ";
+        $archiveFilesString .= "\"" . $archiveFiles[$i] . "\" ";
     }
 
     if ($platform == PLATFORM_RHEL7 || $platform == PLATFORM_RHEL8 || $platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
     {
-        $command = "cd $tempDirectoryPath && zip -r \"$archiveFileName\" $archiveFilesStr";
+        $command = "cd $tempDirectoryPath && zip -r \"$archiveFileName\" $archiveFilesString";
     }
     else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
     {
-        $command = "cd /d \"$tempDirectoryPath\" && Winrar.exe a -afzip \"$archiveFileName\" $archiveFilesStr";
+        $command = "cd /d \"$tempDirectoryPath\" && Winrar.exe a -afzip \"$archiveFileName\" $archiveFilesString";
     }
     else
     {
