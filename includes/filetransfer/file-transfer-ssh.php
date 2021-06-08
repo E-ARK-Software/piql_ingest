@@ -5,20 +5,20 @@ class FileTransferSsh extends FileTransferBase
     private $m_Username = "";
     private $m_Password = "";
     private $m_Port;
-    private $m_PubkeyFile = "";
-    private $m_PrivkeyFile = "";
-    private $m_PrivkeyPassword = "";
+    private $m_PublicKeyFile = "";
+    private $m_PrivateKeyFile = "";
+    private $m_PrivateKeyPassword = "";
     private $m_Connection = NULL;
     private $m_ProgressCallbackFunction = "";
 
-    public function __construct($hostname, $username, $password, $pubkeyFile, $privkeyFile, $privkeyPassword, $port=22)
+    public function __construct($hostname, $username, $password, $publicKeyFile, $privateKeyFile, $privateKeyPassword, $port=22)
     {
         $this->m_Hostname = $hostname;
         $this->m_Username = $username;
         $this->m_Password = $password;
-        $this->m_PubkeyFile = $pubkeyFile;
-        $this->m_PrivkeyFile = $privkeyFile;
-        $this->m_PrivkeyPassword = $privkeyPassword;
+        $this->m_PublicKeyFile = $publicKeyFile;
+        $this->m_PrivateKeyFile = $privateKeyFile;
+        $this->m_PrivateKeyPassword = $privateKeyPassword;
         $this->m_Port = $port;
     }
 
@@ -44,9 +44,9 @@ class FileTransferSsh extends FileTransferBase
                 return false;
             }
         }
-        else if (strlen($this->m_PubkeyFile) > 0 && strlen($this->m_PrivkeyFile) > 0)
+        else if (strlen($this->m_PublicKeyFile) > 0 && strlen($this->m_PrivateKeyFile) > 0)
         {
-            if (!ssh2_auth_pubkey_file($this->m_Connection, $this->m_Username, $this->m_PubkeyFile, $this->m_PrivkeyFile, $this->m_PrivkeyPassword))
+            if (!ssh2_auth_pubkey_file($this->m_Connection, $this->m_Username, $this->m_PublicKeyFile, $this->m_PrivateKeyFile, $this->m_PrivateKeyPassword))
             {
                 return false;
             }
@@ -79,7 +79,7 @@ class FileTransferSsh extends FileTransferBase
 
         if (strlen($this->m_Password) == 0)
         {
-            if (strlen($this->m_PubkeyFile) == 0 || strlen($this->m_PrivkeyFile) == 0)
+            if (strlen($this->m_PublicKeyFile) == 0 || strlen($this->m_PrivateKeyFile) == 0)
             {
                 return false;
             }
