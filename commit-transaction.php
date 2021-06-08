@@ -825,7 +825,7 @@ if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR
     }
     else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
     {
-        $command = "cd /d $tempDirectoryPath && " . __DIR__ . "/tar.exe cf \"$archiveFileName\" $archiveFilesStr";
+        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/tar.exe\" cf \"$archiveFileName\" $archiveFilesStr";
     }
     else
     {
