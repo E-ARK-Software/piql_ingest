@@ -346,6 +346,7 @@ if (!$platforms->isSupported($platform))
 {
     exitWithError("Unsupported platform: platform='$platform' os='$os' distribution='$distribution'");
 }
+logInfo("Identified OS: {$platform}");
 
 // Send first progress
 $communicator->sendProgress(0, gettext("Preparing data"));
