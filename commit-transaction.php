@@ -264,8 +264,8 @@ function createMetadata($metadataListIn, $metadataFileOut, $fileNameList, $metad
 function createBagitDescriptionFile($descriptionOutFile, $version)
 {
     $text = "";
-    $text .= "BagIt-Version: " . $version . PHP_EOL;
-    $text .= "Tag-File-Character-Encoding: UTF-8" . PHP_EOL;
+    $text .= "BagIt-Version: " . $version . "\n";
+    $text .= "Tag-File-Character-Encoding: UTF-8" . "\n";
     file_put_contents($descriptionOutFile, $text, LOCK_EX);
     
     return true;
@@ -279,7 +279,7 @@ function createChecksumManifestFile($checksumManifestOut, $filePathList, $relati
         $filePath = $filePathList[$i];
         if (!is_dir($filePath))
         {
-            $text .= md5_file($filePath) . " " . "data/" . $relativeFilePathList[$i] . PHP_EOL;
+            $text .= md5_file($filePath) . " " . "data/" . $relativeFilePathList[$i] . "\n";
         }
     }
     file_put_contents($checksumManifestOut, $text, LOCK_EX);
@@ -406,7 +406,7 @@ $archiveFiles = array();
         }
 
         // Create other dir
-        $otherPath = $sipPath . "/other";
+        $otherPath = $sipPath . "/OTHER";
         if (!mkdir($otherPath))
         {
             exitWithError("Failed to create directory: $otherPath");
@@ -428,28 +428,52 @@ $archiveFiles = array();
 
         // Create AVLXML
         $avlxmlPath = $otherPath . "/journal/avlxml.xml";
-        array_push($checksumPaths, "other/journal/avlxml.xml");
+        array_push($checksumPaths, "OTHER/journal/avlxml.xml");
         $avlxml = "";
-        $avlxml .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . PHP_EOL;
-        $avlxml .= "<avlxml xmlns=\"http://www.arkivverket.no/standarder/nha/avlxml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.arkivverket.no/standarder/nha/avlxml avlxml.xsd\">" . PHP_EOL;
-        $avlxml .= "        <avlxmlversjon>2.16.578.1.39.100.5.2.2</avlxmlversjon>" . PHP_EOL;
-        $avlxml .= "        <avleveringsidentifikator>" . htmlspecialchars($avleveringsidentifikator) . "</avleveringsidentifikator>" . PHP_EOL;
-        $avlxml .= "        <avleveringsbeskrivelse>" . htmlspecialchars($avleveringsbeskrivelse) . "</avleveringsbeskrivelse>" . PHP_EOL;
-        $avlxml .= "        <arkivskaper>NHA</arkivskaper>" . PHP_EOL;
-        $avlxml .= "        <avtale>" . PHP_EOL;
-        $avlxml .= "                <avtaleidentifikator>" . htmlspecialchars($avtaleidentifikator) . "</avtaleidentifikator>" . PHP_EOL;
-        $avlxml .= "                <avtaledato>" . htmlspecialchars($avtaledato) . "</avtaledato>" . PHP_EOL;
-        $avlxml .= "                <avtalebeskrivelse>" . htmlspecialchars($avtalebeskrivelse) . "</avtalebeskrivelse>" . PHP_EOL;
-        $avlxml .= "                <virksomhet>" . PHP_EOL;
-        $avlxml .= "                        <virksomhetsnavn>" . htmlspecialchars($virksomhetsnavn) . "</virksomhetsnavn>" . PHP_EOL;
-        $avlxml .= "                        <foretaksnavn>" . htmlspecialchars($foretaksnavn) . "</foretaksnavn>" . PHP_EOL;
-        $avlxml .= "                        <organisasjonsnummer>" . htmlspecialchars($organisasjonsnummer) . "</organisasjonsnummer>" . PHP_EOL;
-        $avlxml .= "                </virksomhet>" . PHP_EOL;
-        $avlxml .= "        </avtale>" . PHP_EOL;
-        $avlxml .= "</avlxml>" . PHP_EOL;
+        $avlxml .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . "\n";
+        $avlxml .= "<avlxml xmlns=\"http://www.arkivverket.no/standarder/nha/avlxml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.arkivverket.no/standarder/nha/avlxml avlxml.xsd\">" . "\n";
+        $avlxml .= "        <avlxmlversjon>2.16.578.1.39.100.5.2.2</avlxmlversjon>" . "\n";
+        $avlxml .= "        <avleveringsidentifikator>" . htmlspecialchars($avleveringsidentifikator) . "</avleveringsidentifikator>" . "\n";
+        $avlxml .= "        <avleveringsbeskrivelse>" . htmlspecialchars($avleveringsbeskrivelse) . "</avleveringsbeskrivelse>" . "\n";
+        $avlxml .= "        <arkivskaper>NHA</arkivskaper>" . "\n";
+        $avlxml .= "        <avtale>" . "\n";
+        $avlxml .= "                <avtaleidentifikator>" . htmlspecialchars($avtaleidentifikator) . "</avtaleidentifikator>" . "\n";
+        $avlxml .= "                <avtaledato>" . htmlspecialchars($avtaledato) . "</avtaledato>" . "\n";
+        $avlxml .= "                <avtalebeskrivelse>" . htmlspecialchars($avtalebeskrivelse) . "</avtalebeskrivelse>" . "\n";
+        $avlxml .= "                <virksomhet>" . "\n";
+        $avlxml .= "                        <virksomhetsnavn>" . htmlspecialchars($virksomhetsnavn) . "</virksomhetsnavn>" . "\n";
+        $avlxml .= "                        <foretaksnavn>" . htmlspecialchars($foretaksnavn) . "</foretaksnavn>" . "\n";
+        $avlxml .= "                        <organisasjonsnummer>" . htmlspecialchars($organisasjonsnummer) . "</organisasjonsnummer>" . "\n";
+        $avlxml .= "                </virksomhet>" . "\n";
+        $avlxml .= "        </avtale>" . "\n";
+        $avlxml .= "</avlxml>" . "\n";
         if (file_put_contents($avlxmlPath, $avlxml) === false)
         {
             exitWithError("Failed to write to file: " . $avlxmlPath);
+        }
+
+        // Create identifiers.json
+        $identifiersPath = "$metadataPath/identifiers.json";
+        $identifiersOut = "";
+        $identifiersOut .= "[ { \"file\": \"objects/OTHER/journal/avlxml.xml\", \"identifiers\": [" . "\n";
+        $identifiersOut .= "          {" . "\n";
+        $identifiersOut .= "            \"identifierType\": \"avleveringsidentifikator\"," . "\n";
+        $identifiersOut .= "            \"identifier\": \"" . $avleveringsidentifikator . "\"" . "\n";
+        $identifiersOut .= "          }," . "\n";
+        $identifiersOut .= "          {" . "\n";
+        $identifiersOut .= "            \"identifierType\": \"avtaleidentifikator\"," . "\n";
+        $identifiersOut .= "            \"identifier\": \"" . $avtaleidentifikator . "\"" . "\n";
+        $identifiersOut .= "          }," . "\n";
+        $identifiersOut .= "          {" . "\n";
+        $identifiersOut .= "            \"identifierType\": \"organisasjonsnummer\"," . "\n";
+        $identifiersOut .= "            \"identifier\": \"" . $organisasjonsnummer . "\"" . "\n";
+        $identifiersOut .= "          }" . "\n";
+        $identifiersOut .= "        ]" . "\n";
+        $identifiersOut .= "    }" . "\n";
+        $identifiersOut .= "]" . "\n";
+        if (file_put_contents($identifiersPath, $identifiersOut) === false)
+        {
+            exitWithError("Failed to write to file: " . $identifiersPath);
         }
 
         // Add submission agreement
@@ -468,7 +492,7 @@ $archiveFiles = array();
 
             // Copy file
             $submissionAgreementPath = $otherPath . "/journal/" . basename($filePath);
-            array_push($checksumPaths, "other/journal/" . basename($filePath));
+            array_push($checksumPaths, "OTHER/journal/" . basename($filePath));
             if (!copy($filePath, $submissionAgreementPath))
             {
                 exitWithError("Failed to copy file $filePath to $submissionAgreementPath");
@@ -536,7 +560,7 @@ $archiveFiles = array();
             {
                 exitWithError("Failed to copy file $filePath to $destination");
             }
-            array_push($checksumPaths, "other/objekter/" . basename($filePath));
+            array_push($checksumPaths, "OTHER/objekter/" . basename($filePath));
         }
 
         // Create checksum file
