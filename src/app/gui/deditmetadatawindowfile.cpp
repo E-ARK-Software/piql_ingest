@@ -190,7 +190,7 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         // Add layout for navigation
         QHBoxLayout* navigationLayout = new QHBoxLayout();
         QToolButton* startButton = new QToolButton(this);
-        QToolButton* prevButton = new QToolButton(this);
+        QToolButton* previousButton = new QToolButton(this);
         QToolButton* nextButton = new QToolButton(this);
         QToolButton* endButton = new QToolButton(this);
         QSpacerItem* navigationSpacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -199,10 +199,10 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         startButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
         startButton->setFixedSize(25, 25);
         startButton->setIconSize(QSize(20, 20));
-        prevButton->setIcon(QPixmap(":/images/gui/resources/navigate_button_previous.svg"));
-        prevButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        prevButton->setFixedSize(25, 25);
-        prevButton->setIconSize(QSize(20, 20));
+        previousButton->setIcon(QPixmap(":/images/gui/resources/navigate_button_previous.svg"));
+        previousButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        previousButton->setFixedSize(25, 25);
+        previousButton->setIconSize(QSize(20, 20));
         nextButton->setIcon(QPixmap(":/images/gui/resources/navigate_button_next.svg"));
         nextButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
         nextButton->setFixedSize(25, 25);
@@ -212,7 +212,7 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         endButton->setFixedSize(25, 25);
         endButton->setIconSize(QSize(20, 20));
         navigationLayout->addWidget(startButton);
-        navigationLayout->addWidget(prevButton);
+        navigationLayout->addWidget(previousButton);
         navigationLayout->addWidget(nextButton);
         navigationLayout->addWidget(endButton);
         navigationLayout->addItem(navigationSpacer);
@@ -255,7 +255,7 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         QObject::connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveButtonPressed()));
         QObject::connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
         QObject::connect(startButton, SIGNAL(clicked()), this, SLOT(navigateStart()));
-        QObject::connect(prevButton, SIGNAL(clicked()), this, SLOT(navigatePrevious()));
+        QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(navigatePrevious()));
         QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(navigateNext()));
         QObject::connect(endButton, SIGNAL(clicked()), this, SLOT(navigateEnd()));
     }
