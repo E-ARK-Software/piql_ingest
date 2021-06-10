@@ -152,7 +152,7 @@ D_NAMESPACE_USING( D_NAMESPACE )
     }
 
     // Set commit button icon
-    QPixmap commitButtonPixmap( ":/images/src/gui/resources/commit_button.png" );
+    QPixmap commitButtonPixmap( ":/images/gui/resources/commit_button.png" );
     QIcon commitButtonIcon( commitButtonPixmap );
     m_Ui.commitButton->setIcon( commitButtonIcon );
     m_Ui.commitButton->setIconSize( commitButtonPixmap.rect().size() );

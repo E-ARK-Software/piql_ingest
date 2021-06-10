@@ -23,8 +23,8 @@
    <string>-</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../resources.qrc">
-    <normaloff>:/images/src/gui/resources/icon_16x16.png</normaloff>:/images/src/gui/resources/icon_16x16.png
+   <iconset resource="../resources.qrc">
+    <normaloff>:/images/gui/resources/icon_16x16.png</normaloff>:/images/gui/resources/icon_16x16.png
    </iconset>
   </property>
  </widget>
