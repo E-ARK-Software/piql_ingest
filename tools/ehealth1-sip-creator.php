@@ -7,6 +7,7 @@ $informationPackageId = 'SAMPLE_ID';
 // Define SIP
 $outPath;
 $sip = new Ehealth1Sip($informationPackageId);
+$sip->addSubmissionAgreement('./SA.pdf');
 
 // Add patients
 // TODO: Create form script arguments
@@ -18,7 +19,8 @@ $patient1->addFile('./commit-transaction-ack.php');
 outPath;
 if (!$sip->produceSip($outPath, $outputDir))
 {
-    echo "Failed to produce SIP";
+    echo $sip->error() . PHP_EOL;
+    echo "Failed to produce SIP" . PHP_EOL;
     return 1;
 }
 
