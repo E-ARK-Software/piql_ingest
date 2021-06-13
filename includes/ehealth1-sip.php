@@ -130,10 +130,11 @@ class Ehealth1SipPatient
         foreach ($this->m_DataFilePaths as $path)
         {
             $source = $path['source'];
-            $destination = $path['destination'];
+            $destination = "{$outputDirectory}/{$path['destination']}";
 
             if (!file_exists($source))
             {
+            echo "File doesn't exist: {$source}";
                 return false;
             }
 
@@ -141,6 +142,7 @@ class Ehealth1SipPatient
             {
                 if (!mkdir($destination))
                 {
+                echo "Failed to create dir: {$destination}";
                     return false;
                 }
             }
@@ -148,6 +150,7 @@ class Ehealth1SipPatient
             {
                 if (!copy($source, $destination))
                 {
+                echo "Failed to copy file: {$source} {$destination}";
                     return false;
                 }
             }
@@ -254,7 +257,7 @@ class Ehealth1Sip
         }
 
         // Generate documentation
-        $doctumentationPath = "{$sipBasePath}/documentation";
+        $documentationPath = "{$sipBasePath}/documentation";
         if (!mkdir($documentationPath))
         {
             $this->setError("Failed to create directory: {$documentationPath}");
