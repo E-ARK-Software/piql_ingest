@@ -1,5 +1,5 @@
 <?php
-include(__DIR__ . '/../ehealth1-sip.php');
+include(__DIR__ . '/../includes/ehealth1-sip.php');
 
 $putputDir = './';
 $informationPackageId = 'SAMPLE_ID';
@@ -12,11 +12,16 @@ $sip->addSubmissionAgreement('./SA.pdf');
 // Add patients
 // TODO: Create form script arguments
 $patient1 = new Ehealth1SipPatient('PATIENT1_ID');
-$patient1->addFile('./commit-transaction.php');
-$patient1->addFile('./commit-transaction-ack.php');
+$patient1->addFile('commit-transaction.php', 'commit-transaction.php');
+$patient1->addFile('commit-transaction-ack.php', 'commit-transaction-ack.php');
+
+$patient2 = new Ehealth1SipPatient('PATIENT1_ID');
+$patient2->addFile('includes/filetransfer', 'filetransfer');
+$patient2->addFile('includes/filetransfer/file-transfer-base.php', 'filetransfer/file-transfer-base.php');
+$patient2->addFile('includes/filetransfer/file-transfer-ssh.php', 'filetransfer/file-transfer-ssh.php');
 
 // Output SIP
-outPath;
+$outPath;
 if (!$sip->produceSip($outPath, $outputDir))
 {
     echo $sip->error() . PHP_EOL;

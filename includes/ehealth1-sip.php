@@ -1,8 +1,7 @@
 <?php
 class Ehealth1SipPatient
 {
-    private $m_SourceDataFilePaths = [];
-    private $m_DestinationDataFilePaths = [];
+    private $m_DataFilePaths = [];
     private $m_PatientId = '';
     private $m_LastError = '';
 
@@ -13,13 +12,22 @@ class Ehealth1SipPatient
 
     public function addFile($sourcePath, $destinationPath)
     {
-        array_push($this->m_SourceDataFilePaths, $sourcePath);
-        array_push($this->m_DestinationDataFilePaths, $destinationPath);
+        $item = [];
+        $item['source'] = $sourcePath;
+        $item['destination'] = $destinationPath;
+        array_push($this->m_DataFilePaths, $item);
     }
 
     public function produceSip($outBaseDirectory)
     {
         $patientBasePath = "{$outBaseDirectory}/{$this->m_PatientId}";
+
+        // Create base directory
+        if (!mkdir($patientBasePath))
+        {
+            $this->setError("Failed to create directory: {$patientBasePath}");
+            return false;
+        }
 
         // Generate METS
         if (!$this->generateMets($patientBasePath))
@@ -42,6 +50,17 @@ class Ehealth1SipPatient
         }
 
         // Generate data
+        $dataPath = "{$patientBasePath}/data";
+        if (!mkdir($dataPath))
+        {
+            $this->setError("Failed to create directory: {$dataPath}");
+            return false;
+        }
+        if (!$this->generateData($dataPath))
+        {
+            $this->setError("Failed to generate data");
+            return false;
+        }
 
         return true;
     }
@@ -103,6 +122,37 @@ class Ehealth1SipPatient
     private function generatePreservationMetadata($outputDirectory)
     {
         // TODO
+        return true;
+    }
+
+    private function generateData($outputDirectory)
+    {
+        foreach ($this->m_DataFilePaths as $path)
+        {
+            $source = $path['source'];
+            $destination = $path['destination'];
+
+            if (!file_exists($source))
+            {
+                return false;
+            }
+
+            if (is_dir($source))
+            {
+                if (!mkdir($destination))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (!copy($source, $destination))
+                {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 }
