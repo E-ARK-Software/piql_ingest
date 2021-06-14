@@ -167,14 +167,29 @@ class Ehealth1Sip
     private $m_InformationPackageId = '';
     private $m_LastError = '';
 
-    public function __construct($informationPackageId)
+    public function __construct($informationPackageId='')
     {
         $this->m_InformationPackageId = $informationPackageId;
+    }
+
+    public function informationPackageId()
+    {
+        return $this->m_InformationPackageId;
+    }
+
+    public function setInformationPackageId($id)
+    {
+        $this->m_InformationPackageId = $id;
     }
 
     public function addPatient($patient)
     {
         array_push($this->m_Patients, $patient);
+    }
+
+    public function submissionAgreements()
+    {
+        return $this->m_SubmissionAgreementFilePaths;
     }
 
     public function addSubmissionAgreement($filePath)

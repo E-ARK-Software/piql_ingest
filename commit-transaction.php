@@ -14,6 +14,7 @@ include_once("includes/logger.php");
 include_once("includes/metadata-parser.php");
 include_once("includes/general-functions.php");
 include_once("includes/script-context.php");
+include_once("includes/ehealth1-sip.php");
 include_once("metadata-description.php");
 include_once("metadata-description-package.php");
 include_once("config.php");
@@ -355,7 +356,90 @@ $communicator->sendProgress(0, gettext("Preparing data"));
 $archiveFiles = array();
 {
     // Create package files
-    if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
+    if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_EHEALTH1_SIP)
+    {
+        // Create a SIP compliant to the eHealth1 standard
+        // The payload can contain files or directory stuctures
+        //
+        // SIP structure:
+        //   IP_{ID}
+        //    METS.xml
+        //    metadata/
+        //     descriptive/
+        //      patient1.xml
+        //     preservation/
+        //      PREMIS1.xml
+        //    schemas/
+        //     Fhir.patient.xsd
+        //     Fhir.condition.xsd
+        //     PREMIS.xsd
+        //    documentation/
+        //     Submissionagreement_{ID}.pdf
+        //    representations/
+        //     Patientrecord_{ID}
+        //      METS.xml
+        //      metadata/
+        //       descriptive/
+        //        condition1.xml
+        //       preservation/
+        //        PREMIS_R1.xml
+        //      data/
+        //       {PAYLOAD}
+
+        // Define SIP
+        $sip = new Ehealth1Sip();
+
+        // Build file list
+        for ($i = 0; $i < count($filePathList); $i++)
+        {
+            $filePath = $filePathList[$i];
+            $relativeFilePath = $relativeFilePathList[$i];
+
+            $directoryDepth = substr_count(normalizeFilePath($relativeFilePath), '/');
+            if ($directoryDepth == 0)
+            {
+                // This is a SIP
+                //
+
+                if (strlen($sip->informationPackageId()) > 0)
+                {
+                    exitWithError('Only one SIP per commit is allowed');
+                }
+                $parts = explode('_', $relativeFilePath);
+                if (count($parts) < 2)
+                {
+                    exitWithError("SIP name is in wrong format: {$relativeFilePath}");
+                }
+                $sip->setInformationPackageId($parts[count($parts)-1]);
+            }
+            else if ($directoryDepth == 1)
+            {
+                // This file should be added to SIP
+                //
+
+                
+            }
+            else if ($directoryDepth == 2)
+            {
+                // This is a patient data folder
+                //
+            }
+        }
+
+        // Check that the SIP has an ID
+        if (strlen($sip->informationPackageId()) == 0)
+        {
+            exitWithError('The SIP does not have an ID');
+        }
+
+        // Check that SIP contains exactly one submission agreement
+        $submissionAgreementCount = count($sip->submissionAgreements());
+        if ($submissionAgreementCount != 1)
+        {
+            exitWithError("One submission agreement expected, {$submissionAgreementCount} found");
+        }
+    }
+    else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
     {
         // Create a SIP compliant to the NHA 'other' SIP package type
         //
