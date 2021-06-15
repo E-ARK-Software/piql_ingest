@@ -3,7 +3,8 @@ class Ehealth1SipPatient
 {
     private $m_DataFilePaths = [];
     private $m_PatientId = '';
-    private $m_LastError = '';
+    private $m_descrastError = '';
+    private $m_DescriptiveMetadataFilePaths = [];
 
     public function __construct($patientId)
     {
@@ -18,9 +19,14 @@ class Ehealth1SipPatient
         array_push($this->m_DataFilePaths, $item);
     }
 
+    public function files()
+    {
+        return $this->m_DataFilePaths;
+    }
+
     public function produceSip($outBaseDirectory)
     {
-        $patientBasePath = "{$outBaseDirectory}/{$this->m_PatientId}";
+        $patientBasePath = "{$outBaseDirectory}/Patientrecord_{$this->m_PatientId}";
 
         // Create base directory
         if (!mkdir($patientBasePath))
@@ -75,6 +81,37 @@ class Ehealth1SipPatient
         return $this->m_PatientId;
     }
 
+    public function descriptiveMetadata()
+    {
+        return $this->m_DescriptiveMetadataFilePaths;
+    }
+
+    public function addDescriptiveMetadata($filePath)
+    {
+        array_push($this->m_DescriptiveMetadataFilePaths, $filePath);
+    }
+
+    public function isDescriptiveMetadata($path)
+    {
+        // E.g. Fhir_Condition_{ID}.xml
+
+        // Get ID
+        $baseFileName = pathinfo(basename($path), PATHINFO_FILENAME);
+        $parts = explode('_', $baseFileName);
+        if (count($parts) < 2)
+        {
+            return false;
+        }
+        $id = $parts[count($parts)-1];
+
+        if ($id != $this->m_PatientId)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private function setError($errorText)
     {
         $this->m_LastError = $errorText;
@@ -115,7 +152,16 @@ class Ehealth1SipPatient
 
     private function generateDescriptiveMetadata($outputDirectory)
     {
-        // TODO
+        foreach($this->m_DescriptiveMetadataFilePaths as $filePath)
+        {
+            $fileName = basename($filePath);
+            $destination = "{$outputDirectory}/{$fileName}";
+            if (!copy($filePath, $destination))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -134,7 +180,6 @@ class Ehealth1SipPatient
 
             if (!file_exists($source))
             {
-            echo "File doesn't exist: {$source}";
                 return false;
             }
 
@@ -142,7 +187,6 @@ class Ehealth1SipPatient
             {
                 if (!mkdir($destination))
                 {
-                echo "Failed to create dir: {$destination}";
                     return false;
                 }
             }
@@ -150,7 +194,6 @@ class Ehealth1SipPatient
             {
                 if (!copy($source, $destination))
                 {
-                echo "Failed to copy file: {$source} {$destination}";
                     return false;
                 }
             }
@@ -306,30 +349,18 @@ class Ehealth1Sip
         return $this->m_LastError;
     }
 
-    public static function IsSubmissionAgreement($path)
+    public function isSubmissionAgreement($path)
     {
         // Expects filename like Submissionagreement_ID.pdf
-        $expectedStart = 'Submissionagreement_';
-        $expectedFileExtension = 'pdf';
-
-        $fileName = basename($path);
-        if (substr($fileName, 0, strlen($expectedStart)) != $expectedStart)
+        if (basename($path) == "Submissionagreement_{$this->m_InformationPackageId}.pdf")
         {
-            return false;
-        }
-        if (explode('_', $fileName) != 2)
-        {
-            return false;
-        }
-        if (pathinfo($fileName, PATHINFO_EXTENSION) != $expectedFileExtension)
-        {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
-    public static function IsDescriptiveMetadata($path)
+    public function isDescriptiveMetadata($path)
     {
         if (basename($path) == 'Patients.xml')
         {

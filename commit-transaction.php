@@ -395,7 +395,7 @@ $archiveFiles = array();
             $filePath = $filePathList[$i];
             $relativeFilePath = $relativeFilePathList[$i];
 
-            $directoryDepth = substr_count(normalizeFilePath($relativeFilePath), '/');
+            $directoryDepth = substr_count($relativeFilePath, '/');
             if ($directoryDepth == 0)
             {
                 // This is a SIP
@@ -425,12 +425,12 @@ $archiveFiles = array();
                 // This file should be added to SIP
                 //
 
-                if (Ehealth1Sip::IsSubmissionAgreement($relativeFilePath))
+                if ($sip->isSubmissionAgreement($relativeFilePath))
                 {
                     // Add submission agreement
                     $sip->addSubmissionAgreement($filePath);
                 }
-                else if (Ehealth1Sip::IsDescriptiveMetadata($relativeFilePath))
+                else if ($sip->isDescriptiveMetadata($relativeFilePath))
                 {
                     // Add descriptive metadata
                     $sip->addDescriptiveMetadata($filePath);
@@ -449,9 +449,52 @@ $archiveFiles = array();
                 // This is a patient data folder
                 //
 
-                
+                // Set patient ID
+                $parts = explode('_', $basename($filePath));
+                if (count($parts) != 2)
+                {
+                    exitWithError("Patient directory has invalid naming: {$filePath}");
+                }
+                $patient = new Ehealth1SipPatient($parts[1]);
+
+                // Add files
+                $patientDirectoryPath = $filePath;
+                for ($j = 0; $j < count($filePathList); $j++)
+                {
+                    $filePath = $filePathList[$j];
+                    $relativeFilePath = $relativeFilePathList[$j];
+
+                    // Check if file is part of this patient directory
+                    if (substr($filePath, 0, strlen($patientDirectoryPath)) != $patientDirectoryPath || $filePath == $patientDirectoryPath)
+                    {
+                        continue;
+                    }
+
+                    if (Ehealth1SipPatient::IsDescriptiveMetadata($relativeFilePath))
+                    {
+                        // Add descriptive metadata
+                        $patient->addDescriptiveMetadata($filePath);
+                    }
+                    else
+                    {
+                        // Add payload
+                        $patient->addFile($filePath, substr($filePath, strlen($patientDirectoryPath)+1));
+                    }
+                }
+
+                // Check that patient has data files
+                if (count($patient->files()) == 0)
+                {
+                    exitWithError("Patient has no data files");
+                }
+
+                // Add patient to SIP
+                $sip->addPatient($patient);
             }
         }
+
+        // Add schemas
+        // TODO
 
         // Check that the SIP has an ID
         if (strlen($sip->informationPackageId()) == 0)
@@ -472,6 +515,9 @@ $archiveFiles = array();
         {
             exitWithError("One document of descriptive metadata expected, {$descriptiveMetadataCount} found");
         }
+
+        // Produce SIP
+        // TODO
     }
     else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
     {
