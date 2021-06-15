@@ -164,6 +164,7 @@ class Ehealth1Sip
 {
     private $m_Patients = [];
     private $m_SubmissionAgreementFilePaths = [];
+    private $m_DescriptiveMetadataFilePaths = [];
     private $m_InformationPackageId = '';
     private $m_LastError = '';
 
@@ -195,6 +196,16 @@ class Ehealth1Sip
     public function addSubmissionAgreement($filePath)
     {
         array_push($this->m_SubmissionAgreementFilePaths, $filePath);
+    }
+
+    public function descriptiveMetadata()
+    {
+        return $this->m_DescriptiveMetadataFilePaths;
+    }
+
+    public function addDescriptiveMetadata($filePath)
+    {
+        array_push($this->m_DescriptiveMetadataFilePaths, $filePath);
     }
 
     public function produceSip(&$outPath, $outBaseDirectory)
@@ -295,6 +306,39 @@ class Ehealth1Sip
         return $this->m_LastError;
     }
 
+    public static function IsSubmissionAgreement($path)
+    {
+        // Expects filename like Submissionagreement_ID.pdf
+        $expectedStart = 'Submissionagreement_';
+        $expectedFileExtension = 'pdf';
+
+        $fileName = basename($path);
+        if (substr($fileName, 0, strlen($expectedStart)) != $expectedStart)
+        {
+            return false;
+        }
+        if (explode('_', $fileName) != 2)
+        {
+            return false;
+        }
+        if (pathinfo($fileName, PATHINFO_EXTENSION) != $expectedFileExtension)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function IsDescriptiveMetadata($path)
+    {
+        if (basename($path) == 'Patients.xml')
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private function generateMets($outputDirectory)
     {
         // TODO
@@ -336,7 +380,16 @@ class Ehealth1Sip
 
     private function generateDescriptiveMetadata($outputDirectory)
     {
-        // TODO
+        foreach($this->m_DescriptiveMetadataFilePaths as $filePath)
+        {
+            $fileName = basename($filePath);
+            $destination = "{$outputDirectory}/{$fileName}";
+            if (!copy($filePath, $destination))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 

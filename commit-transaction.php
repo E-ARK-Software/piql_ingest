@@ -401,28 +401,55 @@ $archiveFiles = array();
                 // This is a SIP
                 //
 
+                // Set informationpackage ID
                 if (strlen($sip->informationPackageId()) > 0)
                 {
                     exitWithError('Only one SIP per commit is allowed');
                 }
                 $parts = explode('_', $relativeFilePath);
-                if (count($parts) < 2)
+                if (count($parts) == 1)
+                {
+                    $sip->setInformationPackageId($parts[0]);
+                }
+                else if (count($parts) == 2)
+                {
+                    $sip->setInformationPackageId($parts[1]);
+                }
+                else
                 {
                     exitWithError("SIP name is in wrong format: {$relativeFilePath}");
                 }
-                $sip->setInformationPackageId($parts[count($parts)-1]);
             }
             else if ($directoryDepth == 1)
             {
                 // This file should be added to SIP
                 //
 
-                
+                if (Ehealth1Sip::IsSubmissionAgreement($relativeFilePath))
+                {
+                    // Add submission agreement
+                    $sip->addSubmissionAgreement($filePath);
+                }
+                else if (Ehealth1Sip::IsDescriptiveMetadata($relativeFilePath))
+                {
+                    // Add descriptive metadata
+                    $sip->addDescriptiveMetadata($filePath);
+                }
+                else if (is_dir($filePath) && basename($filePath) == 'Data')
+                {
+                    // This file is legal - skipping
+                }
+                else
+                {
+                    exitWithError("File was not recognized as SIP data: {$relativeFilePath}");
+                }
             }
             else if ($directoryDepth == 2)
             {
                 // This is a patient data folder
                 //
+
+                
             }
         }
 
@@ -437,6 +464,13 @@ $archiveFiles = array();
         if ($submissionAgreementCount != 1)
         {
             exitWithError("One submission agreement expected, {$submissionAgreementCount} found");
+        }
+
+        // Check that SIP contains exactly one document of descriptive metadata
+        $descriptiveMetadataCount = count($sip->descriptiveMetadata());
+        if ($descriptiveMetadataCount != 1)
+        {
+            exitWithError("One document of descriptive metadata expected, {$descriptiveMetadataCount} found");
         }
     }
     else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
