@@ -208,6 +208,7 @@ class Ehealth1Sip
     private $m_Patients = [];
     private $m_SubmissionAgreementFilePaths = [];
     private $m_DescriptiveMetadataFilePaths = [];
+    private $m_SchemaFilePaths = [];
     private $m_InformationPackageId = '';
     private $m_LastError = '';
 
@@ -249,6 +250,16 @@ class Ehealth1Sip
     public function addDescriptiveMetadata($filePath)
     {
         array_push($this->m_DescriptiveMetadataFilePaths, $filePath);
+    }
+
+    public function schemaFiles()
+    {
+        return $this->m_SchemaFilePaths;
+    }
+
+    public function addSchemaFile($filePath)
+    {
+        array_push($this->m_SchemaFilePaths, $filePath);
     }
 
     public function produceSip(&$outPath, $outBaseDirectory)
@@ -378,7 +389,16 @@ class Ehealth1Sip
 
     private function generateSchemas($outputDirectory)
     {
-        // TODO
+        foreach($this->m_SchemaFilePaths as $filePath)
+        {
+            $fileName = basename($filePath);
+            $destination = "{$outputDirectory}/{$fileName}";
+            if (!copy($filePath, $destination))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 

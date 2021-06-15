@@ -494,7 +494,25 @@ $archiveFiles = array();
         }
 
         // Add schemas
-        // TODO
+        $schemaDirectory = $configuration->getValue("Ehealth1SipSchemaDirectory");
+        if (!is_dir($schemaDirectory))
+        {
+            exitWithError("Schema directory could not be found: {$schemaDirectory}");
+        }
+        $schemaFiles = scandir($schemaDirectory);
+        if ($schemaFiles === false)
+        {
+            exitWithError("Failed to read schema directory: {$schemaDirectory}");
+        }
+        foreach ($schemaFiles as $schemaFile)
+        {
+            if (substr($schemaFile, 0, 1) == '.')
+            {
+                // Skipping file
+                continue;
+            }
+            $sip->addSchemaFile("{$schemaDirectory}/{$schemaFile}");
+        }
 
         // Check that the SIP has an ID
         if (strlen($sip->informationPackageId()) == 0)
@@ -516,8 +534,20 @@ $archiveFiles = array();
             exitWithError("One document of descriptive metadata expected, {$descriptiveMetadataCount} found");
         }
 
+        // Check that SIP contains schema files
+        if (count($sip->schemaFiles()) == 0)
+        {
+            exitWithError("SIP does not contain schema files");
+        }
+
         // Produce SIP
-        // TODO
+        if (!$sip->produceSip($outPath, $tempDirectoryPath))
+        {
+            exitWithError('Producing SIP gave following error: ' . $sip->error());
+        }
+
+        // Setup path for SIP to be archived
+        array_push($archiveFiles, basename($outPath));
     }
     else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
     {
