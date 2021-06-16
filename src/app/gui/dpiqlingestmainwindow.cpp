@@ -681,8 +681,7 @@ bool DPiqlIngestMainWindow::commit(bool& canceled, QString& errorMessage, vector
 
     // Commit
     bool commitOk = false;
-    bool ackOk = false;
-    
+
     string scriptFile = DPhpUtils::GetScriptPath( "commit-transaction.php" );
     if ( !scriptFile.length() )
     {
@@ -821,47 +820,9 @@ bool DPiqlIngestMainWindow::commit(bool& canceled, QString& errorMessage, vector
                 error << ERRerror << "Script error: " << scriptError << endl;
             }
 
-            // Acknowledge
-            if ( commitOk )
-            {
-                m_ProgressDialog->setLabelText(QProgressDialog::tr("Handshaking with server"));
-                scriptFile = DPhpUtils::GetScriptPath("commit-transaction-ack.php");
-                if ( scriptFile.length() )
-                {
-                    DPath contextPath;
-                    DScriptContext context;
-                    context.addParameterValue( "TempFileDirectory", tempDir.path() );
-                    if ( !DPhpUtils::CreateScriptContext(contextPath, context, m_TempDir) )
-                    {
-                        error << ERRerror << "Failed to create context" << endl;
-                        return false;
-                    }
-                    else
-                    {
-                        command = phpPath() + " -f \"" + scriptFile + "\" \"" + m_Config->applicationLanguage() + "\" \"" + contextPath.path() + "\"";
-                        string scriptErrorMessage;
-                        if ( DSystemTools::doShellCommand(scriptErrorMessage, command) )
-                        {
-                            ackOk = true;
-                        }
-                        else
-                        {
-                            errorMessage = QMessageBox::tr("Failed to acknowledge");
-                            error << ERRerror << "Failed to execute command: " << command << endl;
-                            error << ERRerror << "Script error message: " << scriptErrorMessage << endl;
-                        }
-                    }
-                }
-                else
-                {
-                    errorMessage = QMessageBox::tr("Failed to acknowledge");
-                    error << ERRerror << "Failed to run script: " << scriptFile << endl;
-                }
-            }
-            
             // Cleanup
             m_ProgressDialog->setLabelText( QProgressDialog::tr("Cleaning up") );
-            if ( !commitOk || !ackOk )
+            if ( !commitOk )
             {
                 bool cleanupOk = false;
                 scriptFile = DPhpUtils::GetScriptPath( "cleanup-transaction.php" );
@@ -923,7 +884,7 @@ bool DPiqlIngestMainWindow::commit(bool& canceled, QString& errorMessage, vector
         showWarningMessage( errorHeader, QMessageBox::tr("Failed to delete temporary files") );
     }
 
-    return commitOk && ackOk;
+    return commitOk;
 }
 
 
