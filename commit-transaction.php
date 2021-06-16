@@ -353,6 +353,7 @@ logInfo("Identified OS: {$platform}");
 $communicator->sendProgress(0, gettext("Preparing data"));
 
 // Build data for archive
+logInfo("Building SIP");
 $archiveFiles = array();
 {
     // Create package files
@@ -450,7 +451,7 @@ $archiveFiles = array();
                 //
 
                 // Set patient ID
-                $parts = explode('_', $basename($filePath));
+                $parts = explode('_', basename($filePath));
                 if (count($parts) != 2)
                 {
                     exitWithError("Patient directory has invalid naming: {$filePath}");
@@ -470,7 +471,7 @@ $archiveFiles = array();
                         continue;
                     }
 
-                    if (Ehealth1SipPatient::IsDescriptiveMetadata($relativeFilePath))
+                    if ($patient->isDescriptiveMetadata($relativeFilePath))
                     {
                         // Add descriptive metadata
                         $patient->addDescriptiveMetadata($filePath);
@@ -1106,6 +1107,7 @@ $archiveFiles = array();
         exitWithError("Invalid output format: " . $configuration->getValue("OutputFormat"));
     }
 }
+logInfo("Done building SIP");
 
 // Check for duplicates of files
 if (count(array_unique($archiveFiles)) < count($archiveFiles))
@@ -1114,6 +1116,7 @@ if (count(array_unique($archiveFiles)) < count($archiveFiles))
 }
 
 // Create archive
+logInfo("Pack SIP");
 $communicator->sendProgress(0, gettext("Creating archive"));
 $archiveFileName = outputArchiveFileName($filePathList);
 $zipFilePath = "$tempDirectoryPath/$archiveFileName";
@@ -1176,6 +1179,7 @@ else
 {
     exitWithError("Invalid output package format: " . $configuration->getValue("OutputArchiveFormat"));
 }
+logInfo("Done packing SIP");
 
 // Send file to server
 $communicator->sendProgress(0, gettext("Sending to server"));
