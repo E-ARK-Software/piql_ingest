@@ -217,46 +217,4 @@ function guidv4($data)
 
     return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
-
-// Remove every path that is a child of any other path in the list
-function removeChildPaths(&$filePaths, &$relativeFilePaths)
-{
-    $removeIndexes = [];
-
-    for ($i = 0; $i < count($filePaths); $i++)
-    {
-        $filePath = $filePaths[$i];
-        $relativeFilePath = $relativeFilePaths[$i];
-
-        if (is_dir($filePath))
-        {
-            $filePath = rtrim($filePath, '/') . '/';
-            $relativeFilePath = rtrim($relativeFilePath, '/') . '/';
-
-            for ($j = 0; $j < count($filePaths); $j++)
-            {
-                $filePath2 = $filePaths[$j];
-                $relativeFilePath2 = $relativeFilePaths[$j];
-
-                if ($i != $j && substr($filePath2, 0, strlen($filePath)) == $filePath)
-                {
-                    // This is a child of another directory - remove
-                    if (!in_array($j, $removeIndexes))
-                    {
-                        array_push($removeIndexes, $j);
-                    }
-                }
-            }
-        }
-    }
-
-    for ($i = count($removeIndexes)-1; $i >= 0; $i--)
-    {
-        $index = $removeIndexes[$i];
-        unset($filePaths[$index]);
-        unset($relativeFilePaths[$index]);
-    }
-    $filePaths = array_values($filePaths);
-    $relativeFilePaths = array_values($relativeFilePaths);
-}
 ?>
