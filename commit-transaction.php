@@ -386,9 +386,6 @@ $archiveFiles = array();
         //      data/
         //       {PAYLOAD}
 
-        // Build file list
-        removeChildPaths($filePathList, $relativeFilePathList);
-
         // Define SIP
         $sip = new Ehealth1Sip();
 
@@ -568,9 +565,6 @@ $archiveFiles = array();
         //     checksum.md5
         //     metadata.csv
         //     identifiers.json
-
-        // Remove child nodes from file list
-        removeChildPaths($filePathList, $relativeFilePathList);
 
         $checksumPaths = array();
 
@@ -830,9 +824,6 @@ $archiveFiles = array();
         //   bagit.txt
         //   manifest-md5.txt
 
-        // Remove child nodes from file list
-        removeChildPaths($filePathList, $relativeFilePathList);
-        
         $dataRootDir = "";
         $dataDir = "";
         for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
@@ -942,9 +933,6 @@ $archiveFiles = array();
         //   <filename_1>
         //   <filename_2>
 
-        // Remove child nodes from file list
-        removeChildPaths($filePathList, $relativeFilePathList);
-    
         $dataRootDir = "";
         for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
         {
@@ -1030,9 +1018,6 @@ $archiveFiles = array();
         // - Maintains directory structure
         // - Supports multiple files
         // - Can be sent directly to AMU
-
-        // Remove child nodes from file list
-        removeChildPaths($filePathList, $relativeFilePathList);
 
         for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
         {
