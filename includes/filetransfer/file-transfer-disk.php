@@ -36,7 +36,7 @@ class FileTransferDisk extends FileTransferBase
 
     public function send($sourcePath, $destinationPath)
     {
-        if (!copy($sourcePath, $destinationPath))
+        if (!copy($sourcePath, "{$this->m_OutputDirectory}/{$destinationPath}"))
         {
             return false;
         }
