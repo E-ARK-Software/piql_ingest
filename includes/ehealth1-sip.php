@@ -275,7 +275,7 @@ class Ehealth1Sip
         }
 
         // Define base output path for SIP - full/output/dir/<packageID>
-        $sipBasePath = rtrim($outBaseDirectory,'/').'/';
+        $sipBasePath = rtrim($outBaseDirectory, '/') . '/';
         $sipBasePath .= $this->m_InformationPackageId;
 
         // Create SIP root directory

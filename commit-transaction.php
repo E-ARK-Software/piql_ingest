@@ -10,6 +10,7 @@ include_once("includes/parameters.php");
 include_once("includes/filetransfer/file-transfer-base.php");
 include_once("includes/filetransfer/file-transfer-ssh.php");
 include_once("includes/filetransfer/file-transfer-sftp.php");
+include_once("includes/filetransfer/file-transfer-disk.php");
 include_once("includes/logger.php");
 include_once("includes/metadata-parser.php");
 include_once("includes/general-functions.php");
@@ -84,11 +85,17 @@ if (count($filePathList) == 0)
 }
 for ($i = 0; $i < count($filePathList); $i++)
 {
+    // Normalize directory separators
     $filePathList[$i] = normalizeFilePath($filePathList[$i]);
+
+    // Check that file exists on disk
     if (!file_exists($filePathList[$i]))
     {
         exitWithError("File does not exist on disk: " . $filePathList[$i]);
     }
+
+    // Remove trailing slash on directories
+    $filePathList[$i] = rtrim($filePathList[$i], '/');
 }
 
 // Get relative paths of files
@@ -102,7 +109,11 @@ if (count($relativeFilePathList) == 0)
 }
 for ($i = 0; $i < count($relativeFilePathList); $i++)
 {
+    // Normalize directory separators
     $relativeFilePathList[$i] = normalizeFilePath($relativeFilePathList[$i]);
+
+    // Remove trailing slash on directories
+    $relativeFilePathList[$i] = rtrim($relativeFilePathList[$i], '/');
 }
 
 // Get file item types - file, directory etc.
@@ -1184,7 +1195,7 @@ logInfo("Done packing SIP");
 // Send file to server
 $communicator->sendProgress(0, gettext("Sending to server"));
 $remoteFile = basename($zipFilePath);
-if (strlen($configuration->getValue("SshDestinationDir")) > 0)
+if (($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SFTP || $configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SSH) && strlen($configuration->getValue("SshDestinationDir")) > 0)
 {
     $remoteFile = $configuration->getValue("SshDestinationDir");
     if (substr($remoteFile, strlen($remoteFile) - 1, 1) != "/")
@@ -1199,26 +1210,26 @@ for ($i = 0; true; $i++)
     {
         exitWithError("Failed to send file to server: $zipFilePath");
     }
-    
+
     if ($i > 0)
     {
         sleep($configuration->getValue("SenderFailDelay"));
     }
-    
+
     // Reconnect to server
     if (($i > 0 || !isset($fileSender)) && !createFileSender($fileSender, $configuration, $logger, "sendProgressCallback"))
     {
         logError("Failed to create file sender");
         continue;
     }
-    
+
     // Upload to server
     if (!$fileSender->send($zipFilePath, $remoteFile))
     {
         logError("Failed to send file with file sender: " . $fileSender->name());
         continue;
     }
-    
+
     break;
 }
 
