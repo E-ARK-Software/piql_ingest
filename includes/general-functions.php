@@ -88,7 +88,38 @@ function normalizeFilePath($path)
 function createFileSender(&$fileSender, $configuration, $logger, $progressCallback)
 {
     $fileSender = NULL;
-    if ($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SFTP)
+    if ($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_DISK)
+    {
+        // Create file sender
+        $fileSender = new FileTransferDisk(
+            $configuration->getValue("FileSenderDiskOutputDirectory"));
+        if ($fileSender == NULL)
+        {
+            $logger->logError("Failed to create file sender" . $fileSender->name());
+            return false;
+        }
+        
+        if (!$fileSender->validate())
+        {
+            $logger->logError("Failed to validate file sender: " . $fileSender->name());
+            return false;
+        }
+        if (!$fileSender->connect())
+        {
+            $logger->logError("Failed to connect with file sender: " . $fileSender->name());
+            return false;
+        }
+        
+        if (strlen($progressCallback) == 0)
+        {
+            $fileSender->setProgressCallback(function($bytesSent, $bytesTotal){});
+        }
+        else
+        {
+            $fileSender->setProgressCallback($progressCallback);
+        }
+    }
+    else if ($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SFTP)
     {
         // Create file sender
         $fileSender = new FileTransferSftp(

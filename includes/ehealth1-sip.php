@@ -210,6 +210,7 @@ class Ehealth1Sip
     private $m_DescriptiveMetadataFilePaths = [];
     private $m_SchemaFilePaths = [];
     private $m_InformationPackageId = '';
+    private $m_PackageMetadata = [];
     private $m_LastError = '';
 
     public function __construct($informationPackageId='')
@@ -225,6 +226,14 @@ class Ehealth1Sip
     public function setInformationPackageId($id)
     {
         $this->m_InformationPackageId = $id;
+    }
+
+    public function addPackageMetadata($key, $value)
+    {
+        $metadata = [];
+        $metadata['key'] = $key;
+        $metadata['value'] = $value;
+        array_push($this->m_PackageMetadata, $metadata);
     }
 
     public function addPatient($patient)
@@ -289,6 +298,13 @@ class Ehealth1Sip
         if (!$this->generateMets($sipBasePath))
         {
             $this->setError("Failed to generate METS file");
+            return false;
+        }
+
+        // Generate package metadata
+        if (!$this->generatePackageMetadata($sipBasePath))
+        {
+            $this->setError("Failed to generate package metadata");
             return false;
         }
 
@@ -385,6 +401,23 @@ class Ehealth1Sip
     {
         // TODO
         return true;
+    }
+
+    private function generatePackageMetadata($outputDirectory)
+    {
+        $metadata = "";
+        $metadata .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        $metadata .= " <metadata>\n";
+        foreach ($this->m_PackageMetadata as $md)
+        {
+            $key = $md["key"];
+            $value = $md["value"];
+            $metadata .= "  <{$key}><![CDATA[{$value}]]></{$key}>\n";
+        }
+        $metadata .= " </metadata>\n";
+
+        $filePath = "{$outputDirectory}/metadata.xml";
+        return file_put_contents($filePath, $metadata, LOCK_EX) !== false;
     }
 
     private function generateSchemas($outputDirectory)

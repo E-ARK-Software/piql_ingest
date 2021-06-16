@@ -526,6 +526,22 @@ $archiveFiles = array();
             $sip->addSchemaFile("{$schemaDirectory}/{$schemaFile}");
         }
 
+        // Populate package metadata
+        $metadataParser = new MetadataParser();
+        if (!$metadataParser->readString($packageMetadata, $errorMessage))
+        {
+            exitWithError($errorMessage);
+        }
+        $metadataList = $metadataParser->getMetadata();
+        if (count($metadataList) == 0)
+        {
+            exitWithError("No package metadata was submitted");
+        }
+        foreach ($metadataList as $metadataItem)
+        {
+            $sip->addPackageMetadata($metadataItem->key(), $metadataItem->value());
+        }
+
         // Check that the SIP has an ID
         if (strlen($sip->informationPackageId()) == 0)
         {
