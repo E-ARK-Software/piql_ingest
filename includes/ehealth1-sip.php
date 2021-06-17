@@ -3,7 +3,7 @@ class Ehealth1SipPatient
 {
     private $m_DataFilePaths = [];
     private $m_PatientId = '';
-    private $m_descrastError = '';
+    private $m_LastError = '';
     private $m_DescriptiveMetadataFilePaths = [];
 
     public function __construct($patientId)
