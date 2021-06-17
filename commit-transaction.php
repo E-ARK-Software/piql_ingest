@@ -1189,7 +1189,7 @@ else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMA
     }
     else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
     {
-        $command = "cd /d \"$tempDirectoryPath\" && Winrar.exe a -afzip \"$archiveFileName\" $archiveFilesString";
+        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/Winrar.exe\" a -afzip \"$archiveFileName\" $archiveFilesString";
     }
     else
     {
