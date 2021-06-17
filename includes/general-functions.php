@@ -91,8 +91,7 @@ function createFileSender(&$fileSender, $configuration, $logger, $progressCallba
     if ($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_DISK)
     {
         // Create file sender
-        $fileSender = new FileTransferDisk(
-            $configuration->getValue("FileSenderDiskOutputDirectory"));
+        $fileSender = new FileTransferDisk($configuration->getValue("FileSenderDiskOutputDirectory"));
         if ($fileSender == NULL)
         {
             $logger->logError("Failed to create file sender" . $fileSender->name());
