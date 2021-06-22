@@ -213,6 +213,11 @@ class MetadataParser
         return false;
     }
 
+    public function getMetadata()
+    {
+        return $this->m_MetadataItems;
+    }
+
     public function writeDublinCoreCsvToFile($metadataFileOut, $fileNameList, $outputOrder, $fondPosition)
     {
         // For Archivematica to process correctly, possitions of the first

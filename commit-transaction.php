@@ -10,10 +10,12 @@ include_once("includes/parameters.php");
 include_once("includes/filetransfer/file-transfer-base.php");
 include_once("includes/filetransfer/file-transfer-ssh.php");
 include_once("includes/filetransfer/file-transfer-sftp.php");
+include_once("includes/filetransfer/file-transfer-disk.php");
 include_once("includes/logger.php");
 include_once("includes/metadata-parser.php");
 include_once("includes/general-functions.php");
 include_once("includes/script-context.php");
+include_once("includes/ehealth1-sip.php");
 include_once("metadata-description.php");
 include_once("metadata-description-package.php");
 include_once("config.php");
@@ -83,11 +85,17 @@ if (count($filePathList) == 0)
 }
 for ($i = 0; $i < count($filePathList); $i++)
 {
+    // Normalize directory separators
     $filePathList[$i] = normalizeFilePath($filePathList[$i]);
+
+    // Check that file exists on disk
     if (!file_exists($filePathList[$i]))
     {
         exitWithError("File does not exist on disk: " . $filePathList[$i]);
     }
+
+    // Remove trailing slash on directories
+    $filePathList[$i] = rtrim($filePathList[$i], '/');
 }
 
 // Get relative paths of files
@@ -101,7 +109,11 @@ if (count($relativeFilePathList) == 0)
 }
 for ($i = 0; $i < count($relativeFilePathList); $i++)
 {
+    // Normalize directory separators
     $relativeFilePathList[$i] = normalizeFilePath($relativeFilePathList[$i]);
+
+    // Remove trailing slash on directories
+    $relativeFilePathList[$i] = rtrim($relativeFilePathList[$i], '/');
 }
 
 // Get file item types - file, directory etc.
@@ -352,10 +364,220 @@ logInfo("Identified OS: {$platform}");
 $communicator->sendProgress(0, gettext("Preparing data"));
 
 // Build data for archive
+logInfo("Building SIP");
 $archiveFiles = array();
 {
     // Create package files
-    if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
+    if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_EHEALTH1_SIP)
+    {
+        // Create a SIP compliant to the eHealth1 standard
+        // The payload can contain files or directory stuctures
+        //
+        // SIP structure:
+        //   IP_{ID}
+        //    METS.xml
+        //    metadata/
+        //     descriptive/
+        //      patient1.xml
+        //     preservation/
+        //      PREMIS1.xml
+        //    schemas/
+        //     Fhir.patient.xsd
+        //     Fhir.condition.xsd
+        //     PREMIS.xsd
+        //    documentation/
+        //     Submissionagreement_{ID}.pdf
+        //    representations/
+        //     Patientrecord_{ID}
+        //      METS.xml
+        //      metadata/
+        //       descriptive/
+        //        condition1.xml
+        //       preservation/
+        //        PREMIS_R1.xml
+        //      data/
+        //       {PAYLOAD}
+
+        // Define SIP
+        $sip = new Ehealth1Sip();
+
+        // Populate files in SIP
+        for ($i = 0; $i < count($filePathList); $i++)
+        {
+            $filePath = $filePathList[$i];
+            $relativeFilePath = $relativeFilePathList[$i];
+
+            $directoryDepth = substr_count($relativeFilePath, '/');
+            if ($directoryDepth == 0)
+            {
+                // This is a SIP
+                //
+
+                // Set informationpackage ID
+                if (strlen($sip->informationPackageId()) > 0)
+                {
+                    exitWithError('Only one SIP per commit is allowed');
+                }
+                $parts = explode('_', $relativeFilePath);
+                if (count($parts) == 1)
+                {
+                    $sip->setInformationPackageId($parts[0]);
+                }
+                else if (count($parts) == 2)
+                {
+                    $sip->setInformationPackageId($parts[1]);
+                }
+                else
+                {
+                    exitWithError("SIP name is in wrong format: {$relativeFilePath}");
+                }
+            }
+            else if ($directoryDepth == 1)
+            {
+                // This file should be added to SIP
+                //
+
+                if ($sip->isSubmissionAgreement($relativeFilePath))
+                {
+                    // Add submission agreement
+                    $sip->addSubmissionAgreement($filePath);
+                }
+                else if ($sip->isDescriptiveMetadata($relativeFilePath))
+                {
+                    // Add descriptive metadata
+                    $sip->addDescriptiveMetadata($filePath);
+                }
+                else if (is_dir($filePath) && basename($filePath) == 'Data')
+                {
+                    // This file is legal - skipping
+                }
+                else
+                {
+                    exitWithError("File was not recognized as SIP data: {$relativeFilePath}");
+                }
+            }
+            else if ($directoryDepth == 2)
+            {
+                // This is a patient data folder
+                //
+
+                // Set patient ID
+                $parts = explode('_', basename($filePath));
+                if (count($parts) != 2)
+                {
+                    exitWithError("Patient directory has invalid naming: {$filePath}");
+                }
+                $patient = new Ehealth1SipPatient($parts[1]);
+
+                // Add files
+                $patientDirectoryPath = $filePath;
+                for ($j = 0; $j < count($filePathList); $j++)
+                {
+                    $filePath = $filePathList[$j];
+                    $relativeFilePath = $relativeFilePathList[$j];
+
+                    // Check if file is part of this patient directory
+                    if (substr($filePath, 0, strlen($patientDirectoryPath)) != $patientDirectoryPath || $filePath == $patientDirectoryPath)
+                    {
+                        continue;
+                    }
+
+                    if ($patient->isDescriptiveMetadata($relativeFilePath))
+                    {
+                        // Add descriptive metadata
+                        $patient->addDescriptiveMetadata($filePath);
+                    }
+                    else
+                    {
+                        // Add payload
+                        $patient->addFile($filePath, substr($filePath, strlen($patientDirectoryPath)+1));
+                    }
+                }
+
+                // Check that patient has data files
+                if (count($patient->files()) == 0)
+                {
+                    exitWithError("Patient has no data files");
+                }
+
+                // Add patient to SIP
+                $sip->addPatient($patient);
+            }
+        }
+
+        // Add schemas
+        $schemaDirectory = $configuration->getValue("Ehealth1SipSchemaDirectory");
+        if (!is_dir($schemaDirectory))
+        {
+            exitWithError("Schema directory could not be found: {$schemaDirectory}");
+        }
+        $schemaFiles = scandir($schemaDirectory);
+        if ($schemaFiles === false)
+        {
+            exitWithError("Failed to read schema directory: {$schemaDirectory}");
+        }
+        foreach ($schemaFiles as $schemaFile)
+        {
+            if (substr($schemaFile, 0, 1) == '.')
+            {
+                // Skipping file
+                continue;
+            }
+            $sip->addSchemaFile("{$schemaDirectory}/{$schemaFile}");
+        }
+
+        // Populate package metadata
+        $metadataParser = new MetadataParser();
+        if (!$metadataParser->readString($packageMetadata, $errorMessage))
+        {
+            exitWithError($errorMessage);
+        }
+        $metadataList = $metadataParser->getMetadata();
+        if (count($metadataList) == 0)
+        {
+            exitWithError("No package metadata was submitted");
+        }
+        foreach ($metadataList as $metadataItem)
+        {
+            $sip->addPackageMetadata($metadataItem->key(), $metadataItem->value());
+        }
+
+        // Check that the SIP has an ID
+        if (strlen($sip->informationPackageId()) == 0)
+        {
+            exitWithError('The SIP does not have an ID');
+        }
+
+        // Check that SIP contains exactly one submission agreement
+        $submissionAgreementCount = count($sip->submissionAgreements());
+        if ($submissionAgreementCount != 1)
+        {
+            exitWithError("One submission agreement expected, {$submissionAgreementCount} found");
+        }
+
+        // Check that SIP contains exactly one document of descriptive metadata
+        $descriptiveMetadataCount = count($sip->descriptiveMetadata());
+        if ($descriptiveMetadataCount != 1)
+        {
+            exitWithError("One document of descriptive metadata expected, {$descriptiveMetadataCount} found");
+        }
+
+        // Check that SIP contains schema files
+        if (count($sip->schemaFiles()) == 0)
+        {
+            exitWithError("SIP does not contain schema files");
+        }
+
+        // Produce SIP
+        if (!$sip->produceSip($outPath, $tempDirectoryPath))
+        {
+            exitWithError('Producing SIP gave following error: ' . $sip->error());
+        }
+
+        // Setup path for SIP to be archived
+        array_push($archiveFiles, basename($outPath));
+    }
+    else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_NHA_OTHER)
     {
         // Create a SIP compliant to the NHA 'other' SIP package type
         //
@@ -629,7 +851,7 @@ $archiveFiles = array();
         //     <filename_2>
         //   bagit.txt
         //   manifest-md5.txt
-        
+
         $dataRootDir = "";
         $dataDir = "";
         for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
@@ -738,7 +960,7 @@ $archiveFiles = array();
         //     metadata.csv
         //   <filename_1>
         //   <filename_2>
-    
+
         $dataRootDir = "";
         for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
         {
@@ -824,7 +1046,7 @@ $archiveFiles = array();
         // - Maintains directory structure
         // - Supports multiple files
         // - Can be sent directly to AMU
-    
+
         for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
         {
             // Get file info
@@ -912,6 +1134,7 @@ $archiveFiles = array();
         exitWithError("Invalid output format: " . $configuration->getValue("OutputFormat"));
     }
 }
+logInfo("Done building SIP");
 
 // Check for duplicates of files
 if (count(array_unique($archiveFiles)) < count($archiveFiles))
@@ -920,6 +1143,7 @@ if (count(array_unique($archiveFiles)) < count($archiveFiles))
 }
 
 // Create archive
+logInfo("Pack SIP");
 $communicator->sendProgress(0, gettext("Creating archive"));
 $archiveFileName = outputArchiveFileName($filePathList);
 $zipFilePath = "$tempDirectoryPath/$archiveFileName";
@@ -965,7 +1189,7 @@ else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMA
     }
     else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
     {
-        $command = "cd /d \"$tempDirectoryPath\" && Winrar.exe a -afzip \"$archiveFileName\" $archiveFilesString";
+        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/Winrar.exe\" a -afzip \"$archiveFileName\" $archiveFilesString";
     }
     else
     {
@@ -982,11 +1206,12 @@ else
 {
     exitWithError("Invalid output package format: " . $configuration->getValue("OutputArchiveFormat"));
 }
+logInfo("Done packing SIP");
 
 // Send file to server
 $communicator->sendProgress(0, gettext("Sending to server"));
 $remoteFile = basename($zipFilePath);
-if (strlen($configuration->getValue("SshDestinationDir")) > 0)
+if (($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SFTP || $configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SSH) && strlen($configuration->getValue("SshDestinationDir")) > 0)
 {
     $remoteFile = $configuration->getValue("SshDestinationDir");
     if (substr($remoteFile, strlen($remoteFile) - 1, 1) != "/")
@@ -1001,26 +1226,26 @@ for ($i = 0; true; $i++)
     {
         exitWithError("Failed to send file to server: $zipFilePath");
     }
-    
+
     if ($i > 0)
     {
         sleep($configuration->getValue("SenderFailDelay"));
     }
-    
+
     // Reconnect to server
     if (($i > 0 || !isset($fileSender)) && !createFileSender($fileSender, $configuration, $logger, "sendProgressCallback"))
     {
         logError("Failed to create file sender");
         continue;
     }
-    
+
     // Upload to server
     if (!$fileSender->send($zipFilePath, $remoteFile))
     {
         logError("Failed to send file with file sender: " . $fileSender->name());
         continue;
     }
-    
+
     break;
 }
 
