@@ -192,6 +192,13 @@ class Ehealth1SipPatient
             }
             else
             {
+                // Create directory if needed
+                if (!is_dir(dirname($destination)) && !mkdir(dirname($destination), 0777, true))
+                {
+                    return false;
+                }
+
+                // Copy file
                 if (!copy($source, $destination))
                 {
                     return false;
@@ -405,6 +412,12 @@ class Ehealth1Sip
 
     private function generatePackageMetadata($outputDirectory)
     {
+        // Do not generate file if no metadata is added
+        if (count($this->m_PackageMetadata) == 0)
+        {
+            return true;
+        }
+
         $metadata = "";
         $metadata .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         $metadata .= " <metadata>\n";

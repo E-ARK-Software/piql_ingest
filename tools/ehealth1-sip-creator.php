@@ -1,35 +1,231 @@
 <?php
 include(__DIR__ . '/../includes/ehealth1-sip.php');
+include(__DIR__ . '/../includes/general-functions.php');
 
-$outputDir = './';
-$informationPackageId = 'SAMPLE_ID';
+define("ARCHIVE_TYPE_ZIP", "ZIP");
+define("ARCHIVE_TYPE_TAR", "TAR");
+define("ARCHIVE_TYPE_NONE", "NONE");
+
+// Help text
+if ($argc != 3)
+{
+    echo "Usage: " . $argv[0] . " <IP directory> <schema directory>" . PHP_EOL;
+    exit(1);
+}
+
+// IP direcotry
+$informationPackageDirectory = $argv[1];
+if (!is_dir($informationPackageDirectory))
+{
+    echo "IP directory is invalid: $informationPackageDirectory" . PHP_EOL;
+}
+
+// Schema direcotry
+$schemaDirectory = $argv[2];
+if (!is_dir($schemaDirectory))
+{
+    echo "Schema directory is invalid: $schemaDirectory" . PHP_EOL;
+}
+
+$outputDirectory = './';
+$archiveType = ARCHIVE_TYPE_ZIP;
+
+// Get ID of informationpackage
+$parts = explode("_", basename($informationPackageDirectory));
+$informationPackageId = $parts[count($parts)-1];
 
 // Define SIP
 $outPath;
 $sip = new Ehealth1Sip($informationPackageId);
-$sip->addSubmissionAgreement('./SA.pdf');
 
-// Add patients
-// TODO: Create form script arguments
-$patient1 = new Ehealth1SipPatient('PATIENT1_ID');
-$patient1->addFile('commit-transaction.php', 'commit-transaction.php');
-$patient1->addFile('commit-transaction-ack.php', 'commit-transaction-ack.php');
-$sip->addPatient($patient1);
+// Schema
+$schemaFiles = scandir($schemaDirectory);
+if ($schemaFiles === false)
+{
+    echo "Failed to read schema directory: {$schemaDirectory}";
+    exit(1);
+}
+foreach ($schemaFiles as $schemaFile)
+{
+    if (substr($schemaFile, 0, 1) == '.')
+    {
+        // Skipping file
+        continue;
+    }
+    $sip->addSchemaFile("{$schemaDirectory}/{$schemaFile}");
+}
 
-$patient2 = new Ehealth1SipPatient('PATIENT2_ID');
-$patient2->addFile('includes/filetransfer', 'filetransfer');
-$patient2->addFile('includes/filetransfer/file-transfer-base.php', 'filetransfer/file-transfer-base.php');
-$patient2->addFile('includes/filetransfer/file-transfer-ssh.php', 'filetransfer/file-transfer-ssh.php');
-$sip->addPatient($patient2);
+// Submission agreement
+$submissionAgreementPath = "{$informationPackageDirectory}/Submissionagreement_{$informationPackageId}.pdf";
+if (!file_exists($submissionAgreementPath))
+{
+    echo "Submission agreement does not exist: {$submissionAgreementPath}" . PHP_EOL;
+    exit(1);
+}
+$sip->addSubmissionAgreement($submissionAgreementPath);
+
+// Add files in root level of informationpackage
+$files = scandir($informationPackageDirectory);
+if ($files === false)
+{
+    echo "Failed to read IP directory: {$informationPackageDirectory}";
+    exit(1);
+}
+foreach ($files as $file)
+{
+    $filePath = "{$informationPackageDirectory}/{$file}";
+    if (substr($file, 0, 1) == '.')
+    {
+        // Skipping file
+        continue;
+    }
+
+    if ($sip->isSubmissionAgreement($filePath))
+    {
+        // Add submission agreement
+        $sip->addSubmissionAgreement($filePath);
+    }
+    else if ($sip->isDescriptiveMetadata($filePath))
+    {
+        // Add descriptive metadata
+        $sip->addDescriptiveMetadata($filePath);
+    }
+    else if (is_dir($filePath) && basename($filePath) == 'Data')
+    {
+        $patientDirectories = scandir($filePath);
+        if ($patientDirectories === false)
+        {
+            echo "Failed to read patient directories from data directory: {$filePath}";
+            exit(1);
+        }
+
+        foreach ($patientDirectories as $patientDirectory)
+        {
+            $patientPath = "{$filePath}/{$patientDirectory}";
+
+            if (substr($patientDirectory, 0, 1) == '.')
+            {
+                // Skipping file
+                continue;
+            }
+
+            if (!is_dir($patientPath))
+            {
+                echo "Invalid file: {$patientPath}" . PHP_EOL;
+                exit(1);
+            }
+
+            // Define patient
+            $parts = explode('_', basename($patientPath));
+            if (count($parts) != 2)
+            {
+                echo "Patient directory has invalid naming: {$patientPath}" . PHP_EOL;
+                exit(1);
+            }
+            $patient = new Ehealth1SipPatient($parts[1]);
+
+            $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($patientPath, RecursiveDirectoryIterator::SKIP_DOTS));
+            foreach ($rii as $patientFile)
+            {
+                $patientFilePath = $patientFile->getPathname();
+                $relativePatientFilePath = substr($patientFilePath, strlen($patientPath)+1);
+
+                if ($patient->isDescriptiveMetadata($relativePatientFilePath))
+                {
+                    // Add descriptive metadata
+                    $patient->addDescriptiveMetadata($patientFilePath);
+                }
+                else
+                {
+                    // Add payload
+                    $patient->addFile($patientFilePath, $relativePatientFilePath);
+                }
+            }
+
+            // Check that patient has data files
+            if (count($patient->files()) == 0)
+            {
+                echo "Patient has no data files" . PHP_EOL;
+            }
+
+            // Add patient to SIP
+            $sip->addPatient($patient);
+        }
+    }
+    else
+    {
+        echo "File was not recognized as SIP data: {$filePath}";
+        exit(1);
+    }
+}
 
 // Output SIP
 $outPath;
-if (!$sip->produceSip($outPath, $outputDir))
+if (!$sip->produceSip($outPath, $outputDirectory))
 {
     echo $sip->error() . PHP_EOL;
     echo "Failed to produce SIP" . PHP_EOL;
     return 1;
 }
 
-echo "Wrote SIP to $outPath" . PHP_EOL;
+$archivePath = '';
+if ($archiveType == ARCHIVE_TYPE_ZIP)
+{
+    $archivePath = "{$outPath}.zip";
+    $zip = new ZipArchive;
+    if($zip->open($archivePath, ZipArchive::CREATE) === true)
+    {
+        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($outPath));
+        foreach ($rii as $file)
+        {
+            $filePath = $file->getPathname();
+            $relativeFilePath = basename($outPath) . "/" . substr($filePath, strlen($outPath)+1);
+
+            if (!$file->isDir())
+            {
+                if (!$zip->addFile($filePath, $relativeFilePath))
+                {
+                    echo "Failed to add SIP to archive: {$outPath}" . PHP_EOL;
+                    exit(1);
+                }
+            }
+        }
+
+        if (!$zip->close())
+        {
+            echo "Failed to close archive: {$archivePath}" . PHP_EOL;
+            exit(1);
+        }
+    }
+
+    if (!deleteFromDisk($outPath, true))
+    {
+        echo "Failed to delete SIP: {$outPath}" . PHP_EOL;
+        exit(1);
+    }
+}
+else if ($archiveType == ARCHIVE_TYPE_TAR)
+{
+    $archivePath = "{$outPath}.tar";
+    $tar = PharData();
+    $tar->buildFromDirectory($outPath);
+
+    if (!deleteFromDisk($outPath, true))
+    {
+        echo "Failed to delete SIP: {$outPath}" . PHP_EOL;
+        exit(1);
+    }
+}
+else if ($archiveType == ARCHIVE_TYPE_NONE)
+{
+    // Keep output as is
+    $archivePath = $outPath;
+}
+else
+{
+    echo "Archive type is invalid: {$achiveType}" . PHP_EOL;
+    exit(1);
+}
+
+echo "Wrote SIP to $archivePath" . PHP_EOL;
 ?>
