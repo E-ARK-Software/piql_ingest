@@ -27,7 +27,7 @@ if (!is_dir($schemaDirectory))
     echo "Schema directory is invalid: $schemaDirectory" . PHP_EOL;
 }
 
-$outputDir = './';
+$outputDirectory = './';
 $archiveType = ARCHIVE_TYPE_ZIP;
 
 // Get ID of informationpackage
@@ -161,7 +161,7 @@ foreach ($files as $file)
 
 // Output SIP
 $outPath;
-if (!$sip->produceSip($outPath, $outputDir))
+if (!$sip->produceSip($outPath, $outputDirectory))
 {
     echo $sip->error() . PHP_EOL;
     echo "Failed to produce SIP" . PHP_EOL;
