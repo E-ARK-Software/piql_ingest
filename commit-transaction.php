@@ -1146,60 +1146,55 @@ if (count(array_unique($archiveFiles)) < count($archiveFiles))
 logInfo("Pack SIP");
 $communicator->sendProgress(0, gettext("Creating archive"));
 $archiveFileName = outputArchiveFileName($filePathList);
-$zipFilePath = "$tempDirectoryPath/$archiveFileName";
-$command = "";
+$archiveFilePath = "$tempDirectoryPath/$archiveFileName";
 if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR)
 {
-    $archiveFilesString = "";
-    for ($i = 0; $i < count($archiveFiles); $i++)
-    {
-        $archiveFilesString .= "\"" . normalizeFilePath($archiveFiles[$i]) . "\" ";
-    }
-
-    if ($platform == PLATFORM_RHEL7 || $platform == PLATFORM_RHEL8 || $platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
-    {
-        $command = "cd $tempDirectoryPath && tar -cf \"$archiveFileName\" $archiveFilesString";
-    }
-    else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
-    {
-        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/tar.exe\" cf \"$archiveFileName\" $archiveFilesString";
-    }
-    else
-    {
-        exitWithError("Platform is not supported: $platform");
-    }
-    $ret = false;
-    $output = system($command, $ret);
-    if ($ret != 0)
-    {
-        exitWithError("Command failed: command='$command' output='$output'");
-    }
+    // TODO
 }
 else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_ZIP)
 {
-    $archiveFilesString = "";
+    $zip = new ZipArchive;
+    if($zip->open($archivePath, ZipArchive::CREATE) !== true)
+    {
+        exitWithError("Failed to open file to create zip: {$archivePath}");
+    }
     for ($i = 0; $i < count($archiveFiles); $i++)
     {
-        $archiveFilesString .= "\"" . $archiveFiles[$i] . "\" ";
-    }
+        $archiveFile = $archiveFiles[$i];
+        if (!file_exists($archiveFile))
+        {
+            exitWithError("Failed to zip since it doesn't exist: " . $archiveFiles[$i]);
+        }
+        else if (is_dir($archiveFile))
+        {
+            $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($archiveFile));
+            foreach ($rii as $file)
+            {
+                $filePath = $file->getPathname();
+                $relativeFilePath = basename($archiveFile) . "/" . substr($filePath, strlen($archiveFile)+1);
 
-    if ($platform == PLATFORM_RHEL7 || $platform == PLATFORM_RHEL8 || $platform == PLATFORM_CENTOS6 || $platform == PLATFORM_CENTOS7 || $platform == PLATFORM_OSX)
-    {
-        $command = "cd $tempDirectoryPath && zip -r \"$archiveFileName\" $archiveFilesString";
+                if (!$file->isDir())
+                {
+                    if (!$zip->addFile($filePath, $relativeFilePath))
+                    {
+                        exitWithError("Failed to add file to zip archive: {$filePath}");
+                    }
+                }
+            }
+        }
+        else
+        {
+            $filePath = $archiveFile;
+            $relativeFilePath = basename($archiveFile);
+            if (!$zip->addFile($filePath, $relativeFilePath))
+            {
+                exitWithError("Failed to add file to zip archive: {$filePath}");
+            }
+        }
     }
-    else if ($platform == PLATFORM_WINDOWS7 || $platform == PLATFORM_WINDOWS8 || $platform == PLATFORM_WINDOWS10 )
+    if (!$zip->close())
     {
-        $command = "cd /d \"$tempDirectoryPath\" && \"" . __DIR__ . "/Winrar.exe\" a -afzip \"$archiveFileName\" $archiveFilesString";
-    }
-    else
-    {
-        exitWithError("Platform is not supported: $platform");
-    }
-    $ret = false;
-    $output = system($command, $ret);
-    if ($ret != 0)
-    {
-        exitWithError("Command failed: command='$command' output='$output'");
+        exitWithError("Failed to close zip file: {$archivePath}");
     }
 }
 else
@@ -1210,7 +1205,7 @@ logInfo("Done packing SIP");
 
 // Send file to server
 $communicator->sendProgress(0, gettext("Sending to server"));
-$remoteFile = basename($zipFilePath);
+$remoteFile = basename($archiveFilePath);
 if (($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SFTP || $configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SSH) && strlen($configuration->getValue("SshDestinationDir")) > 0)
 {
     $remoteFile = $configuration->getValue("SshDestinationDir");
@@ -1218,13 +1213,13 @@ if (($configuration->getValue("FileSendMethod") == FILE_SEND_METHOD_SFTP || $con
     {
         $remoteFile .= "/";
     }
-    $remoteFile .= basename($zipFilePath);
+    $remoteFile .= basename($archiveFilePath);
 }
 for ($i = 0; true; $i++)
 {
     if ($i > $configuration->getValue("SenderMaxRetries"))
     {
-        exitWithError("Failed to send file to server: $zipFilePath");
+        exitWithError("Failed to send file to server: $archiveFilePath");
     }
 
     if ($i > 0)
@@ -1240,7 +1235,7 @@ for ($i = 0; true; $i++)
     }
 
     // Upload to server
-    if (!$fileSender->send($zipFilePath, $remoteFile))
+    if (!$fileSender->send($archiveFilePath, $remoteFile))
     {
         logError("Failed to send file with file sender: " . $fileSender->name());
         continue;
@@ -1255,7 +1250,7 @@ if ($configuration->getValue("VerifyUploadChecksum"))
     logInfo("Verifying checksum");
 
     $communicator->sendProgress(100, gettext("Verifying transfer"));
-    $localChecksum = md5_file($zipFilePath);
+    $localChecksum = md5_file($archiveFilePath);
     if (strlen($localChecksum) != 32)
     {
         exitWithError("Wrong checksum on local side: $localChecksum");
@@ -1282,7 +1277,7 @@ if ($configuration->getValue("VerifyUploadChecksum"))
     
         if (!$fileSender->calculateChecksumMd5($remoteChecksum, $remoteFile))
         {
-            logError("Failed to calculate checksum of file: " . $configuration->getValue("SshDestinationDir") . "/$fileNameBase.zip");
+            logError("Failed to calculate checksum of file: " . $configuration->getValue("SshDestinationDir") . "/" . basename($remoteFile));
             continue;
         }
         
@@ -1308,7 +1303,7 @@ if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_NHA_OTHER)
     // File content example: 14b68e4f906cf498f9c5e3d51dc7c9f0  document.mft
 
     $communicator->sendProgress(100, gettext("Sending acknowledgement"));
-    $checksum = md5_file($zipFilePath);
+    $checksum = md5_file($archiveFilePath);
     if (strlen($checksum) != 32)
     {
         exitWithError("Wrong checksum on local side: $checksum");
@@ -1326,7 +1321,7 @@ if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_NHA_OTHER)
     $remoteChecksumFile .= "md5";
 
     $localChecksumFile = "$tempDirectoryPath/$fileNameBase.md5";
-    file_put_contents($localChecksumFile, "$checksum  " . substr(basename($zipFilePath), 0, strlen(basename($zipFilePath)) - 3) . "tar" . "\n");
+    file_put_contents($localChecksumFile, "$checksum  " . substr(basename($archiveFilePath), 0, strlen(basename($archiveFilePath)) - 3) . "tar" . "\n");
 
     for ($i = 0; true; $i++)
     {
@@ -1388,7 +1383,7 @@ else if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_SHA1_V
     // File content example: d1ef1c2cee5d83f608c222b65bf8752b65a6d86c document.zip
 
     $communicator->sendProgress(100, gettext("Sending acknowledgement"));
-    $checksum = sha1_file($zipFilePath);
+    $checksum = sha1_file($archiveFilePath);
     if (strlen($checksum) != 40)
     {
         exitWithError("Wrong checksum on local side: $checksum");
@@ -1406,7 +1401,7 @@ else if ($configuration->getValue("CommitAckMethod") == COMMIT_ACK_METHOD_SHA1_V
     $remoteChecksumFile .= "sha1";
     
     $localChecksumFile = "$tempDirectoryPath/$fileNameBase.sha1";
-    file_put_contents($localChecksumFile, "$checksum " . pathinfo($zipFilePath, PATHINFO_BASENAME) . "\n");
+    file_put_contents($localChecksumFile, "$checksum " . pathinfo($archiveFilePath, PATHINFO_BASENAME) . "\n");
     
     for ($i = 0; true; $i++)
     {
