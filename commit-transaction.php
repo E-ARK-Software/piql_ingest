@@ -1154,26 +1154,38 @@ if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR
 else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_ZIP)
 {
     $zip = new ZipArchive;
-    if($zip->open($archivePath, ZipArchive::CREATE) !== true)
+    if($zip->open($archiveFilePath, ZipArchive::CREATE) !== true)
     {
-        exitWithError("Failed to open file to create zip: {$archivePath}");
+        exitWithError("Failed to open file to create zip: {$archiveFilePath}");
     }
     for ($i = 0; $i < count($archiveFiles); $i++)
     {
-        $archiveFile = $archiveFiles[$i];
+        $archiveFile = "{$tempDirectoryPath}/{$archiveFiles[$i]}";
         if (!file_exists($archiveFile))
         {
             exitWithError("Failed to zip since it doesn't exist: " . $archiveFiles[$i]);
         }
         else if (is_dir($archiveFile))
         {
-            $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($archiveFile));
+            $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($archiveFile, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
             foreach ($rii as $file)
             {
                 $filePath = $file->getPathname();
                 $relativeFilePath = basename($archiveFile) . "/" . substr($filePath, strlen($archiveFile)+1);
 
-                if (!$file->isDir())
+                if (!file_exists($filePath))
+                {
+                    exitWithError("The file to be added to archive does not exist: {$filePath}");
+                }
+
+                if (is_dir($filePath))
+                {
+                    if (!$zip->addEmptyDir($relativeFilePath))
+                    {
+                        exitWithError("Failed to add directory to zip archive: {$filePath}");
+                    }
+                }
+                else
                 {
                     if (!$zip->addFile($filePath, $relativeFilePath))
                     {
@@ -1194,7 +1206,7 @@ else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMA
     }
     if (!$zip->close())
     {
-        exitWithError("Failed to close zip file: {$archivePath}");
+        exitWithError("Failed to close zip file: {$archiveFilePath}");
     }
 }
 else
