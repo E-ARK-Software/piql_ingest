@@ -28,7 +28,7 @@ if (!is_dir($schemaDirectory))
 }
 
 $outputDirectory = './';
-$archiveType = ARCHIVE_TYPE_ZIP;
+$archiveType = ARCHIVE_TYPE_TAR;
 
 // Get ID of informationpackage
 $parts = explode("_", basename($informationPackageDirectory));
@@ -207,7 +207,7 @@ if ($archiveType == ARCHIVE_TYPE_ZIP)
 else if ($archiveType == ARCHIVE_TYPE_TAR)
 {
     $archivePath = "{$outPath}.tar";
-    $tar = PharData();
+    $tar = new PharData($archivePath);
     $tar->buildFromDirectory($outPath);
 
     if (!deleteFromDisk($outPath, true))
