@@ -28,7 +28,7 @@ if (!is_dir($schemaDirectory))
 }
 
 $outputDirectory = './';
-$archiveType = ARCHIVE_TYPE_TAR;
+$archiveType = ARCHIVE_TYPE_ZIP;
 
 // Get ID of informationpackage
 $parts = explode("_", basename($informationPackageDirectory));
@@ -175,17 +175,30 @@ if ($archiveType == ARCHIVE_TYPE_ZIP)
     $zip = new ZipArchive;
     if($zip->open($archivePath, ZipArchive::CREATE) === true)
     {
-        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($outPath));
+        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($outPath, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
         foreach ($rii as $file)
         {
             $filePath = $file->getPathname();
             $relativeFilePath = basename($outPath) . "/" . substr($filePath, strlen($outPath)+1);
 
-            if (!$file->isDir())
+            if (!file_exists($filePath))
+            {
+                echo "The file to be added to archive does not exist: {$filePath}" . PHP_EOL;
+                exit(1);
+            }
+
+            if (is_dir($filePath))
+            {
+                if (!$zip->addEmptyDir($relativeFilePath))
+                {
+                    echo "Failed to add directory to zip archive: {$filePath}" . PHP_EOL;
+                }
+            }
+            else
             {
                 if (!$zip->addFile($filePath, $relativeFilePath))
                 {
-                    echo "Failed to add SIP to archive: {$outPath}" . PHP_EOL;
+                    echo "Failed to add file to zip archive: {$filePath}" . PHP_EOL;
                     exit(1);
                 }
             }
@@ -208,7 +221,31 @@ else if ($archiveType == ARCHIVE_TYPE_TAR)
 {
     $archivePath = "{$outPath}.tar";
     $tar = new PharData($archivePath);
-    $tar->buildFromDirectory($outPath);
+
+    // Add base directory
+    $tar->addEmptyDir(basename($outPath));
+
+    $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($outPath, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+    foreach ($rii as $file)
+    {
+        $filePath = $file->getPathname();
+        $relativeFilePath = basename($outPath) . "/" . substr($filePath, strlen($outPath)+1);
+echo "File path: " . $filePath . PHP_EOL;
+        if (!file_exists($filePath))
+        {
+            echo "The file to be added to archive does not exist: {$filePath}" . PHP_EOL;
+            exit(1);
+        }
+
+        if (is_dir($filePath))
+        {
+            $tar->addEmptyDir($relativeFilePath);
+        }
+        else
+        {
+            $tar->addFile($filePath, $relativeFilePath);
+        }
+    }
 
     if (!deleteFromDisk($outPath, true))
     {
