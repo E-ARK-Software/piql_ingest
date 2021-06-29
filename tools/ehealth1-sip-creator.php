@@ -175,6 +175,9 @@ if ($archiveType == ARCHIVE_TYPE_ZIP)
     $zip = new ZipArchive;
     if($zip->open($archivePath, ZipArchive::CREATE) === true)
     {
+        // Add base directory
+        $zip->addEmptyDir(basename($outPath));
+
         $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($outPath, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
         foreach ($rii as $file)
         {
