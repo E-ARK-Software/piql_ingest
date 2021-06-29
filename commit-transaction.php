@@ -1149,15 +1149,64 @@ $archiveFileName = outputArchiveFileName($filePathList);
 $archiveFilePath = "$tempDirectoryPath/$archiveFileName";
 if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_TAR)
 {
-    // TODO
+    try {
+        $tar = new PharData($archiveFilePath);
+        for ($i = 0; $i < count($archiveFiles); $i++)
+        {
+            $archiveFile = "{$tempDirectoryPath}/{$archiveFiles[$i]}";
+            if (!file_exists($archiveFile))
+            {
+                exitWithError("Failed to TAR since it doesn't exist: " . $archiveFiles[$i]);
+            }
+            else if (is_dir($archiveFile))
+            {
+                // Add base directory
+                $tar->addEmptyDir(basename($archiveFile));
+
+                // Parse directory recursively and add all files and directories
+                // Recursive building in PharData is not used since we then leave out the empty directories
+                $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($archiveFile, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+                foreach ($rii as $file)
+                {
+                    $filePath = $file->getPathname();
+                    $relativeFilePath = basename($archiveFile) . "/" . substr($filePath, strlen($archiveFile)+1);
+
+                    if (!file_exists($filePath))
+                    {
+                        exitWithError("The file to be added to archive does not exist: {$filePath}");
+                    }
+
+                    if (is_dir($filePath))
+                    {
+                        $tar->addEmptyDir($relativeFilePath);
+                    }
+                    else
+                    {
+                        $tar->addFile($filePath, $relativeFilePath);
+                    }
+                }
+            }
+            else
+            {
+                $filePath = $archiveFile;
+                $relativeFilePath = basename($archiveFile);
+                $tar->addFile($filePath, $relativeFilePath);
+            }
+        }
+    } catch (Exception $e) {
+        exitWithError("Failed to create TAR archive: " . $e->getMessage());
+    }
 }
 else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMAT_ZIP)
 {
+    // Open archive for writing
     $zip = new ZipArchive;
     if($zip->open($archiveFilePath, ZipArchive::CREATE) !== true)
     {
         exitWithError("Failed to open file to create zip: {$archiveFilePath}");
     }
+
+    // Add files to archive
     for ($i = 0; $i < count($archiveFiles); $i++)
     {
         $archiveFile = "{$tempDirectoryPath}/{$archiveFiles[$i]}";
@@ -1167,6 +1216,11 @@ else if ($configuration->getValue("OutputArchiveFormat") == OUTPUT_ARCHIVE_FORMA
         }
         else if (is_dir($archiveFile))
         {
+            // Add base directory
+            $zip->addEmptyDir(basename($archiveFile));
+
+            // Parse directory recursively and add all files and directories
+            // Recursive building in ZipArchive is not used since we then leave out the empty directories
             $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($archiveFile, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
             foreach ($rii as $file)
             {
