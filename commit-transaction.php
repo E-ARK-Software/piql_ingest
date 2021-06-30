@@ -416,23 +416,17 @@ try {
                     //
 
                     // Set informationpackage ID
+                    // Expecting directory with name some_name_{ID}
                     if (strlen($sip->informationPackageId()) > 0)
                     {
                         exitWithError('Only one SIP per commit is allowed');
                     }
                     $parts = explode('_', $relativeFilePath);
-                    if (count($parts) == 1)
-                    {
-                        $sip->setInformationPackageId($parts[0]);
-                    }
-                    else if (count($parts) == 2)
-                    {
-                        $sip->setInformationPackageId($parts[1]);
-                    }
-                    else
+                    if (count($parts) == 0)
                     {
                         exitWithError("SIP name is in wrong format: {$relativeFilePath}");
                     }
+                    $sip->setInformationPackageId($parts[count($parts)-1]);
                 }
                 else if ($directoryDepth == 1)
                 {
