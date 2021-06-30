@@ -234,6 +234,17 @@ class Ehealth1Sip
         array_push($this->m_Patients, $patient);
     }
 
+    public function isPatientDirectory($path)
+    {
+        $expectStart = "patientrecord";
+        if (substr(basename($path), 0, strlen($expectStart)) != $expectStart)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public function submissionAgreements()
     {
         return $this->m_SubmissionAgreementFilePaths;

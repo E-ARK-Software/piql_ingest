@@ -443,61 +443,62 @@ try {
                         // Add descriptive metadata
                         $sip->addDescriptiveMetadata($filePath);
                     }
-                    else if (is_dir($filePath) && basename($filePath) == 'Data')
+                    else if (is_dir($filePath) && $sip->isPatientDirectory($relativeFilePath))
                     {
-                        // This file is legal - skipping
+                        // This is a patient data folder
+                        //
+
+                        // Set patient ID
+                        $parts = explode('_', basename($filePath));
+                        $patientId = '';
+                        if (count($parts) >= 2)
+                        {
+                            $patientId = $parts[count($parts)-1];
+                        }
+                        else
+                        {
+                            $patientId = guidv4(openssl_random_pseudo_bytes(16));
+                        }
+                        $patient = new Ehealth1SipPatient($patientId);
+
+                        // Add files
+                        $patientDirectoryPath = $filePath;
+                        for ($j = 0; $j < count($filePathList); $j++)
+                        {
+                            $filePath = $filePathList[$j];
+                            $relativeFilePath = $relativeFilePathList[$j];
+
+                            // Check if file is part of this patient directory
+                            if (substr($filePath, 0, strlen($patientDirectoryPath)) != $patientDirectoryPath || $filePath == $patientDirectoryPath)
+                            {
+                                continue;
+                            }
+
+                            if ($patient->isDescriptiveMetadata($relativeFilePath))
+                            {
+                                // Add descriptive metadata
+                                $patient->addDescriptiveMetadata($filePath);
+                            }
+                            else
+                            {
+                                // Add payload
+                                $patient->addFile($filePath, substr($filePath, strlen($patientDirectoryPath)+1));
+                            }
+                        }
+
+                        // Check that patient has data files
+                        if (count($patient->files()) == 0)
+                        {
+                            exitWithError("Patient has no data files");
+                        }
+
+                        // Add patient to SIP
+                        $sip->addPatient($patient);
                     }
                     else
                     {
                         exitWithError("File was not recognized as SIP data: {$relativeFilePath}");
                     }
-                }
-                else if ($directoryDepth == 2)
-                {
-                    // This is a patient data folder
-                    //
-
-                    // Set patient ID
-                    $parts = explode('_', basename($filePath));
-                    if (count($parts) != 2)
-                    {
-                        exitWithError("Patient directory has invalid naming: {$filePath}");
-                    }
-                    $patient = new Ehealth1SipPatient($parts[1]);
-
-                    // Add files
-                    $patientDirectoryPath = $filePath;
-                    for ($j = 0; $j < count($filePathList); $j++)
-                    {
-                        $filePath = $filePathList[$j];
-                        $relativeFilePath = $relativeFilePathList[$j];
-
-                        // Check if file is part of this patient directory
-                        if (substr($filePath, 0, strlen($patientDirectoryPath)) != $patientDirectoryPath || $filePath == $patientDirectoryPath)
-                        {
-                            continue;
-                        }
-
-                        if ($patient->isDescriptiveMetadata($relativeFilePath))
-                        {
-                            // Add descriptive metadata
-                            $patient->addDescriptiveMetadata($filePath);
-                        }
-                        else
-                        {
-                            // Add payload
-                            $patient->addFile($filePath, substr($filePath, strlen($patientDirectoryPath)+1));
-                        }
-                    }
-
-                    // Check that patient has data files
-                    if (count($patient->files()) == 0)
-                    {
-                        exitWithError("Patient has no data files");
-                    }
-
-                    // Add patient to SIP
-                    $sip->addPatient($patient);
                 }
             }
 
