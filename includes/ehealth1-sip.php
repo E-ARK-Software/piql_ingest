@@ -375,7 +375,7 @@ class Ehealth1Sip
         $expectedBaseName = "submissionagreement";
         $allowedExtensions = ['xml', 'pdf', 'jpg', 'jpeg'];
 
-        if (pathinfo($path, PATHINFO_FILENAME) != $expectedBaseName)
+        if (substr(pathinfo($path, PATHINFO_FILENAME), 0, strlen($expectedBaseName)) != $expectedBaseName)
         {
             return false;
         }
