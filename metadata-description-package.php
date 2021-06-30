@@ -1,4 +1,5 @@
 <?php
+include_once("includes/error-handler.php");
 include_once("includes/metadata-description-package-header.php");
 
 
