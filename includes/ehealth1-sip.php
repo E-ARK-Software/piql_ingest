@@ -95,21 +95,7 @@ class Ehealth1SipPatient
     {
         // E.g. Fhir_Condition_{ID}.xml
 
-        // Get ID
-        $baseFileName = pathinfo(basename($path), PATHINFO_FILENAME);
-        $parts = explode('_', $baseFileName);
-        if (count($parts) < 2)
-        {
-            return false;
-        }
-        $id = $parts[count($parts)-1];
-
-        if ($id != $this->m_PatientId)
-        {
-            return false;
-        }
-
-        return true;
+        return strtolower(pathinfo($path, PATHINFO_EXTENSION)) == 'xml';
     }
 
     private function setError($errorText)
