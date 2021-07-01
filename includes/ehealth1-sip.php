@@ -95,21 +95,7 @@ class Ehealth1SipPatient
     {
         // E.g. Fhir_Condition_{ID}.xml
 
-        // Get ID
-        $baseFileName = pathinfo(basename($path), PATHINFO_FILENAME);
-        $parts = explode('_', $baseFileName);
-        if (count($parts) < 2)
-        {
-            return false;
-        }
-        $id = $parts[count($parts)-1];
-
-        if ($id != $this->m_PatientId)
-        {
-            return false;
-        }
-
-        return true;
+        return strtolower(pathinfo($path, PATHINFO_EXTENSION)) == 'xml';
     }
 
     private function setError($errorText)
@@ -246,6 +232,17 @@ class Ehealth1Sip
     public function addPatient($patient)
     {
         array_push($this->m_Patients, $patient);
+    }
+
+    public function isPatientDirectory($path)
+    {
+        $expectStart = "patientrecord";
+        if (substr(basename($path), 0, strlen($expectStart)) != $expectStart)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public function submissionAgreements()
@@ -385,13 +382,20 @@ class Ehealth1Sip
 
     public function isSubmissionAgreement($path)
     {
-        // Expects filename like Submissionagreement_ID.pdf
-        if (basename($path) == "Submissionagreement_{$this->m_InformationPackageId}.pdf")
+        // Expects filename like submissionagreement.{xml|pdf|jpg|jpeg}
+        $expectedBaseName = "submissionagreement";
+        $allowedExtensions = ['xml', 'pdf', 'jpg', 'jpeg'];
+
+        if (substr(pathinfo($path, PATHINFO_FILENAME), 0, strlen($expectedBaseName)) != $expectedBaseName)
         {
-            return true;
+            return false;
+        }
+        if (!in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), $allowedExtensions))
+        {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public function isDescriptiveMetadata($path)

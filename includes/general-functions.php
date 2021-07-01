@@ -5,8 +5,9 @@ function exitWithError($message)
     global $communicator;
     global $logger;
 
-    $communicator->sendError(gettext("Error in script. Check logs."));
+    $communicator->sendError($message);
     $logger->logError($message);
+    sleep(0.2);
     exit(1);
 }
 
@@ -18,6 +19,7 @@ function exitWithSuccess()
 
     $communicator->sendSuccess();
     $logger->logInfo("Finished successfully");
+    sleep(0.2);
     exit(0);
 }
 

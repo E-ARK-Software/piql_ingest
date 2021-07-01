@@ -2033,9 +2033,9 @@ bool WorkerThread::progress( int& progress, string& message )
 
 void WorkerThread::run()
 {
-    ERROR_F( "WorkerThread::updateProgress" );
+    ERROR_F( "WorkerThread::run" );
 
-    error << ERRinfo << m_Command << endl;
+    error << ERRinfo << "Executing command: " << m_Command << endl;
     
     if ( !DSystemTools::doShellCommand( updateProgress, cancelExecution, m_Command, this ) )
     {

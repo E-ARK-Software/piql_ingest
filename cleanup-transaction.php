@@ -2,6 +2,7 @@
 // Includes
 //
 
+include_once("includes/error-handler.php");
 include_once("includes/defines.php");
 include_once("includes/configuration.php");
 include_once("includes/communicator.php");
