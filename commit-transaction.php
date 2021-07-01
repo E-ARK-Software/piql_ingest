@@ -611,35 +611,35 @@ try {
                 exitWithError("Failed to read values from metadata");
             }
 
-            // Create SIP root dir
+            // Create SIP root directory
             $sipPath = $tempDirectoryPath . "/" . guidv4(openssl_random_pseudo_bytes(16));
             if (!mkdir($sipPath))
             {
                 exitWithError("Failed to create directory: $sipPath");
             }
 
-            // Create metadata dir
+            // Create metadata directory
             $metadataPath = $sipPath . "/metadata";
             if (!mkdir($metadataPath))
             {
                 exitWithError("Failed to create directory: $metadataPath");
             }
 
-            // Create other dir
+            // Create other directory
             $otherPath = $sipPath . "/OTHER";
             if (!mkdir($otherPath))
             {
                 exitWithError("Failed to create directory: $otherPath");
             }
 
-            // Create journal dir
+            // Create journal directory
             $journalPath = $otherPath . "/journal";
             if (!mkdir($journalPath))
             {
                 exitWithError("Failed to create directory: $journalPath");
             }
 
-            // Create objects dir
+            // Create objects directory
             $objectsPath = $otherPath . "/objekter";
             if (!mkdir($objectsPath))
             {
@@ -849,8 +849,8 @@ try {
             //   bagit.txt
             //   manifest-md5.txt
 
-            $dataRootDir = "";
-            $dataDir = "";
+            $dataRootDirectory = "";
+            $dataDirectory = "";
             for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
             {
                 // Get file info
@@ -871,19 +871,19 @@ try {
                         exitWithError("One or multiple files is supported for format OUTPUT_FORMAT_BAGIT_V097, " . count($filePathList) . " was given");
                     }
                 
-                    $dataRootDir = "$tempDirectoryPath";
+                    $dataRootDirectory = "$tempDirectoryPath";
 
                     // Create data directory
-                    $dataDir = "$dataRootDir/data";
-                    if (!mkdir($dataDir, 0777, false))
+                    $dataDirectory = "$dataRootDirectory/data";
+                    if (!mkdir($dataDirectory, 0777, false))
                     {
                         exitWithError("Failed to create data directory");
                     }
-                    array_push($archiveFiles, basename($dataDir));
+                    array_push($archiveFiles, basename($dataDirectory));
 
                     // Create metadata directory
-                    $metadataDir = "$dataRootDir/metadata";
-                    if (!mkdir($metadataDir, 0777, false))
+                    $metadataDirectory = "$dataRootDirectory/metadata";
+                    if (!mkdir($metadataDirectory, 0777, false))
                     {
                         exitWithError("Failed to create metadata directory");
                     }
@@ -894,7 +894,7 @@ try {
                     {
                         array_push($fileNames, basename($filePathList[$i]));
                     }
-                    $metadataOut = "$metadataDir/metadata.csv";
+                    $metadataOut = "$metadataDirectory/metadata.csv";
                     if (!createMetadata($metadataList, $metadataOut, $fileNames, $metadataTemplate, $configuration))
                     {
                         exitWithError("Failed to create metadata file");
@@ -903,11 +903,11 @@ try {
                     // Include metadata if generated
                     if (is_file($metadataOut))
                     {
-                        array_push($archiveFiles, basename($metadataDir));
+                        array_push($archiveFiles, basename($metadataDirectory));
                     }
 
                     // Create BagIt description file
-                    $descriptionOut = "$dataRootDir/bagit.txt";
+                    $descriptionOut = "$dataRootDirectory/bagit.txt";
                     if (!createBagitDescriptionFile($descriptionOut, "0.97"))
                     {
                         exitWithError("Failed to create BagIt description file");
@@ -915,7 +915,7 @@ try {
                     array_push($archiveFiles, basename($descriptionOut));
 
                     // Create checksum manifest
-                    $checksumManifestOut = "$dataRootDir/manifest-md5.txt";
+                    $checksumManifestOut = "$dataRootDirectory/manifest-md5.txt";
                     if (!createChecksumManifestFile($checksumManifestOut, $filePathList, $relativeFilePathList))
                     {
                         exitWithError("Failed to create checksum manifest file");
@@ -925,7 +925,7 @@ try {
 
                 // Add data
                 $source = $filePath;
-                $destination = "$dataDir/$relativeFilePath";
+                $destination = "$dataDirectory/$relativeFilePath";
                 if ($fileItemType == FILE_ITEM_TYPE_DIRECTORY)
                 {
                     if (!mkdir($destination, 0777, false))
@@ -958,7 +958,7 @@ try {
             //   <filename_1>
             //   <filename_2>
 
-            $dataRootDir = "";
+            $dataRootDirectory = "";
             for ($fileIndex = 0; $fileIndex < count($filePathList); $fileIndex++)
             {
                 // Get file info
@@ -995,23 +995,23 @@ try {
                     $fileNameBase = $fileNames[0];
 
                     // Create root directory
-                    $dataRootDir = "$tempDirectoryPath/$fileNameBase";
-                    if (file_exists($dataRootDir))
+                    $dataRootDirectory = "$tempDirectoryPath/$fileNameBase";
+                    if (file_exists($dataRootDirectory))
                     {
-                        exitWithError("Directory already exists: {$dataRootDir}");
+                        exitWithError("Directory already exists: {$dataRootDirectory}");
                     }
-                    if (!mkdir($dataRootDir, 0777, false))
+                    if (!mkdir($dataRootDirectory, 0777, false))
                     {
-                        exitWithError("Failed to create data root directory: $dataRootDir");
+                        exitWithError("Failed to create data root directory: $dataRootDirectory");
                     }
 
                     // Create metadata directory
-                    $metadataDir = "$dataRootDir/metadata";
-                    if (file_exists($metadataDir))
+                    $metadataDirectory = "$dataRootDirectory/metadata";
+                    if (file_exists($metadataDirectory))
                     {
-                        exitWithError("Directory already exists: {$metadataDir}");
+                        exitWithError("Directory already exists: {$metadataDirectory}");
                     }
-                    if (!mkdir($metadataDir, 0777, false))
+                    if (!mkdir($metadataDirectory, 0777, false))
                     {
                         exitWithError("Failed to create metadata directory");
                     }
@@ -1022,7 +1022,7 @@ try {
                     {
                         array_push($fileNames, basename($filePathList[$i]));
                     }
-                    $metadataOut = "$metadataDir/metadata.csv";
+                    $metadataOut = "$metadataDirectory/metadata.csv";
                     createMetadata($metadataList, $metadataOut, $fileNames, $metadataTemplate, $configuration);
 
                     array_push($archiveFiles, $fileNameBase);
@@ -1030,7 +1030,7 @@ try {
 
                 // Add data
                 $source = $filePath;
-                $destination = "$dataRootDir/$fileName";
+                $destination = "$dataRootDirectory/$fileName";
                 if (!copy($source, $destination))
                 {
                     exitWithError("Failed to copy file '$source' to '$destination'");
@@ -1064,23 +1064,23 @@ try {
                         if ($i == count($parentFileIdList) - 1)
                         {
                             // Create directory
-                            $dirPath = "$tempDirectoryPath/$relativeFilePath";
-                            if (substr($dirPath, strlen($dirPath) - 1) == "/")
+                            $directoryPath = "$tempDirectoryPath/$relativeFilePath";
+                            if (substr($directoryPath, strlen($directoryPath) - 1) == "/")
                             {
-                                $dirPath = substr($dirPath, 0, strlen($dirPath) - 1);
+                                $directoryPath = substr($directoryPath, 0, strlen($directoryPath) - 1);
                             }
 
-                            if (file_exists($dirPath))
+                            if (file_exists($directoryPath))
                             {
-                                exitWithError("Directory already exists: $dirPath");
+                                exitWithError("Directory already exists: $directoryPath");
                             }
                             else
                             {
-                                if (!mkdir($dirPath, 0777, true))
+                                if (!mkdir($directoryPath, 0777, true))
                                 {
-                                    exitWithError("Failed to create directory: $dirPath");
+                                    exitWithError("Failed to create directory: $directoryPath");
                                 }
-                                array_push($archiveFiles, $dirPath);
+                                array_push($archiveFiles, $directoyPath);
                             }
                         }
                     }
@@ -1095,17 +1095,17 @@ try {
                     }
                     for ($i = 0; $i < count($pathComponents) - 1; $i++)
                     {
-                        $dirPath = "$tempDirectoryPath";
+                        $directoryPath = "$tempDirectoryPath";
                         for ($j = 0; $j <= $i; $j++)
                         {
-                            $dirPath .= "/" . $pathComponents[$j];
+                            $directoryPath .= "/" . $pathComponents[$j];
                         }
 
-                        if (!is_dir($dirPath))
+                        if (!is_dir($directoryPath))
                         {
-                            if (!mkdir($dirPath, 0777, true))
+                            if (!mkdir($directoryPath, 0777, true))
                             {
-                                exitWithError("Failed to create directory: $dirPath");
+                                exitWithError("Failed to create directory: $directoryPath");
                             }
                         }
                     }
