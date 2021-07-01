@@ -729,30 +729,30 @@ try {
             }
 
             // Remove submission agreement metadata
-            $tmpMetadataList = $metadataList;
-            $tmpFileNames = $fileNames;
+            $temporaryMetadataList = $metadataList;
+            $temporaryFileNames = $fileNames;
             for ($i = 0; $i < count($fileNames); $i++)
             {
                 if (!isSubmissionAgreement($fileNames[$i]))
                 {
-                    array_push($tmpFileNames, $fileNames[$i]);
-                    array_push($tmpMetadataList, $metadataList[$i]);
+                    array_push($temporaryFileNames, $fileNames[$i]);
+                    array_push($temporaryMetadataList, $metadataList[$i]);
                 }
             }
 
             // Create metadata file
-            $tmpFileNames = array();
-            $tmpMetadataList = array();
+            $temporaryFileNames = array();
+            $temporaryMetadataList = array();
             for ($i = 0; $i < count($filePathList); $i++)
             {
                 if (!isSubmissionAgreement($filePathList[$i]))
                 {
-                    array_push($tmpFileNames, basename($filePathList[$i]));
-                    array_push($tmpMetadataList, $metadataList[$i]);
+                    array_push($temporaryFileNames, basename($filePathList[$i]));
+                    array_push($temporaryMetadataList, $metadataList[$i]);
                 }
             }
             $metadataOut = "$metadataPath/metadata.csv";
-            if (!createMetadata($tmpMetadataList, $metadataOut, $tmpFileNames, $metadataTemplate, $configuration))
+            if (!createMetadata($temporaryMetadataList, $metadataOut, $temporaryFileNames, $metadataTemplate, $configuration))
             {
                 exitWithError("Failed to create metadata file");
             }
