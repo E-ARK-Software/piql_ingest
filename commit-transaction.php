@@ -789,13 +789,13 @@ try {
             {
                 $absolutePath = $sipPath . "/" . $relativePath;
 
-                $md5sum = md5_file($absolutePath);
-                if ($md5sum === false)
+                $checksum = md5_file($absolutePath);
+                if ($checksum === false)
                 {
                     exitWithError("Failed to calculate checksum for file: " . $absolutePath);
                 }
 
-                if (file_put_contents($checksumFilePath, $md5sum . "  " . $relativePath . "\n", FILE_APPEND | LOCK_EX) === false)
+                if (file_put_contents($checksumFilePath, $checksum . "  " . $relativePath . "\n", FILE_APPEND | LOCK_EX) === false)
                 {
                     exitWithError("Failed to write to file: " . $checksumFilePath);
                 }
