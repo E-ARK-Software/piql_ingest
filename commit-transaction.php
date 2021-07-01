@@ -188,7 +188,7 @@ try {
         $logger->logError($text);
     }
 
-    function loginfo($text)
+    function logInfo($text)
     {
         global $logger;
         $logger->logInfo($text);
