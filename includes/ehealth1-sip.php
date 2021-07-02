@@ -1,4 +1,6 @@
 <?php
+include_once(__DIR__ . "/python-runner.php");
+
 class Ehealth1SipPatient
 {
     private $m_DataFilePaths = [];
@@ -32,13 +34,6 @@ class Ehealth1SipPatient
         if (!mkdir($patientBasePath))
         {
             $this->setError("Failed to create directory: {$patientBasePath}");
-            return false;
-        }
-
-        // Generate METS
-        if (!$this->generateMets($patientBasePath))
-        {
-            $this->setError("Failed to generate METS file");
             return false;
         }
 
@@ -101,12 +96,6 @@ class Ehealth1SipPatient
     private function setError($errorText)
     {
         $this->m_LastError = $errorText;
-    }
-
-    private function generateMets($outputDirectory)
-    {
-        // TODO
-        return true;
     }
 
     private function generateMetadata($outputDirectory)
@@ -298,36 +287,11 @@ class Ehealth1Sip
             return false;
         }
 
-        // Generate METS
-        if (!$this->generateMets($sipBasePath))
-        {
-            $this->setError("Failed to generate METS file");
-            return false;
-        }
-
         // Generate package metadata
         if (!$this->generatePackageMetadata($sipBasePath))
         {
             $this->setError("Failed to generate package metadata");
             return false;
-        }
-
-        // Generate representations
-        $representationsPath = "{$sipBasePath}/representations";
-        if (!mkdir($representationsPath))
-        {
-            $this->setError("Failed to create directory: {$representationsPath}");
-            return false;
-        }
-        foreach($this->m_Patients as $patient)
-        {
-            if (!$patient->produceSip($representationsPath))
-            {
-                $patientError = $patient->error();
-                $patientId = $patient->patientId();
-                $this->setError("Failed to produce patient data for patient {$patientId}: {$patientError}");
-                return false;
-            }
         }
 
         // Generate schemas
@@ -366,6 +330,30 @@ class Ehealth1Sip
         if (!$this->generateDocumentation($documentationPath))
         {
             $this->setError("Failed to generate documentation");
+            return false;
+        }
+
+        // Generate representations
+        $representationsPath = "{$sipBasePath}/representations";
+        if (!mkdir($representationsPath))
+        {
+            $this->setError("Failed to create directory: {$representationsPath}");
+            return false;
+        }
+        foreach($this->m_Patients as $patient)
+        {
+            if (!$patient->produceSip($representationsPath))
+            {
+                $patientError = $patient->error();
+                $patientId = $patient->patientId();
+                $this->setError("Failed to produce patient data for patient {$patientId}: {$patientError}");
+                return false;
+            }
+        }
+
+        // Generate METS
+        if (!$this->generateMets($sipBasePath))
+        {
             return false;
         }
 
@@ -408,9 +396,26 @@ class Ehealth1Sip
         return false;
     }
 
-    private function generateMets($outputDirectory)
+    private function generateMets($sipPath)
     {
-        // TODO
+        $runner = new PythonRunner();
+
+        $scriptPath = __DIR__ . '/../thirdparty/metsgen/genrepmets.py';
+        $arguments = [$sipPath];
+        if (!$runner->executeScript($scriptPath, $arguments))
+        {
+            $this->setError('Failed to generate patient METS: ' . $runner->error());
+            return false;
+        }
+
+        $scriptPath = __DIR__ . '/../thirdparty/metsgen/genrootmets.py ';
+        $arguments = [$sipPath];
+        if (!$runner->executeScript($scriptPath, $arguments))
+        {
+            $this->setError('Failed to generate root METS: ' . $runner->error());
+            return false;
+        }
+
         return true;
     }
 
