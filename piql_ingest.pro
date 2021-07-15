@@ -12,10 +12,22 @@
 }
 
 # Get php resources
-system(mkdir -p thirdparty)
-system(mkdir -p thirdparty/phpseclib)
-system(cp -r $$(CV_PHPSECLIB_ROOT)/* thirdparty/phpseclib/.)
-system(unzip data/util/metsgen.zip -d thirdparty/.)
+##  LINUX PLATFORM ##
+unix {
+    system(mkdir -p thirdparty)
+    system(mkdir -p thirdparty/phpseclib)
+    system(cp -r $$(CV_PHPSECLIB_ROOT)/* thirdparty/phpseclib/.)
+    system(unzip data/util/metsgen.zip -d thirdparty/.)
+}
+##  WIN PLATFORM  ##
+win32 {
+    system(mkdir thirdparty\phpseclib)
+    system(xcopy /d /s /e /y %CV_PHPSECLIB_ROOT%\* thirdparty\phpseclib)
+    system(WinRAR x -y data/util/metsgen.zip thirdparty)
+
+    system(mkdir php)
+    system(xcopy /d /s /e /y %CV_PHP_ROOT%\* php)
+}
 
 TEMPLATE          =   subdirs
 CONFIG           +=   ordered

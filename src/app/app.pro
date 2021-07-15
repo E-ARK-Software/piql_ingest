@@ -33,7 +33,8 @@ win32:QMAKE_LFLAGS +=  /LARGEADDRESSAWARE
 TRANSLATIONS      =   $$(CV_ROOT)/locale/sv_SE/sv_SE.ts \
                       $$(CV_ROOT)/locale/nb_NO/nb_NO.ts
 
-TARGET            =   $$(CV_ROOT)/piql_ingest
+DESTDIR           =   $$(CV_ROOT)/$$CURBUILD
+TARGET            =   piql_ingest
 OBJECTS_DIR       =   obj/$$PLATFORM/$$CURBUILD
 MOC_DIR           =   obj/$$PLATFORM/$$CURBUILD
 
@@ -116,3 +117,5 @@ macx:ICON=resources/icon_32x32.icns
 macx:QMAKE_EXTRA_TARGETS += createicons
 macx:PRE_TARGETDEPS      += resources/icon_32x32.icns
 win32:RC_ICONS=resources/icon_32x32.ico
+
+include(add_app_paths.pri)

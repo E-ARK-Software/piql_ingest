@@ -19,18 +19,11 @@ echo =========================================================================
 echo Setup the Win32 dev environment - Visual Studio 2013
 echo =========================================================================
 echo.
-echo QTDIR=%QTDIR%
+echo CV_QTDIR=%CV_QTDIR%
 echo QMAKESPEC=%QMAKESPEC%
 echo CV_BOOST_INCLUDE=%CV_BOOST_INCLUDE%
 echo CV_BOOST_LIBS=%CV_BOOST_LIBS%
 echo =========================================================================
 echo.
-
-echo =========================================================================
-echo Install additional tools
-echo =========================================================================
-echo.
-
-call install-tools.cmd
 
 cmd /k

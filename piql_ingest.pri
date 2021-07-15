@@ -106,6 +106,6 @@ defineReplace(INCLUDE_TCLAP) {
     # INCLUDES is a local variable for this function
     INCLUDES=
 
-    INCLUDES       +=   $$(CV_THIRDPARTY)/tclap-1.2.1/include
+    INCLUDES       +=   $$(CV_TCLAP_INCLUDE)/include
     return( $$INCLUDES )
 }

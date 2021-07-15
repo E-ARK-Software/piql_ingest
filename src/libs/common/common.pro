@@ -11,19 +11,6 @@
     error( "No libs.pri file found" )
 }
 
-## Function to get BOOST includes
-defineReplace(INCLUDE_BOOST) {
-    win32 {
-        return ( $$(CV_BOOST_INCLUDE) )
-    }
-    
-    !win32 {
-       _INCLUDE        = $$(CV_BOOST_INCLUDE)
-       macx:_INCLUDE  += $$(CV_BOOST_INCLUDE)/boost
-       return( $$_INCLUDE )
-    }
-}
-
 TEMPLATE        =   lib
 TARGET          =   common
 
@@ -36,8 +23,6 @@ CONFIG         += staticlib create_prl
 win32:QMAKE_CXXFLAGS   += /wd4996
 
 INCLUDEPATH    += $$INCLUDE_BOOST()
-                  #$$INCLUDE_CPPUNIT() \
-                  #$$(CV_BASE_ROOT)/posixtar/inc
 
 ### PROJECT INCLUDE FILES
 

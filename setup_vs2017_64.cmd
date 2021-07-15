@@ -1,15 +1,15 @@
 @echo off
 
-set QTDIR=C:\Qt\5.12.2\msvc2017_64
-set CV_BOOST_INCLUDE="..\..\cmu_112\thirdparty\w32\boost_1_60_0"
-set CV_BOOST_LIBS="..\..\cmu_112\thirdparty\w32\boost_1_60_0\stage\lib"
+call setup_paths.cmd
 
-rem PATH setup
-set path=%QTDIR%\bin;%path%
+for /f "usebackq delims=" %%a in (`"%programfiles(x86)%\Microsoft Visual Studio\Installer\vswhere" -latest -property installationPath`) do set VSPATH=%%a
 
-pushd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build"
+pushd "%VSPATH%"\vc\Auxiliary\Build\
+if not defined DevEnvDir (
 call vcvarsall.bat"" x64
+)
 popd
+
 if ERRORLEVEL 1 (
 echo.
 echo ERROR: Visual Studio 2017 is not installed!
@@ -24,7 +24,7 @@ echo =========================================================================
 echo Setup the Win64 dev environment - Visual Studio 2017
 echo =========================================================================
 echo.
-echo QTDIR=%QTDIR%
+echo CV_QTDIR=%CV_QTDIR%
 echo QMAKESPEC=%QMAKESPEC%
 echo CV_BOOST_INCLUDE=%CV_BOOST_INCLUDE%
 echo CV_BOOST_LIBS=%CV_BOOST_LIBS%
