@@ -376,29 +376,51 @@ try {
             // The payload can contain files or directory stuctures
             //
             // SIP structure:
-            //   IP_{ID}
-            //    METS.xml
+            //   {ID}
+            //    mets.xml
             //    metadata/
             //     descriptive/
-            //      patient1.xml
+            //      Patients.xml
             //     preservation/
-            //      PREMIS1.xml
             //    schemas/
-            //     Fhir.patient.xsd
-            //     Fhir.condition.xsd
-            //     PREMIS.xsd
+            //     condition.xsd
+            //     DILCISExtensionMETS.xsd
+            //     DILCISExtensionSIPMETS.xsd
+            //     patient.xsd
+            //     xlink.xsd
+            //     xml.xsd
             //    documentation/
-            //     Submissionagreement_{ID}.pdf
+            //     submissionagreement.pdf
             //    representations/
             //     Patientrecord_{ID}
-            //      METS.xml
+            //      mets.xml
             //      metadata/
             //       descriptive/
-            //        condition1.xml
+            //        Patient1_condition.xml
             //       preservation/
-            //        PREMIS_R1.xml
             //      data/
             //       {PAYLOAD}
+            //
+            // Input structure:
+            //   eHealth1_Transfer_{ID}
+            //    Patients.xml
+            //    submissionagreement.pdf
+            //    patientrecord_1/
+            //     Patient1_condition.xml
+            //     Patient1Case1/
+            //      Patient1Case1Document1/
+            //       patient1_record1.pdf
+            //     Patient1Case2/
+            //      Patient1Case2Document1/
+            //       patient1_record2.pdf
+            //    patientrecord_2/
+            //     Patient2_condition.xml
+            //     Patient2Case1/
+            //      Patient2Case1Subcase1/
+            //       Patient2Case1Subcase1Document1/
+            //        patient2_record1.pdf
+            //       Patient2Case1Subcase1Document2/
+            //        patient2_record2.pdf
 
             // Define SIP
             $sip = new Ehealth1Sip();
