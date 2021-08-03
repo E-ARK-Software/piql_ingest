@@ -429,14 +429,16 @@ class Ehealth1Sip
 
         $metadata = "";
         $metadata .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        $metadata .= " <metadata>\n";
+        $metadata .= "<systemData>\n";
         foreach ($this->m_PackageMetadata as $md)
         {
             $key = $md["key"];
             $value = $md["value"];
-            $metadata .= "  <{$key}><![CDATA[{$value}]]></{$key}>\n";
+            $metadata .= "    <{$key}>\n";
+            $metadata .= "        <![CDATA[{$value}]]>\n";
+            $metadata .= "    </{$key}>\n";
         }
-        $metadata .= " </metadata>\n";
+        $metadata .= "</systemData>\n";
 
         $filePath = "{$outputDirectory}/metadata.xml";
         return file_put_contents($filePath, $metadata, LOCK_EX) !== false;
