@@ -15,7 +15,7 @@
 system(mkdir -p thirdparty)
 system(mkdir -p thirdparty/phpseclib)
 system(cp -r $$(CV_PHPSECLIB_ROOT)/* thirdparty/phpseclib/.)
-system(unzip data/util/metsgen.zip -d thirdparty/.)
+system(unzip $$(CV_METSGEN_ROOT)/metsgen_1.0.1.zip -d thirdparty/.)
 
 TEMPLATE          =   subdirs
 CONFIG           +=   ordered
