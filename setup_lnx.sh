@@ -74,6 +74,10 @@ if [ ! -d "$CV_BOOST_ROOT" -o ! -d "$CV_BOOST_INCLUDE" -o ! -d "$CV_BOOST_LIBS" 
     return 1
 fi
 
+if [ "$CV_METSGEN_ROOT" == "" ] ; then
+    export CV_METSGEN_ROOT="$CV_THIRDPARTY/metsgen"
+fi
+
 # Add doc folder to path, contains class templates
 export PATH=$PATH:$CV_ROOT/doc
 
