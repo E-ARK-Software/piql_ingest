@@ -9,17 +9,25 @@ class PythonRunner
 
     public function executeScript($path, $arguments)
     {
+        // Check that Python is installed
         if (!$this->pythonPath($pythonPath))
         {
             $this->setError("Python is not properly installed");
             return false;
         }
 
+        // Compile command
         $command = "\"{$pythonPath}\" \"{$path}\"";
         foreach ($arguments as $argument)
         {
             $command .= " \"{$argument}\"";
         }
+
+        // Write stderr to stdout
+        $command .= " 2>&1";
+
+        // Execute command
+        $output = [];
         if (exec($command, $output, $returnCode) === false || $returnCode != 0)
         {
             $json = json_encode($output);
