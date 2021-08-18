@@ -53,8 +53,7 @@ function outputArchiveFileName($filePaths)
     }
     else if ($configuration->getValue("OutputFormat") == OUTPUT_FORMAT_EHEALTH1_SIP)
     {
-        $parts = explode("_", basename($filePaths[0]));
-        $fileName = "IP_" . $parts[count($parts)-1];
+        $fileName = "IP_" . basename($filePaths[0]);
     }
     else
     {

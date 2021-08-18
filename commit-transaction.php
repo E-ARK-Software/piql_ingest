@@ -376,7 +376,7 @@ try {
             // The payload can contain files or directory stuctures
             //
             // SIP structure:
-            //   {ID}
+            //   {TRANSFER_NAME}
             //    mets.xml
             //    metadata/
             //     descriptive/
@@ -437,9 +437,8 @@ try {
                     // This is a SIP
                     //
 
-                    // Set informationpackage ID
-                    // Expecting directory with name some_name_{ID}
-                    if (strlen($sip->informationPackageId()) > 0)
+                    // Set transfer name
+                    if (strlen($sip->transferName()) > 0)
                     {
                         exitWithError('Only one SIP per commit is allowed');
                     }
@@ -448,7 +447,7 @@ try {
                     {
                         exitWithError("SIP name is in wrong format: {$relativeFilePath}");
                     }
-                    $sip->setInformationPackageId($parts[count($parts)-1]);
+                    $sip->setTransferName($relativeFilePath);
                 }
                 else if ($directoryDepth == 1)
                 {
@@ -562,7 +561,7 @@ try {
             }
 
             // Check that the SIP has an ID
-            if (strlen($sip->informationPackageId()) == 0)
+            if (strlen($sip->transferName()) == 0)
             {
                 exitWithError('The SIP does not have an ID');
             }

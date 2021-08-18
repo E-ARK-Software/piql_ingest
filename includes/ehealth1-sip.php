@@ -225,23 +225,23 @@ class Ehealth1Sip
     private $m_SubmissionAgreementFilePaths = [];
     private $m_DescriptiveMetadataFilePaths = [];
     private $m_SchemaFilePaths = [];
-    private $m_InformationPackageId = '';
+    private $m_TransferName = '';
     private $m_PackageMetadata = [];
     private $m_LastError = '';
 
-    public function __construct($informationPackageId='')
+    public function __construct($transferName='')
     {
-        $this->m_InformationPackageId = $informationPackageId;
+        $this->m_TransferName = $transferName;
     }
 
-    public function informationPackageId()
+    public function transferName()
     {
-        return $this->m_InformationPackageId;
+        return $this->m_TransferName;
     }
 
-    public function setInformationPackageId($id)
+    public function setTransferName($name)
     {
-        $this->m_InformationPackageId = $id;
+        $this->m_TransferName = $name;
     }
 
     public function addPackageMetadata($key, $value)
@@ -310,9 +310,9 @@ class Ehealth1Sip
             return false;
         }
 
-        // Define base output path for SIP - full/output/dir/<packageID>
+        // Define base output path for SIP - full/output/dir/<transferName>
         $sipBasePath = rtrim($outBaseDirectory, '/') . '/';
-        $sipBasePath .= $this->m_InformationPackageId;
+        $sipBasePath .= "IP_" . $this->m_TransferName;
 
         // Create SIP root directory
         if (!mkdir($sipBasePath))
