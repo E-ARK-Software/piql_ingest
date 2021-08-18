@@ -70,6 +70,7 @@ DPiqlIngestConfig::DPiqlIngestConfig( const std::string& filename )
     m_MainWindowTitle = settings.value("MAIN_WINDOW_TITLE", "").toString().toStdString();
     m_MainWindowIcon = settings.value("MAIN_WINDOW_ICON", "").toString().toStdString();
     m_ApplicationLanguage = settings.value("APPLICATION_LANGUAGE", "").toString().toStdString();
+    m_CommitButtonText = settings.value("COMMIT_BUTTON_TEXT", "").toString().toStdString();
 }
 
 
@@ -261,4 +262,14 @@ std::string DPiqlIngestConfig::mainWindowIcon()
 std::string DPiqlIngestConfig::applicationLanguage()
 {
     return m_ApplicationLanguage;
+}
+
+//----------------------------------------------------------------------------
+/*!
+*  Commit button text
+*/
+
+std::string DPiqlIngestConfig::commitButtonText()
+{
+    return m_CommitButtonText;
 }

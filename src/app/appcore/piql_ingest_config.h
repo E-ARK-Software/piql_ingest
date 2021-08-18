@@ -56,6 +56,7 @@ public:
     std::string                 mainWindowTitle();
     std::string                 mainWindowIcon();
     std::string                 applicationLanguage();
+    std::string                 commitButtonText();
 
 private:
 
@@ -78,6 +79,7 @@ private:
     std::string                 m_MainWindowTitle;
     std::string                 m_MainWindowIcon;
     std::string                 m_ApplicationLanguage;
+    std::string                 m_CommitButtonText;
 
 private: // DISABLE
     
