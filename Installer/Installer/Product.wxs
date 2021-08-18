@@ -1,0 +1,1320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define ProductName="Piql Ingest" ?>
+  <?define ProductVersion="1.0.0.0" ?>
+  <?define ProductCode="*"?>
+  <?define UpgradeCode="c351a522-e0b4-4c71-bc7c-4acb6080129d"?>
+  <?define Manufacturer="PIQL"?>
+
+  <Product Id="$(var.ProductCode)" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Piql_Ingest_Setup" Level="1">
+      <ComponentRef Id="QSVGICON.DLL" />
+      <ComponentRef Id="QGIF.DLL" />
+      <ComponentRef Id="QICNS.DLL" />
+      <ComponentRef Id="QICO.DLL" />
+      <ComponentRef Id="QJPEG.DLL" />
+      <ComponentRef Id="QSVG.DLL" />
+      <ComponentRef Id="QTGA.DLL" />
+      <ComponentRef Id="QTIFF.DLL" />
+      <ComponentRef Id="QWBMP.DLL" />
+      <ComponentRef Id="QWEBP.DLL" />
+      <ComponentRef Id="COMMUNICATOR.PHP" />
+      <ComponentRef Id="CONFIGURATION.PHP" />
+      <ComponentRef Id="DEFINES.PHP" />
+      <ComponentRef Id="EHEALTH1_SIP.PHP" />
+      <ComponentRef Id="ERROR_HANDLER.PHP" />
+      <ComponentRef Id="GENERAL_FUNCTIONS.PHP" />
+      <ComponentRef Id="LOGGER.PHP" />
+      <ComponentRef Id="METADATA_DESCRIPTION_FOOTER.PHP" />
+      <ComponentRef Id="METADATA_DESCRIPTION_HEADER.PHP" />
+      <ComponentRef Id="METADATA_DESCRIPTION_PACKAGE_FOOTER.PHP" />
+      <ComponentRef Id="METADATA_DESCRIPTION_PACKAGE_HEADER.PHP" />
+      <ComponentRef Id="METADATA_PARSER.PHP" />
+      <ComponentRef Id="METADATA_TEMPLATE.PHP" />
+      <ComponentRef Id="PARAMETERS.PHP" />
+      <ComponentRef Id="PLATFORMS.PHP" />
+      <ComponentRef Id="SCRIPT_CONTEXT.PHP" />
+      <ComponentRef Id="FILE_TRANSFER_BASE.PHP" />
+      <ComponentRef Id="FILE_TRANSFER_DISK.PHP" />
+      <ComponentRef Id="FILE_TRANSFER_SFTP.PHP" />
+      <ComponentRef Id="FILE_TRANSFER_SSH.PHP" />
+      <ComponentRef Id="NB.QM" />
+      <ComponentRef Id="QT_NB.QM" />
+      <ComponentRef Id="QT_SV.QM" />
+      <ComponentRef Id="SV.QM" />
+      <ComponentRef Id="NB_NO.QM" />
+      <ComponentRef Id="NB_NO.TS" />
+      <ComponentRef Id="QT_NB_NO.QM" />
+      <ComponentRef Id="QT_NB_NO.TS" />
+      <ComponentRef Id="MESSAGES.MO" />
+      <ComponentRef Id="MESSAGES.PO" />
+      <ComponentRef Id="QT_SV_SE.QM" />
+      <ComponentRef Id="QT_SV_SE.TS" />
+      <ComponentRef Id="SV_SE.QM" />
+      <ComponentRef Id="SV_SE.TS" />
+      <ComponentRef Id="MESSAGES.MO_1" />
+      <ComponentRef Id="MESSAGES.PO_1" />
+      <ComponentRef Id="UKR_UK.QM" />
+      <ComponentRef Id="UKR_UK.TS" />
+      <ComponentRef Id="DEPLISTER.EXE" />
+      <ComponentRef Id="GLIB_2.DLL" />
+      <ComponentRef Id="GMODULE_2.DLL" />
+      <ComponentRef Id="ICUDT57.DLL" />
+      <ComponentRef Id="ICUIN57.DLL" />
+      <ComponentRef Id="ICUIO57.DLL" />
+      <ComponentRef Id="ICULE57.DLL" />
+      <ComponentRef Id="ICULX57.DLL" />
+      <ComponentRef Id="ICUUC57.DLL" />
+      <ComponentRef Id="INSTALL.TXT" />
+      <ComponentRef Id="LIBEAY32.DLL" />
+      <ComponentRef Id="LIBENCHANT.DLL" />
+      <ComponentRef Id="LIBPQ.DLL" />
+      <ComponentRef Id="LIBSASL.DLL" />
+      <ComponentRef Id="LIBSSH2.DLL" />
+      <ComponentRef Id="LICENSE.TXT" />
+      <ComponentRef Id="NEWS.TXT" />
+      <ComponentRef Id="NGHTTP2.DLL" />
+      <ComponentRef Id="PHAR.PHAR.BAT" />
+      <ComponentRef Id="PHARCOMMAND.PHAR" />
+      <ComponentRef Id="PHP_CGI.EXE" />
+      <ComponentRef Id="PHP_WIN.EXE" />
+      <ComponentRef Id="PHP.EXE" />
+      <ComponentRef Id="PHP.GIF" />
+      <ComponentRef Id="PHP.INI" />
+      <ComponentRef Id="PHP.INI_DEVELOPMENT" />
+      <ComponentRef Id="PHP.INI_PRODUCTION" />
+      <ComponentRef Id="PHP7APACHE2_4.DLL" />
+      <ComponentRef Id="PHP7EMBED.LIB" />
+      <ComponentRef Id="PHP7PHPDBG.DLL" />
+      <ComponentRef Id="PHP7TS.DLL" />
+      <ComponentRef Id="PHPDBG.EXE" />
+      <ComponentRef Id="README_REDIST_BINS.TXT" />
+      <ComponentRef Id="SNAPSHOT.TXT" />
+      <ComponentRef Id="SSLEAY32.DLL" />
+      <ComponentRef Id="PHP7TS.LIB" />
+      <ComponentRef Id="COMPOSER.JSON" />
+      <ComponentRef Id="LICENSE" />
+      <ComponentRef Id="PHP_BZ2.DLL" />
+      <ComponentRef Id="PHP_COM_DOTNET.DLL" />
+      <ComponentRef Id="PHP_CURL.DLL" />
+      <ComponentRef Id="PHP_ENCHANT.DLL" />
+      <ComponentRef Id="PHP_EXIF.DLL" />
+      <ComponentRef Id="PHP_FILEINFO.DLL" />
+      <ComponentRef Id="PHP_FTP.DLL" />
+      <ComponentRef Id="PHP_GD2.DLL" />
+      <ComponentRef Id="PHP_GETTEXT.DLL" />
+      <ComponentRef Id="PHP_GMP.DLL" />
+      <ComponentRef Id="PHP_IMAP.DLL" />
+      <ComponentRef Id="PHP_INTERBASE.DLL" />
+      <ComponentRef Id="PHP_INTL.DLL" />
+      <ComponentRef Id="PHP_LDAP.DLL" />
+      <ComponentRef Id="PHP_MBSTRING.DLL" />
+      <ComponentRef Id="PHP_MYSQLI.DLL" />
+      <ComponentRef Id="PHP_OCI8_12C.DLL" />
+      <ComponentRef Id="PHP_ODBC.DLL" />
+      <ComponentRef Id="PHP_OPCACHE.DLL" />
+      <ComponentRef Id="PHP_OPENSSL.DLL" />
+      <ComponentRef Id="PHP_PDO_FIREBIRD.DLL" />
+      <ComponentRef Id="PHP_PDO_MYSQL.DLL" />
+      <ComponentRef Id="PHP_PDO_OCI.DLL" />
+      <ComponentRef Id="PHP_PDO_ODBC.DLL" />
+      <ComponentRef Id="PHP_PDO_PGSQL.DLL" />
+      <ComponentRef Id="PHP_PDO_SQLITE.DLL" />
+      <ComponentRef Id="PHP_PGSQL.DLL" />
+      <ComponentRef Id="PHP_PHPDBG_WEBHELPER.DLL" />
+      <ComponentRef Id="PHP_SHMOP.DLL" />
+      <ComponentRef Id="PHP_SNMP.DLL" />
+      <ComponentRef Id="PHP_SOAP.DLL" />
+      <ComponentRef Id="PHP_SOCKETS.DLL" />
+      <ComponentRef Id="PHP_SQLITE3.DLL" />
+      <ComponentRef Id="PHP_SSH2.DLL" />
+      <ComponentRef Id="PHP_SSH2.PDB" />
+      <ComponentRef Id="PHP_SYSVSHM.DLL" />
+      <ComponentRef Id="PHP_TIDY.DLL" />
+      <ComponentRef Id="PHP_XMLRPC.DLL" />
+      <ComponentRef Id="PHP_XSL.DLL" />
+      <ComponentRef Id="OPENSSL.CNF" />
+      <ComponentRef Id="LIBENCHANT_ISPELL.DLL" />
+      <ComponentRef Id="LIBENCHANT_MYSPELL.DLL" />
+      <ComponentRef Id="SASLANONYMOUS.DLL" />
+      <ComponentRef Id="SASLCRAMMD5.DLL" />
+      <ComponentRef Id="SASLDIGESTMD5.DLL" />
+      <ComponentRef Id="SASLLOGIN.DLL" />
+      <ComponentRef Id="SASLNTLM.DLL" />
+      <ComponentRef Id="SASLOTP.DLL" />
+      <ComponentRef Id="SASLPLAIN.DLL" />
+      <ComponentRef Id="SASLSCRAM.DLL" />
+      <ComponentRef Id="SASLSQLITE.DLL" />
+      <ComponentRef Id="SASLSRP.DLL" />
+      <ComponentRef Id="QWINDOWS.DLL" />
+      <ComponentRef Id="QWINDOWSVISTASTYLE.DLL" />
+      <ComponentRef Id="GENREPMETS.PY" />
+      <ComponentRef Id="GENROOTMETS.PY" />
+      <ComponentRef Id="README.TXT" />
+      <ComponentRef Id="DI.PY" />
+      <ComponentRef Id="EXCEPTIONS.PY" />
+      <ComponentRef Id="FSENTRY.PY" />
+      <ComponentRef Id="METADATA.PY" />
+      <ComponentRef Id="METS.PY" />
+      <ComponentRef Id="UTILS.PY" />
+      <ComponentRef Id="VALIDATE.PY" />
+      <ComponentRef Id="__INIT__.PY" />
+      <ComponentRef Id="_.GITIGNORE" />
+      <ComponentRef Id="METSRW.IML" />
+      <ComponentRef Id="MISC.XML" />
+      <ComponentRef Id="MODULES.XML" />
+      <ComponentRef Id="WORKSPACE.XML" />
+      <ComponentRef Id="PROFILES_SETTINGS.XML" />
+      <ComponentRef Id="__INIT__.PY_1" />
+      <ComponentRef Id="PREMIS.PY" />
+      <ComponentRef Id="README.RST" />
+      <ComponentRef Id="UTILS.PY_1" />
+      <ComponentRef Id="__INIT__.PY_2" />
+      <ComponentRef Id="PREMIS.CPYTHON_36.PYC" />
+      <ComponentRef Id="PREMIS.CPYTHON_38.PYC" />
+      <ComponentRef Id="UTILS.CPYTHON_36.PYC" />
+      <ComponentRef Id="UTILS.CPYTHON_38.PYC" />
+      <ComponentRef Id="__INIT__.CPYTHON_36.PYC" />
+      <ComponentRef Id="__INIT__.CPYTHON_38.PYC" />
+      <ComponentRef Id="__INIT__.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="__INIT__.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="ARCHIVEMATICA_METS_POINTER_FILE_SCHEMATRON.XML" />
+      <ComponentRef Id="ARCHIVEMATICA_METS_SCHEMATRON.XML" />
+      <ComponentRef Id="METS.XSD" />
+      <ComponentRef Id="DI.CPYTHON_36.PYC" />
+      <ComponentRef Id="DI.CPYTHON_38.PYC" />
+      <ComponentRef Id="EXCEPTIONS.CPYTHON_36.PYC" />
+      <ComponentRef Id="EXCEPTIONS.CPYTHON_38.PYC" />
+      <ComponentRef Id="FSENTRY.CPYTHON_36.PYC" />
+      <ComponentRef Id="FSENTRY.CPYTHON_38.PYC" />
+      <ComponentRef Id="METADATA.CPYTHON_36.PYC" />
+      <ComponentRef Id="METADATA.CPYTHON_38.PYC" />
+      <ComponentRef Id="METS.CPYTHON_36.PYC" />
+      <ComponentRef Id="METS.CPYTHON_38.PYC" />
+      <ComponentRef Id="UTILS.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="UTILS.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="VALIDATE.CPYTHON_36.PYC" />
+      <ComponentRef Id="VALIDATE.CPYTHON_38.PYC" />
+      <ComponentRef Id="__INIT__.CPYTHON_36.PYC_2" />
+      <ComponentRef Id="__INIT__.CPYTHON_38.PYC_2" />
+      <ComponentRef Id="DI.PY_1" />
+      <ComponentRef Id="EXCEPTIONS.PY_1" />
+      <ComponentRef Id="FSENTRY.PY_1" />
+      <ComponentRef Id="METADATA.PY_1" />
+      <ComponentRef Id="METS.PY_1" />
+      <ComponentRef Id="UTILS.PY_2" />
+      <ComponentRef Id="VALIDATE.PY_1" />
+      <ComponentRef Id="__INIT__.PY_3" />
+      <ComponentRef Id="_.GITIGNORE_1" />
+      <ComponentRef Id="METSRW.IML_1" />
+      <ComponentRef Id="MISC.XML_1" />
+      <ComponentRef Id="MODULES.XML_1" />
+      <ComponentRef Id="WORKSPACE.XML_1" />
+      <ComponentRef Id="PROFILES_SETTINGS.XML_1" />
+      <ComponentRef Id="__INIT__.PY_4" />
+      <ComponentRef Id="PREMIS.PY_1" />
+      <ComponentRef Id="README.RST_1" />
+      <ComponentRef Id="UTILS.PY_3" />
+      <ComponentRef Id="__INIT__.PY_5" />
+      <ComponentRef Id="PREMIS.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="PREMIS.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="UTILS.CPYTHON_36.PYC_2" />
+      <ComponentRef Id="UTILS.CPYTHON_38.PYC_2" />
+      <ComponentRef Id="__INIT__.CPYTHON_36.PYC_3" />
+      <ComponentRef Id="__INIT__.CPYTHON_38.PYC_3" />
+      <ComponentRef Id="__INIT__.CPYTHON_36.PYC_4" />
+      <ComponentRef Id="__INIT__.CPYTHON_38.PYC_4" />
+      <ComponentRef Id="ARCHIVEMATICA_METS_POINTER_FILE_SCHEMATRON.XML_1" />
+      <ComponentRef Id="ARCHIVEMATICA_METS_SCHEMATRON.XML_1" />
+      <ComponentRef Id="METS.XSD_1" />
+      <ComponentRef Id="DI.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="DI.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="EXCEPTIONS.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="EXCEPTIONS.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="FSENTRY.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="FSENTRY.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="METADATA.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="METADATA.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="METS.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="METS.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="UTILS.CPYTHON_36.PYC_3" />
+      <ComponentRef Id="UTILS.CPYTHON_38.PYC_3" />
+      <ComponentRef Id="VALIDATE.CPYTHON_36.PYC_1" />
+      <ComponentRef Id="VALIDATE.CPYTHON_38.PYC_1" />
+      <ComponentRef Id="__INIT__.CPYTHON_36.PYC_5" />
+      <ComponentRef Id="__INIT__.CPYTHON_38.PYC_5" />
+      <ComponentRef Id="ROY.EXE" />
+      <ComponentRef Id="SF.EXE" />
+      <ComponentRef Id="SF_OUTPUT.JSON" />
+      <ComponentRef Id="BOOTSTRAP.PHP" />
+      <ComponentRef Id="OPENSSL.CNF_1" />
+      <ComponentRef Id="AES.PHP" />
+      <ComponentRef Id="BASE.PHP" />
+      <ComponentRef Id="BLOWFISH.PHP" />
+      <ComponentRef Id="DES.PHP" />
+      <ComponentRef Id="HASH.PHP" />
+      <ComponentRef Id="RANDOM.PHP" />
+      <ComponentRef Id="RC2.PHP" />
+      <ComponentRef Id="RC4.PHP" />
+      <ComponentRef Id="RIJNDAEL.PHP" />
+      <ComponentRef Id="RSA.PHP" />
+      <ComponentRef Id="TRIPLEDES.PHP" />
+      <ComponentRef Id="TWOFISH.PHP" />
+      <ComponentRef Id="ANSI.PHP" />
+      <ComponentRef Id="ASN1.PHP" />
+      <ComponentRef Id="X509.PHP" />
+      <ComponentRef Id="BIGINTEGER.PHP" />
+      <ComponentRef Id="SCP.PHP" />
+      <ComponentRef Id="SFTP.PHP" />
+      <ComponentRef Id="SSH1.PHP" />
+      <ComponentRef Id="SSH2.PHP" />
+      <ComponentRef Id="STREAM.PHP" />
+      <ComponentRef Id="SSH_AGENT.PHP" />
+      <ComponentRef Id="AGENT.PHP" />
+      <ComponentRef Id="QT_AR.QM" />
+      <ComponentRef Id="QT_BG.QM" />
+      <ComponentRef Id="QT_CA.QM" />
+      <ComponentRef Id="QT_CS.QM" />
+      <ComponentRef Id="QT_DA.QM" />
+      <ComponentRef Id="QT_DE.QM" />
+      <ComponentRef Id="QT_EN.QM" />
+      <ComponentRef Id="QT_ES.QM" />
+      <ComponentRef Id="QT_FI.QM" />
+      <ComponentRef Id="QT_FR.QM" />
+      <ComponentRef Id="QT_GD.QM" />
+      <ComponentRef Id="QT_HE.QM" />
+      <ComponentRef Id="QT_HU.QM" />
+      <ComponentRef Id="QT_IT.QM" />
+      <ComponentRef Id="QT_JA.QM" />
+      <ComponentRef Id="QT_KO.QM" />
+      <ComponentRef Id="QT_LV.QM" />
+      <ComponentRef Id="QT_PL.QM" />
+      <ComponentRef Id="QT_RU.QM" />
+      <ComponentRef Id="QT_SK.QM" />
+      <ComponentRef Id="QT_UK.QM" />
+      <ComponentRef Id="root_files" />
+      <ComponentRef Id="StartMenuShortcuts" />
+    </Feature>
+
+    <UI />
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" ></Property>
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="License.rtf" />
+    <UIRef Id="WixUI_InstallDir" />
+    <Icon Id="DesktopIcon.exe" SourceFile="..\..\piql_ingest_1.0.2\piql_ingest.exe" />
+    <Icon Id="StartMenuIcon.exe" SourceFile="..\..\piql_ingest_1.0.2\piql_ingest.exe" />
+    
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
+          <Directory Id="ICONENGINES" Name="iconengines">
+            <Component Id="QSVGICON.DLL" DiskId="1" Guid="BC40BC4E-941D-4E0A-B37C-1ED050947FA3">
+              <File Id="QSVGICON.DLL" Name="qsvgicon.dll" Source="..\..\piql_ingest_1.0.2\iconengines\qsvgicon.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="IMAGEFORMATS" Name="imageformats">
+            <Component Id="QGIF.DLL" DiskId="1" Guid="0867B41F-D23F-409C-84D4-4F27865FFD9C">
+              <File Id="QGIF.DLL" Name="qgif.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qgif.dll" />
+            </Component>
+            <Component Id="QICNS.DLL" DiskId="1" Guid="D586B59C-D9D9-448D-9BCC-7826AAD89345">
+              <File Id="QICNS.DLL" Name="qicns.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qicns.dll" />
+            </Component>
+            <Component Id="QICO.DLL" DiskId="1" Guid="EB6049A2-131C-444B-B5CD-B7790B46E6F8">
+              <File Id="QICO.DLL" Name="qico.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qico.dll" />
+            </Component>
+            <Component Id="QJPEG.DLL" DiskId="1" Guid="86BBF371-1A54-4D12-B05D-4FA7DEFEC7D0">
+              <File Id="QJPEG.DLL" Name="qjpeg.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qjpeg.dll" />
+            </Component>
+            <Component Id="QSVG.DLL" DiskId="1" Guid="BCB256EC-37BC-47EE-876C-B9451B9621E2">
+              <File Id="QSVG.DLL" Name="qsvg.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qsvg.dll" />
+            </Component>
+            <Component Id="QTGA.DLL" DiskId="1" Guid="C08CE9A7-AA0B-4899-AA54-F38A2C8D653C">
+              <File Id="QTGA.DLL" Name="qtga.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qtga.dll" />
+            </Component>
+            <Component Id="QTIFF.DLL" DiskId="1" Guid="460E4D62-283A-4251-8813-B6F8B60BF29C">
+              <File Id="QTIFF.DLL" Name="qtiff.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qtiff.dll" />
+            </Component>
+            <Component Id="QWBMP.DLL" DiskId="1" Guid="B5F11BB2-B59A-427F-86D3-8DC008BD72FF">
+              <File Id="QWBMP.DLL" Name="qwbmp.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qwbmp.dll" />
+            </Component>
+            <Component Id="QWEBP.DLL" DiskId="1" Guid="4A79E25C-DD30-474F-8CFF-59C23D4836A6">
+              <File Id="QWEBP.DLL" Name="qwebp.dll" Source="..\..\piql_ingest_1.0.2\imageformats\qwebp.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="INCLUDES" Name="includes">
+            <Component Id="COMMUNICATOR.PHP" DiskId="1" Guid="31B5B1F4-63B2-48A6-BA3E-A20812FE1A2B">
+              <File Id="COMMUNICATOR.PHP" Name="communicator.php" Source="..\..\piql_ingest_1.0.2\includes\communicator.php" />
+            </Component>
+            <Component Id="CONFIGURATION.PHP" DiskId="1" Guid="D0D9DA52-B95D-4223-A0B5-31DCE05226D6">
+              <File Id="CONFIGURATION.PHP" Name="configuration.php" Source="..\..\piql_ingest_1.0.2\includes\configuration.php" />
+            </Component>
+            <Component Id="DEFINES.PHP" DiskId="1" Guid="99090C70-F6C0-4E88-93FB-B8392759F746">
+              <File Id="DEFINES.PHP" Name="defines.php" Source="..\..\piql_ingest_1.0.2\includes\defines.php" />
+            </Component>
+            <Component Id="EHEALTH1_SIP.PHP" DiskId="1" Guid="8DB8AF08-1939-4CA4-9288-52E601DA4E0F">
+              <File Id="EHEALTH1_SIP.PHP" Name="ehealth1-sip.php" Source="..\..\piql_ingest_1.0.2\includes\ehealth1-sip.php" />
+            </Component>
+            <Component Id="ERROR_HANDLER.PHP" DiskId="1" Guid="4681F3A0-AE53-444F-902B-DE709CB06636">
+              <File Id="ERROR_HANDLER.PHP" Name="error-handler.php" Source="..\..\piql_ingest_1.0.2\includes\error-handler.php" />
+            </Component>
+            <Component Id="GENERAL_FUNCTIONS.PHP" DiskId="1" Guid="0210BB86-7237-4B6E-9733-14333C4F1CAD">
+              <File Id="GENERAL_FUNCTIONS.PHP" Name="general-functions.php" Source="..\..\piql_ingest_1.0.2\includes\general-functions.php" />
+            </Component>
+            <Component Id="LOGGER.PHP" DiskId="1" Guid="37F19660-AD18-4C95-89B6-7EFB974775DF">
+              <File Id="LOGGER.PHP" Name="logger.php" Source="..\..\piql_ingest_1.0.2\includes\logger.php" />
+            </Component>
+            <Component Id="METADATA_DESCRIPTION_FOOTER.PHP" DiskId="1" Guid="2E16D529-7C5F-44BB-A954-604330F26ABB">
+              <File Id="METADATA_DESCRIPTION_FOOTER.PHP" Name="metadata-description-footer.php" Source="..\..\piql_ingest_1.0.2\includes\metadata-description-footer.php" />
+            </Component>
+            <Component Id="METADATA_DESCRIPTION_HEADER.PHP" DiskId="1" Guid="207C654B-C022-4774-A862-8D69E8633F4E">
+              <File Id="METADATA_DESCRIPTION_HEADER.PHP" Name="metadata-description-header.php" Source="..\..\piql_ingest_1.0.2\includes\metadata-description-header.php" />
+            </Component>
+            <Component Id="METADATA_DESCRIPTION_PACKAGE_FOOTER.PHP" DiskId="1" Guid="DD30BD74-00BC-4450-B98E-F2469149A85F">
+              <File Id="METADATA_DESCRIPTION_PACKAGE_FOOTER.PHP" Name="metadata-description-package-footer.php" Source="..\..\piql_ingest_1.0.2\includes\metadata-description-package-footer.php" />
+            </Component>
+            <Component Id="METADATA_DESCRIPTION_PACKAGE_HEADER.PHP" DiskId="1" Guid="8E700D72-F9E7-4AD9-8B5A-AEAFF8B4B06A">
+              <File Id="METADATA_DESCRIPTION_PACKAGE_HEADER.PHP" Name="metadata-description-package-header.php" Source="..\..\piql_ingest_1.0.2\includes\metadata-description-package-header.php" />
+            </Component>
+            <Component Id="METADATA_PARSER.PHP" DiskId="1" Guid="EF919913-008E-41F2-AD67-1E2017DCDF9F">
+              <File Id="METADATA_PARSER.PHP" Name="metadata-parser.php" Source="..\..\piql_ingest_1.0.2\includes\metadata-parser.php" />
+            </Component>
+            <Component Id="METADATA_TEMPLATE.PHP" DiskId="1" Guid="9DC4CBC3-0C5E-426A-8C9C-230445834129">
+              <File Id="METADATA_TEMPLATE.PHP" Name="metadata-template.php" Source="..\..\piql_ingest_1.0.2\includes\metadata-template.php" />
+            </Component>
+            <Component Id="PARAMETERS.PHP" DiskId="1" Guid="020196B1-58CE-4E92-A177-839C2EE759E7">
+              <File Id="PARAMETERS.PHP" Name="parameters.php" Source="..\..\piql_ingest_1.0.2\includes\parameters.php" />
+            </Component>
+            <Component Id="PLATFORMS.PHP" DiskId="1" Guid="7BB72784-1DD8-4211-8CB5-5C18B70A6ECF">
+              <File Id="PLATFORMS.PHP" Name="platforms.php" Source="..\..\piql_ingest_1.0.2\includes\platforms.php" />
+            </Component>
+            <Component Id="SCRIPT_CONTEXT.PHP" DiskId="1" Guid="190F1886-E095-4B5D-B18A-41B440CB22F8">
+              <File Id="SCRIPT_CONTEXT.PHP" Name="script-context.php" Source="..\..\piql_ingest_1.0.2\includes\script-context.php" />
+            </Component>
+            <Directory Id="FILETRANSFER" Name="filetransfer">
+              <Component Id="FILE_TRANSFER_BASE.PHP" DiskId="1" Guid="6D1BC4A5-302A-4044-9E75-6054BFCAA6FD">
+                <File Id="FILE_TRANSFER_BASE.PHP" Name="file-transfer-base.php" Source="..\..\piql_ingest_1.0.2\includes\filetransfer\file-transfer-base.php" />
+              </Component>
+              <Component Id="FILE_TRANSFER_DISK.PHP" DiskId="1" Guid="146363E1-B4AD-47B8-BCF5-E114B2CA2CCF">
+                <File Id="FILE_TRANSFER_DISK.PHP" Name="file-transfer-disk.php" Source="..\..\piql_ingest_1.0.2\includes\filetransfer\file-transfer-disk.php" />
+              </Component>
+              <Component Id="FILE_TRANSFER_SFTP.PHP" DiskId="1" Guid="225B3062-76C2-4470-83D3-E07F5789CB5D">
+                <File Id="FILE_TRANSFER_SFTP.PHP" Name="file-transfer-sftp.php" Source="..\..\piql_ingest_1.0.2\includes\filetransfer\file-transfer-sftp.php" />
+              </Component>
+              <Component Id="FILE_TRANSFER_SSH.PHP" DiskId="1" Guid="63014110-E352-4374-A528-7C59A35F4AB9">
+                <File Id="FILE_TRANSFER_SSH.PHP" Name="file-transfer-ssh.php" Source="..\..\piql_ingest_1.0.2\includes\filetransfer\file-transfer-ssh.php" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="LOCALE" Name="locale">
+            <Component Id="NB.QM" DiskId="1" Guid="8FD6B198-AD5E-4ED8-B902-56E9455E1F7E">
+              <File Id="NB.QM" Name="nb.qm" Source="..\..\piql_ingest_1.0.2\locale\nb.qm" />
+            </Component>
+            <Component Id="QT_NB.QM" DiskId="1" Guid="4E1689E4-48FD-4F51-A50A-4CB27BD63B1C">
+              <File Id="QT_NB.QM" Name="qt_nb.qm" Source="..\..\piql_ingest_1.0.2\locale\qt_nb.qm" />
+            </Component>
+            <Component Id="QT_SV.QM" DiskId="1" Guid="16356ADF-ED1A-4369-B98A-44DC90B894BB">
+              <File Id="QT_SV.QM" Name="qt_sv.qm" Source="..\..\piql_ingest_1.0.2\locale\qt_sv.qm" />
+            </Component>
+            <Component Id="SV.QM" DiskId="1" Guid="7BD6F6FC-D303-491C-AB3C-5F68AD54600A">
+              <File Id="SV.QM" Name="sv.qm" Source="..\..\piql_ingest_1.0.2\locale\sv.qm" />
+            </Component>
+            <Directory Id="NB_NO" Name="nb_NO">
+              <Component Id="NB_NO.QM" DiskId="1" Guid="E663B15D-9433-495C-8C26-96B9262B1C25">
+                <File Id="NB_NO.QM" Name="nb_NO.qm" Source="..\..\piql_ingest_1.0.2\locale\nb_NO\nb_NO.qm" />
+              </Component>
+              <Component Id="NB_NO.TS" DiskId="1" Guid="BEFADD72-2FA7-43E3-BFD1-CCF22E159BED">
+                <File Id="NB_NO.TS" Name="nb_NO.ts" Source="..\..\piql_ingest_1.0.2\locale\nb_NO\nb_NO.ts" />
+              </Component>
+              <Component Id="QT_NB_NO.QM" DiskId="1" Guid="CA096E40-1320-412B-8AA5-53B177FF1F6E">
+                <File Id="QT_NB_NO.QM" Name="qt_nb_NO.qm" Source="..\..\piql_ingest_1.0.2\locale\nb_NO\qt_nb_NO.qm" />
+              </Component>
+              <Component Id="QT_NB_NO.TS" DiskId="1" Guid="70A77775-3F9B-4730-9856-8124C078FC32">
+                <File Id="QT_NB_NO.TS" Name="qt_nb_NO.ts" Source="..\..\piql_ingest_1.0.2\locale\nb_NO\qt_nb_NO.ts" />
+              </Component>
+              <Directory Id="LC_MESSAGES" Name="LC_MESSAGES">
+                <Component Id="MESSAGES.MO" DiskId="1" Guid="48897FE5-1E7A-4F2D-A904-FF914838E089">
+                  <File Id="MESSAGES.MO" Name="messages.mo" Source="..\..\piql_ingest_1.0.2\locale\nb_NO\LC_MESSAGES\messages.mo" />
+                </Component>
+                <Component Id="MESSAGES.PO" DiskId="1" Guid="890C8A76-DD76-4025-96A9-4E1F33A215FA">
+                  <File Id="MESSAGES.PO" Name="messages.po" Source="..\..\piql_ingest_1.0.2\locale\nb_NO\LC_MESSAGES\messages.po" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="SV_SE" Name="sv_SE">
+              <Component Id="QT_SV_SE.QM" DiskId="1" Guid="9527C865-7826-4A2C-BDEA-EAFA99B00AFC">
+                <File Id="QT_SV_SE.QM" Name="qt_sv_SE.qm" Source="..\..\piql_ingest_1.0.2\locale\sv_SE\qt_sv_SE.qm" />
+              </Component>
+              <Component Id="QT_SV_SE.TS" DiskId="1" Guid="F6287863-C20C-406E-801C-0A60428F49F5">
+                <File Id="QT_SV_SE.TS" Name="qt_sv_SE.ts" Source="..\..\piql_ingest_1.0.2\locale\sv_SE\qt_sv_SE.ts" />
+              </Component>
+              <Component Id="SV_SE.QM" DiskId="1" Guid="BD376C8C-E5FE-45A3-A56A-B464850A5447">
+                <File Id="SV_SE.QM" Name="sv_SE.qm" Source="..\..\piql_ingest_1.0.2\locale\sv_SE\sv_SE.qm" />
+              </Component>
+              <Component Id="SV_SE.TS" DiskId="1" Guid="A34C8A22-737C-4DE0-AF2B-D35208B37793">
+                <File Id="SV_SE.TS" Name="sv_SE.ts" Source="..\..\piql_ingest_1.0.2\locale\sv_SE\sv_SE.ts" />
+              </Component>
+              <Directory Id="LC_MESSAGES_1" Name="LC_MESSAGES">
+                <Component Id="MESSAGES.MO_1" DiskId="1" Guid="DA15B97A-E7C8-4A8D-B412-26825ACA8EC2">
+                  <File Id="MESSAGES.MO_1" Name="messages.mo" Source="..\..\piql_ingest_1.0.2\locale\sv_SE\LC_MESSAGES\messages.mo" />
+                </Component>
+                <Component Id="MESSAGES.PO_1" DiskId="1" Guid="9BB4FDD0-6017-4A0D-8C8A-2505A6EC3FCA">
+                  <File Id="MESSAGES.PO_1" Name="messages.po" Source="..\..\piql_ingest_1.0.2\locale\sv_SE\LC_MESSAGES\messages.po" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="UKR_UK" Name="ukr_UK">
+              <Component Id="UKR_UK.QM" DiskId="1" Guid="1E4A6459-699E-49A9-970E-1C239FA4F824">
+                <File Id="UKR_UK.QM" Name="ukr_UK.qm" Source="..\..\piql_ingest_1.0.2\locale\ukr_UK\ukr_UK.qm" />
+              </Component>
+              <Component Id="UKR_UK.TS" DiskId="1" Guid="5EE4C4C1-7A2F-4FA0-8DEF-30D63BD2C8C7">
+                <File Id="UKR_UK.TS" Name="ukr_UK.ts" Source="..\..\piql_ingest_1.0.2\locale\ukr_UK\ukr_UK.ts" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="PHP" Name="php">
+            <Component Id="DEPLISTER.EXE" DiskId="1" Guid="01579613-86AE-4D14-8C0C-BB2522A1C87E">
+              <File Id="DEPLISTER.EXE" Name="deplister.exe" Source="..\..\piql_ingest_1.0.2\php\deplister.exe" />
+            </Component>
+            <Component Id="GLIB_2.DLL" DiskId="1" Guid="F046ED35-63E7-4D17-AC86-A3EBB1975997">
+              <File Id="GLIB_2.DLL" Name="glib-2.dll" Source="..\..\piql_ingest_1.0.2\php\glib-2.dll" />
+            </Component>
+            <Component Id="GMODULE_2.DLL" DiskId="1" Guid="978C0ED8-C000-4D6C-AFE0-C2DFCF3DAD77">
+              <File Id="GMODULE_2.DLL" Name="gmodule-2.dll" Source="..\..\piql_ingest_1.0.2\php\gmodule-2.dll" />
+            </Component>
+            <Component Id="ICUDT57.DLL" DiskId="1" Guid="25C183BF-1F59-4E37-9DBD-1AE838F327B6">
+              <File Id="ICUDT57.DLL" Name="icudt57.dll" Source="..\..\piql_ingest_1.0.2\php\icudt57.dll" />
+            </Component>
+            <Component Id="ICUIN57.DLL" DiskId="1" Guid="6AE64852-5043-4C84-B0AE-692E62A54084">
+              <File Id="ICUIN57.DLL" Name="icuin57.dll" Source="..\..\piql_ingest_1.0.2\php\icuin57.dll" />
+            </Component>
+            <Component Id="ICUIO57.DLL" DiskId="1" Guid="0E21E60E-8A0E-4FE9-B071-9B5F5E8DEF70">
+              <File Id="ICUIO57.DLL" Name="icuio57.dll" Source="..\..\piql_ingest_1.0.2\php\icuio57.dll" />
+            </Component>
+            <Component Id="ICULE57.DLL" DiskId="1" Guid="49C78076-D9CE-47C7-AAE1-681FD92299B3">
+              <File Id="ICULE57.DLL" Name="icule57.dll" Source="..\..\piql_ingest_1.0.2\php\icule57.dll" />
+            </Component>
+            <Component Id="ICULX57.DLL" DiskId="1" Guid="72050F94-9ABA-4A5C-9E78-543C40B1B7B3">
+              <File Id="ICULX57.DLL" Name="iculx57.dll" Source="..\..\piql_ingest_1.0.2\php\iculx57.dll" />
+            </Component>
+            <Component Id="ICUUC57.DLL" DiskId="1" Guid="F46E23AB-A256-4B0C-A839-152697DC54F9">
+              <File Id="ICUUC57.DLL" Name="icuuc57.dll" Source="..\..\piql_ingest_1.0.2\php\icuuc57.dll" />
+            </Component>
+            <Component Id="INSTALL.TXT" DiskId="1" Guid="59C18E59-87FB-4474-9483-3AA278E04C19">
+              <File Id="INSTALL.TXT" Name="install.txt" Source="..\..\piql_ingest_1.0.2\php\install.txt" />
+            </Component>
+            <Component Id="LIBEAY32.DLL" DiskId="1" Guid="2D6ECFCB-14CE-40C7-AFBD-5E3658880B3E">
+              <File Id="LIBEAY32.DLL" Name="libeay32.dll" Source="..\..\piql_ingest_1.0.2\php\libeay32.dll" />
+            </Component>
+            <Component Id="LIBENCHANT.DLL" DiskId="1" Guid="1D56230E-A9B4-4993-B6DB-176476EDB907">
+              <File Id="LIBENCHANT.DLL" Name="libenchant.dll" Source="..\..\piql_ingest_1.0.2\php\libenchant.dll" />
+            </Component>
+            <Component Id="LIBPQ.DLL" DiskId="1" Guid="9F7FF6F1-1976-41A1-A7DF-7502B1C6C038">
+              <File Id="LIBPQ.DLL" Name="libpq.dll" Source="..\..\piql_ingest_1.0.2\php\libpq.dll" />
+            </Component>
+            <Component Id="LIBSASL.DLL" DiskId="1" Guid="1649FDB1-430C-4C2C-980C-9ABA99F43C36">
+              <File Id="LIBSASL.DLL" Name="libsasl.dll" Source="..\..\piql_ingest_1.0.2\php\libsasl.dll" />
+            </Component>
+            <Component Id="LIBSSH2.DLL" DiskId="1" Guid="F5F4F369-5C02-4829-9498-D86CC667EBF3">
+              <File Id="LIBSSH2.DLL" Name="libssh2.dll" Source="..\..\piql_ingest_1.0.2\php\libssh2.dll" />
+            </Component>
+            <Component Id="LICENSE.TXT" DiskId="1" Guid="175847D4-8BB5-420E-8D13-62D61E88EDB6">
+              <File Id="LICENSE.TXT" Name="license.txt" Source="..\..\piql_ingest_1.0.2\php\license.txt" />
+            </Component>
+            <Component Id="NEWS.TXT" DiskId="1" Guid="5B2AAA3F-A942-4898-B6EC-0E99544BF288">
+              <File Id="NEWS.TXT" Name="news.txt" Source="..\..\piql_ingest_1.0.2\php\news.txt" />
+            </Component>
+            <Component Id="NGHTTP2.DLL" DiskId="1" Guid="74D0A754-BD36-4963-8471-85517CA183B8">
+              <File Id="NGHTTP2.DLL" Name="nghttp2.dll" Source="..\..\piql_ingest_1.0.2\php\nghttp2.dll" />
+            </Component>
+            <Component Id="PHAR.PHAR.BAT" DiskId="1" Guid="FC32DCDC-1913-4C92-8403-EE2A30E4B6FC">
+              <File Id="PHAR.PHAR.BAT" Name="phar.phar.bat" Source="..\..\piql_ingest_1.0.2\php\phar.phar.bat" />
+            </Component>
+            <Component Id="PHARCOMMAND.PHAR" DiskId="1" Guid="3C6E2146-1EE4-49B2-8127-0B5E342B76EA">
+              <File Id="PHARCOMMAND.PHAR" Name="pharcommand.phar" Source="..\..\piql_ingest_1.0.2\php\pharcommand.phar" />
+            </Component>
+            <Component Id="PHP_CGI.EXE" DiskId="1" Guid="C5068821-E421-426A-A820-6DE41A2CDC54">
+              <File Id="PHP_CGI.EXE" Name="php-cgi.exe" Source="..\..\piql_ingest_1.0.2\php\php-cgi.exe" />
+            </Component>
+            <Component Id="PHP_WIN.EXE" DiskId="1" Guid="2F349924-15D0-4465-A6C2-DB916B7790C7">
+              <File Id="PHP_WIN.EXE" Name="php-win.exe" Source="..\..\piql_ingest_1.0.2\php\php-win.exe" />
+            </Component>
+            <Component Id="PHP.EXE" DiskId="1" Guid="0C5F0DE1-2E50-4C87-BA46-F2462D332F56">
+              <File Id="PHP.EXE" Name="php.exe" Source="..\..\piql_ingest_1.0.2\php\php.exe" />
+            </Component>
+            <Component Id="PHP.GIF" DiskId="1" Guid="83B62BA0-7E05-4B67-80FA-E597DD09E641">
+              <File Id="PHP.GIF" Name="php.gif" Source="..\..\piql_ingest_1.0.2\php\php.gif" />
+            </Component>
+            <Component Id="PHP.INI" DiskId="1" Guid="14D60F43-D3B2-4FAE-ACC0-8E2BA7C8B5D2">
+              <File Id="PHP.INI" Name="php.ini" Source="..\..\piql_ingest_1.0.2\php\php.ini" />
+            </Component>
+            <Component Id="PHP.INI_DEVELOPMENT" DiskId="1" Guid="33055CFE-004F-4CDE-9147-050E290FC45C">
+              <File Id="PHP.INI_DEVELOPMENT" Name="php.ini-development" Source="..\..\piql_ingest_1.0.2\php\php.ini-development" />
+            </Component>
+            <Component Id="PHP.INI_PRODUCTION" DiskId="1" Guid="12545B09-9017-414B-9FAD-5F3043BBF6B3">
+              <File Id="PHP.INI_PRODUCTION" Name="php.ini-production" Source="..\..\piql_ingest_1.0.2\php\php.ini-production" />
+            </Component>
+            <Component Id="PHP7APACHE2_4.DLL" DiskId="1" Guid="37DBC491-AD8B-4BF8-B1CA-07BE2189B412">
+              <File Id="PHP7APACHE2_4.DLL" Name="php7apache2_4.dll" Source="..\..\piql_ingest_1.0.2\php\php7apache2_4.dll" />
+            </Component>
+            <Component Id="PHP7EMBED.LIB" DiskId="1" Guid="C1E316CF-7E3A-485F-9DA8-F1F811030283">
+              <File Id="PHP7EMBED.LIB" Name="php7embed.lib" Source="..\..\piql_ingest_1.0.2\php\php7embed.lib" />
+            </Component>
+            <Component Id="PHP7PHPDBG.DLL" DiskId="1" Guid="D899401A-32B5-49DD-8136-53A2FE520F90">
+              <File Id="PHP7PHPDBG.DLL" Name="php7phpdbg.dll" Source="..\..\piql_ingest_1.0.2\php\php7phpdbg.dll" />
+            </Component>
+            <Component Id="PHP7TS.DLL" DiskId="1" Guid="0764ABF0-4E67-455E-A35D-198DABEFA873">
+              <File Id="PHP7TS.DLL" Name="php7ts.dll" Source="..\..\piql_ingest_1.0.2\php\php7ts.dll" />
+            </Component>
+            <Component Id="PHPDBG.EXE" DiskId="1" Guid="1F965152-9184-4371-9553-B2E686DBE7C1">
+              <File Id="PHPDBG.EXE" Name="phpdbg.exe" Source="..\..\piql_ingest_1.0.2\php\phpdbg.exe" />
+            </Component>
+            <Component Id="README_REDIST_BINS.TXT" DiskId="1" Guid="2CED39B0-909E-4E2A-8972-FF4CED840BFA">
+              <File Id="README_REDIST_BINS.TXT" Name="readme-redist-bins.txt" Source="..\..\piql_ingest_1.0.2\php\readme-redist-bins.txt" />
+            </Component>
+            <Component Id="SNAPSHOT.TXT" DiskId="1" Guid="42373F8B-158B-4D61-BE9B-307426798E1B">
+              <File Id="SNAPSHOT.TXT" Name="snapshot.txt" Source="..\..\piql_ingest_1.0.2\php\snapshot.txt" />
+            </Component>
+            <Component Id="SSLEAY32.DLL" DiskId="1" Guid="FE851C62-0DA7-428E-94FC-13BFBF98D98D">
+              <File Id="SSLEAY32.DLL" Name="ssleay32.dll" Source="..\..\piql_ingest_1.0.2\php\ssleay32.dll" />
+            </Component>
+            <Directory Id="DEV" Name="dev">
+              <Component Id="PHP7TS.LIB" DiskId="1" Guid="B961A0A9-2724-40EA-A9C2-3AE44330D196">
+                <File Id="PHP7TS.LIB" Name="php7ts.lib" Source="..\..\piql_ingest_1.0.2\php\dev\php7ts.lib" />
+              </Component>
+            </Directory>
+            <Directory Id="EXT" Name="ext">
+              <Component Id="COMPOSER.JSON" DiskId="1" Guid="AE20CC3A-C43A-46EF-80C7-96777F5E9462">
+                <File Id="COMPOSER.JSON" Name="composer.json" Source="..\..\piql_ingest_1.0.2\php\ext\composer.json" />
+              </Component>
+              <Component Id="LICENSE" DiskId="1" Guid="6E60EBBA-C545-4502-B448-0216FB8F2E16">
+                <File Id="LICENSE" Name="LICENSE" Source="..\..\piql_ingest_1.0.2\php\ext\LICENSE" />
+              </Component>
+              <Component Id="PHP_BZ2.DLL" DiskId="1" Guid="2F3D8AC2-A345-464D-BEDA-0E5A28B70B49">
+                <File Id="PHP_BZ2.DLL" Name="php_bz2.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_bz2.dll" />
+              </Component>
+              <Component Id="PHP_COM_DOTNET.DLL" DiskId="1" Guid="0FFCC993-B3D5-47A5-9005-EA8E1BFFCC64">
+                <File Id="PHP_COM_DOTNET.DLL" Name="php_com_dotnet.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_com_dotnet.dll" />
+              </Component>
+              <Component Id="PHP_CURL.DLL" DiskId="1" Guid="D3F35DD0-B926-49F2-87E7-D02DC72081F0">
+                <File Id="PHP_CURL.DLL" Name="php_curl.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_curl.dll" />
+              </Component>
+              <Component Id="PHP_ENCHANT.DLL" DiskId="1" Guid="2C7D9923-A3BE-4F12-B42F-2BBA9C6196A2">
+                <File Id="PHP_ENCHANT.DLL" Name="php_enchant.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_enchant.dll" />
+              </Component>
+              <Component Id="PHP_EXIF.DLL" DiskId="1" Guid="AB5F3283-2C3B-4DFD-8A67-CC2E2ECCC343">
+                <File Id="PHP_EXIF.DLL" Name="php_exif.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_exif.dll" />
+              </Component>
+              <Component Id="PHP_FILEINFO.DLL" DiskId="1" Guid="1244CDB0-667E-4CE6-A67F-3EC54D636F79">
+                <File Id="PHP_FILEINFO.DLL" Name="php_fileinfo.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_fileinfo.dll" />
+              </Component>
+              <Component Id="PHP_FTP.DLL" DiskId="1" Guid="69A13568-2538-4EA3-8713-D4800029EF81">
+                <File Id="PHP_FTP.DLL" Name="php_ftp.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_ftp.dll" />
+              </Component>
+              <Component Id="PHP_GD2.DLL" DiskId="1" Guid="D829E595-7F5F-48AC-9C03-7BC9ADC7AAE9">
+                <File Id="PHP_GD2.DLL" Name="php_gd2.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_gd2.dll" />
+              </Component>
+              <Component Id="PHP_GETTEXT.DLL" DiskId="1" Guid="A4BD1862-4791-41E7-A530-36846FBC4911">
+                <File Id="PHP_GETTEXT.DLL" Name="php_gettext.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_gettext.dll" />
+              </Component>
+              <Component Id="PHP_GMP.DLL" DiskId="1" Guid="F8D570EE-4061-4DDB-917B-42A76CC859FA">
+                <File Id="PHP_GMP.DLL" Name="php_gmp.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_gmp.dll" />
+              </Component>
+              <Component Id="PHP_IMAP.DLL" DiskId="1" Guid="8C524C5D-8433-4C8C-89C1-BB9480192A9E">
+                <File Id="PHP_IMAP.DLL" Name="php_imap.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_imap.dll" />
+              </Component>
+              <Component Id="PHP_INTERBASE.DLL" DiskId="1" Guid="92CCFF6D-427C-47AD-B3CA-CCFF931D4644">
+                <File Id="PHP_INTERBASE.DLL" Name="php_interbase.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_interbase.dll" />
+              </Component>
+              <Component Id="PHP_INTL.DLL" DiskId="1" Guid="7953199A-638E-4815-B7D6-5B4522E8E38B">
+                <File Id="PHP_INTL.DLL" Name="php_intl.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_intl.dll" />
+              </Component>
+              <Component Id="PHP_LDAP.DLL" DiskId="1" Guid="E5D73D4C-E2AB-40F2-B505-F59CCF0976BA">
+                <File Id="PHP_LDAP.DLL" Name="php_ldap.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_ldap.dll" />
+              </Component>
+              <Component Id="PHP_MBSTRING.DLL" DiskId="1" Guid="196183FD-B409-435E-8DE8-AB8C48125D85">
+                <File Id="PHP_MBSTRING.DLL" Name="php_mbstring.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_mbstring.dll" />
+              </Component>
+              <Component Id="PHP_MYSQLI.DLL" DiskId="1" Guid="3BDBA9D1-C38D-48A9-82E4-4066AAAF1565">
+                <File Id="PHP_MYSQLI.DLL" Name="php_mysqli.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_mysqli.dll" />
+              </Component>
+              <Component Id="PHP_OCI8_12C.DLL" DiskId="1" Guid="C844F402-A217-4F88-9083-E918E0EBF87B">
+                <File Id="PHP_OCI8_12C.DLL" Name="php_oci8_12c.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_oci8_12c.dll" />
+              </Component>
+              <Component Id="PHP_ODBC.DLL" DiskId="1" Guid="C2BBCDC2-DB36-410D-AC34-8A11EEEA5683">
+                <File Id="PHP_ODBC.DLL" Name="php_odbc.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_odbc.dll" />
+              </Component>
+              <Component Id="PHP_OPCACHE.DLL" DiskId="1" Guid="6E5CC31C-45CD-434F-8C64-D49BCDF4D1FF">
+                <File Id="PHP_OPCACHE.DLL" Name="php_opcache.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_opcache.dll" />
+              </Component>
+              <Component Id="PHP_OPENSSL.DLL" DiskId="1" Guid="97AB5B9A-7A61-45C4-BD9E-1EFAE393B5D6">
+                <File Id="PHP_OPENSSL.DLL" Name="php_openssl.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_openssl.dll" />
+              </Component>
+              <Component Id="PHP_PDO_FIREBIRD.DLL" DiskId="1" Guid="007E6E34-5A21-4216-BFC9-07E99A957B63">
+                <File Id="PHP_PDO_FIREBIRD.DLL" Name="php_pdo_firebird.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pdo_firebird.dll" />
+              </Component>
+              <Component Id="PHP_PDO_MYSQL.DLL" DiskId="1" Guid="253EFFCE-F0FA-4490-82D5-5498F0EE526A">
+                <File Id="PHP_PDO_MYSQL.DLL" Name="php_pdo_mysql.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pdo_mysql.dll" />
+              </Component>
+              <Component Id="PHP_PDO_OCI.DLL" DiskId="1" Guid="0519F00D-D1B8-4BDF-9A50-D848435865D9">
+                <File Id="PHP_PDO_OCI.DLL" Name="php_pdo_oci.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pdo_oci.dll" />
+              </Component>
+              <Component Id="PHP_PDO_ODBC.DLL" DiskId="1" Guid="5E51CDCE-25AE-4554-A251-FCDB0A7E5373">
+                <File Id="PHP_PDO_ODBC.DLL" Name="php_pdo_odbc.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pdo_odbc.dll" />
+              </Component>
+              <Component Id="PHP_PDO_PGSQL.DLL" DiskId="1" Guid="949BA306-192D-496E-9E87-E9036CF2B92E">
+                <File Id="PHP_PDO_PGSQL.DLL" Name="php_pdo_pgsql.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pdo_pgsql.dll" />
+              </Component>
+              <Component Id="PHP_PDO_SQLITE.DLL" DiskId="1" Guid="2C6FA2B3-122A-4F60-9CCC-8F7811CB56DC">
+                <File Id="PHP_PDO_SQLITE.DLL" Name="php_pdo_sqlite.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pdo_sqlite.dll" />
+              </Component>
+              <Component Id="PHP_PGSQL.DLL" DiskId="1" Guid="7F259C30-F9FB-4EE6-816E-C25E67F57253">
+                <File Id="PHP_PGSQL.DLL" Name="php_pgsql.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_pgsql.dll" />
+              </Component>
+              <Component Id="PHP_PHPDBG_WEBHELPER.DLL" DiskId="1" Guid="8EFA63F0-3CAF-4D34-B61B-F0A3CC015276">
+                <File Id="PHP_PHPDBG_WEBHELPER.DLL" Name="php_phpdbg_webhelper.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_phpdbg_webhelper.dll" />
+              </Component>
+              <Component Id="PHP_SHMOP.DLL" DiskId="1" Guid="C23EC06B-79EE-4277-81B3-999201953793">
+                <File Id="PHP_SHMOP.DLL" Name="php_shmop.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_shmop.dll" />
+              </Component>
+              <Component Id="PHP_SNMP.DLL" DiskId="1" Guid="8CD026C4-39BE-4E84-812C-FBEBE377A6B0">
+                <File Id="PHP_SNMP.DLL" Name="php_snmp.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_snmp.dll" />
+              </Component>
+              <Component Id="PHP_SOAP.DLL" DiskId="1" Guid="C2CD543A-1B25-4B2C-B17C-7C3E7777C422">
+                <File Id="PHP_SOAP.DLL" Name="php_soap.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_soap.dll" />
+              </Component>
+              <Component Id="PHP_SOCKETS.DLL" DiskId="1" Guid="1196483D-43F5-477E-94CF-1314F22F3A64">
+                <File Id="PHP_SOCKETS.DLL" Name="php_sockets.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_sockets.dll" />
+              </Component>
+              <Component Id="PHP_SQLITE3.DLL" DiskId="1" Guid="F0E141DD-035C-47FC-961B-CD444984177F">
+                <File Id="PHP_SQLITE3.DLL" Name="php_sqlite3.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_sqlite3.dll" />
+              </Component>
+              <Component Id="PHP_SSH2.DLL" DiskId="1" Guid="103BD82F-EE5C-405C-BFF2-BFB7ABA62F8C">
+                <File Id="PHP_SSH2.DLL" Name="php_ssh2.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_ssh2.dll" />
+              </Component>
+              <Component Id="PHP_SSH2.PDB" DiskId="1" Guid="DCDDDB67-3950-405F-B8AC-D16FE7CBBFD6">
+                <File Id="PHP_SSH2.PDB" Name="php_ssh2.pdb" Source="..\..\piql_ingest_1.0.2\php\ext\php_ssh2.pdb" />
+              </Component>
+              <Component Id="PHP_SYSVSHM.DLL" DiskId="1" Guid="8DE2B646-A934-4D4C-A140-64DB75BAF009">
+                <File Id="PHP_SYSVSHM.DLL" Name="php_sysvshm.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_sysvshm.dll" />
+              </Component>
+              <Component Id="PHP_TIDY.DLL" DiskId="1" Guid="1EFA58B4-5A34-4948-860B-08DC5DAA1B06">
+                <File Id="PHP_TIDY.DLL" Name="php_tidy.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_tidy.dll" />
+              </Component>
+              <Component Id="PHP_XMLRPC.DLL" DiskId="1" Guid="43EC721A-59A3-4232-991A-EBD7D42FA1EE">
+                <File Id="PHP_XMLRPC.DLL" Name="php_xmlrpc.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_xmlrpc.dll" />
+              </Component>
+              <Component Id="PHP_XSL.DLL" DiskId="1" Guid="06C5504D-6A20-4AFB-9F4D-E6AC54CE935F">
+                <File Id="PHP_XSL.DLL" Name="php_xsl.dll" Source="..\..\piql_ingest_1.0.2\php\ext\php_xsl.dll" />
+              </Component>
+            </Directory>
+            <Directory Id="EXTRAS" Name="extras">
+              <Directory Id="SSL" Name="ssl">
+                <Component Id="OPENSSL.CNF" DiskId="1" Guid="856F9304-3F7A-4171-8AED-B22EEC0B4656">
+                  <File Id="OPENSSL.CNF" Name="openssl.cnf" Source="..\..\piql_ingest_1.0.2\php\extras\ssl\openssl.cnf" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="LIB" Name="lib">
+              <Directory Id="ENCHANT" Name="enchant">
+                <Component Id="LIBENCHANT_ISPELL.DLL" DiskId="1" Guid="84D0B14D-F6A6-484D-952F-B0A5D418AE82">
+                  <File Id="LIBENCHANT_ISPELL.DLL" Name="libenchant_ispell.dll" Source="..\..\piql_ingest_1.0.2\php\lib\enchant\libenchant_ispell.dll" />
+                </Component>
+                <Component Id="LIBENCHANT_MYSPELL.DLL" DiskId="1" Guid="6C646FCE-D6BF-426E-A0F3-EAB47473A6C0">
+                  <File Id="LIBENCHANT_MYSPELL.DLL" Name="libenchant_myspell.dll" Source="..\..\piql_ingest_1.0.2\php\lib\enchant\libenchant_myspell.dll" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="SASL2" Name="sasl2">
+              <Component Id="SASLANONYMOUS.DLL" DiskId="1" Guid="BBE804B0-B216-4408-822C-BF5A887F02B6">
+                <File Id="SASLANONYMOUS.DLL" Name="saslANONYMOUS.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslANONYMOUS.dll" />
+              </Component>
+              <Component Id="SASLCRAMMD5.DLL" DiskId="1" Guid="3C646937-88F9-4A6E-8FB2-C7A9E653C3CD">
+                <File Id="SASLCRAMMD5.DLL" Name="saslCRAMMD5.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslCRAMMD5.dll" />
+              </Component>
+              <Component Id="SASLDIGESTMD5.DLL" DiskId="1" Guid="E3032523-BAB6-4944-815C-FB1E2719255F">
+                <File Id="SASLDIGESTMD5.DLL" Name="saslDIGESTMD5.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslDIGESTMD5.dll" />
+              </Component>
+              <Component Id="SASLLOGIN.DLL" DiskId="1" Guid="1C183090-B586-488E-A23F-C8EDE764231D">
+                <File Id="SASLLOGIN.DLL" Name="saslLOGIN.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslLOGIN.dll" />
+              </Component>
+              <Component Id="SASLNTLM.DLL" DiskId="1" Guid="8DAC95A5-0F71-4397-9E0C-A15E47D8FB19">
+                <File Id="SASLNTLM.DLL" Name="saslNTLM.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslNTLM.dll" />
+              </Component>
+              <Component Id="SASLOTP.DLL" DiskId="1" Guid="1A65ED92-A177-46DA-9C13-A8EF3339D2BF">
+                <File Id="SASLOTP.DLL" Name="saslOTP.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslOTP.dll" />
+              </Component>
+              <Component Id="SASLPLAIN.DLL" DiskId="1" Guid="B8F3C480-3341-4691-9713-21843165EC46">
+                <File Id="SASLPLAIN.DLL" Name="saslPLAIN.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslPLAIN.dll" />
+              </Component>
+              <Component Id="SASLSCRAM.DLL" DiskId="1" Guid="38CFC496-A82B-42FD-B75D-ED7FFD065684">
+                <File Id="SASLSCRAM.DLL" Name="saslSCRAM.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslSCRAM.dll" />
+              </Component>
+              <Component Id="SASLSQLITE.DLL" DiskId="1" Guid="DCB22A2D-2D97-4A77-815D-F6B41657FDA2">
+                <File Id="SASLSQLITE.DLL" Name="saslSQLITE.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslSQLITE.dll" />
+              </Component>
+              <Component Id="SASLSRP.DLL" DiskId="1" Guid="42DFA655-F0F2-4F59-81AB-D800BED723CD">
+                <File Id="SASLSRP.DLL" Name="saslSRP.dll" Source="..\..\piql_ingest_1.0.2\php\sasl2\saslSRP.dll" />
+              </Component>
+            </Directory>
+          </Directory>
+          <Directory Id="PLATFORMS" Name="platforms">
+            <Component Id="QWINDOWS.DLL" DiskId="1" Guid="E5F95991-C891-4AC6-8013-36EB8CE08917">
+              <File Id="QWINDOWS.DLL" Name="qwindows.dll" Source="..\..\piql_ingest_1.0.2\platforms\qwindows.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="STYLES" Name="styles">
+            <Component Id="QWINDOWSVISTASTYLE.DLL" DiskId="1" Guid="D6A45FD8-A180-42F4-A9C2-D86BF90730E2">
+              <File Id="QWINDOWSVISTASTYLE.DLL" Name="qwindowsvistastyle.dll" Source="..\..\piql_ingest_1.0.2\styles\qwindowsvistastyle.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="THIRDPARTY" Name="thirdparty">
+            <Directory Id="METSGEN" Name="metsgen">
+              <Component Id="GENREPMETS.PY" DiskId="1" Guid="6E00B921-24C4-45D1-8F8D-91B4C8EAF533">
+                <File Id="GENREPMETS.PY" Name="genrepmets.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\genrepmets.py" />
+              </Component>
+              <Component Id="GENROOTMETS.PY" DiskId="1" Guid="3C64A9C3-15DD-4F91-A37E-60850BA45155">
+                <File Id="GENROOTMETS.PY" Name="genrootmets.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\genrootmets.py" />
+              </Component>
+              <Component Id="README.TXT" DiskId="1" Guid="EBAB3449-B822-4D47-85E0-8396CAAFE6C4">
+                <File Id="README.TXT" Name="README.txt" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\README.txt" />
+              </Component>
+              <Directory Id="METSRWREP" Name="metsrwrep">
+                <Component Id="DI.PY" DiskId="1" Guid="61B95BAF-A7A7-44F6-85F7-D7B5281226E7">
+                  <File Id="DI.PY" Name="di.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\di.py" />
+                </Component>
+                <Component Id="EXCEPTIONS.PY" DiskId="1" Guid="5DEC9679-5155-46AB-8F5C-ECB001ECCB15">
+                  <File Id="EXCEPTIONS.PY" Name="exceptions.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\exceptions.py" />
+                </Component>
+                <Component Id="FSENTRY.PY" DiskId="1" Guid="3A771CDD-2C0A-49A6-BC22-E961949A9A0E">
+                  <File Id="FSENTRY.PY" Name="fsentry.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\fsentry.py" />
+                </Component>
+                <Component Id="METADATA.PY" DiskId="1" Guid="D97F76D6-401B-46C3-9E81-9D4EB52BEA66">
+                  <File Id="METADATA.PY" Name="metadata.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\metadata.py" />
+                </Component>
+                <Component Id="METS.PY" DiskId="1" Guid="1DBA6588-D130-4E8E-8BDC-36392A9CCB27">
+                  <File Id="METS.PY" Name="mets.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\mets.py" />
+                </Component>
+                <Component Id="UTILS.PY" DiskId="1" Guid="40169BE1-8B7A-498F-AC91-DBFE4A2F8096">
+                  <File Id="UTILS.PY" Name="utils.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\utils.py" />
+                </Component>
+                <Component Id="VALIDATE.PY" DiskId="1" Guid="3268493C-7B3F-4C30-AB9F-05392FC10605">
+                  <File Id="VALIDATE.PY" Name="validate.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\validate.py" />
+                </Component>
+                <Component Id="__INIT__.PY" DiskId="1" Guid="7B71D05B-4602-467F-86D3-44F2361225AD">
+                  <File Id="__INIT__.PY" Name="__init__.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__init__.py" />
+                </Component>
+                <Directory Id="_.IDEA" Name=".idea">
+                  <Component Id="_.GITIGNORE" DiskId="1" Guid="A2A2751F-6B80-45BD-9D17-11021DB2BDB7">
+                    <File Id="_.GITIGNORE" Name=".gitignore" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\.idea\.gitignore" />
+                  </Component>
+                  <Component Id="METSRW.IML" DiskId="1" Guid="26A25554-7379-492B-BAB3-BAF6034E9407">
+                    <File Id="METSRW.IML" Name="metsrw.iml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\.idea\metsrw.iml" />
+                  </Component>
+                  <Component Id="MISC.XML" DiskId="1" Guid="F01655D4-80FC-4E7E-B2D7-01A7D8B64749">
+                    <File Id="MISC.XML" Name="misc.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\.idea\misc.xml" />
+                  </Component>
+                  <Component Id="MODULES.XML" DiskId="1" Guid="3E987C69-16BC-4C41-B65A-CB42526D4CF4">
+                    <File Id="MODULES.XML" Name="modules.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\.idea\modules.xml" />
+                  </Component>
+                  <Component Id="WORKSPACE.XML" DiskId="1" Guid="A3A1D680-25B5-4B71-857C-B8401ECA4B7F">
+                    <File Id="WORKSPACE.XML" Name="workspace.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\.idea\workspace.xml" />
+                  </Component>
+                  <Directory Id="INSPECTIONPROFILES" Name="inspectionProfiles">
+                    <Component Id="PROFILES_SETTINGS.XML" DiskId="1" Guid="ED206CD4-CC3E-4ABC-950F-99DC10A1BD19">
+                      <File Id="PROFILES_SETTINGS.XML" Name="profiles_settings.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\.idea\inspectionProfiles\profiles_settings.xml" />
+                    </Component>
+                  </Directory>
+                </Directory>
+                <Directory Id="PLUGINS" Name="plugins">
+                  <Component Id="__INIT__.PY_1" DiskId="1" Guid="68DC8EED-1D4B-49AA-AAFB-8096E1217324">
+                    <File Id="__INIT__.PY_1" Name="__init__.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\__init__.py" />
+                  </Component>
+                  <Directory Id="PREMISRW" Name="premisrw">
+                    <Component Id="PREMIS.PY" DiskId="1" Guid="E6052B79-5706-4DF7-B6DE-19B4A42CBECD">
+                      <File Id="PREMIS.PY" Name="premis.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\premis.py" />
+                    </Component>
+                    <Component Id="README.RST" DiskId="1" Guid="6976C6AC-AFC8-44B4-A20C-876193E42B82">
+                      <File Id="README.RST" Name="README.rst" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\README.rst" />
+                    </Component>
+                    <Component Id="UTILS.PY_1" DiskId="1" Guid="375123D0-E981-4737-A2EC-C3680DA99A69">
+                      <File Id="UTILS.PY_1" Name="utils.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\utils.py" />
+                    </Component>
+                    <Component Id="__INIT__.PY_2" DiskId="1" Guid="725F0512-A41B-4796-8860-AB53E0AF4E09">
+                      <File Id="__INIT__.PY_2" Name="__init__.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__init__.py" />
+                    </Component>
+                    <Directory Id="__PYCACHE__" Name="__pycache__">
+                      <Component Id="PREMIS.CPYTHON_36.PYC" DiskId="1" Guid="1DF30267-C956-4830-B85B-B39E6608BB02">
+                        <File Id="PREMIS.CPYTHON_36.PYC" Name="premis.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__pycache__\premis.cpython-36.pyc" />
+                      </Component>
+                      <Component Id="PREMIS.CPYTHON_38.PYC" DiskId="1" Guid="DE31E91B-8FA2-4603-ABA6-34B0A834D8A3">
+                        <File Id="PREMIS.CPYTHON_38.PYC" Name="premis.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__pycache__\premis.cpython-38.pyc" />
+                      </Component>
+                      <Component Id="UTILS.CPYTHON_36.PYC" DiskId="1" Guid="5A06473E-69E1-4A0F-9C1F-8CEE31F04614">
+                        <File Id="UTILS.CPYTHON_36.PYC" Name="utils.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__pycache__\utils.cpython-36.pyc" />
+                      </Component>
+                      <Component Id="UTILS.CPYTHON_38.PYC" DiskId="1" Guid="E7EE0585-3ACF-4C0D-98A1-0540044ECE99">
+                        <File Id="UTILS.CPYTHON_38.PYC" Name="utils.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__pycache__\utils.cpython-38.pyc" />
+                      </Component>
+                      <Component Id="__INIT__.CPYTHON_36.PYC" DiskId="1" Guid="E406AACE-4AE9-48D5-A601-A0F9C8932878">
+                        <File Id="__INIT__.CPYTHON_36.PYC" Name="__init__.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__pycache__\__init__.cpython-36.pyc" />
+                      </Component>
+                      <Component Id="__INIT__.CPYTHON_38.PYC" DiskId="1" Guid="6BBBF6A2-FF9F-4362-9D4E-D736760BE887">
+                        <File Id="__INIT__.CPYTHON_38.PYC" Name="__init__.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\premisrw\__pycache__\__init__.cpython-38.pyc" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                  <Directory Id="__PYCACHE___1" Name="__pycache__">
+                    <Component Id="__INIT__.CPYTHON_36.PYC_1" DiskId="1" Guid="C0F700B6-0776-4BDB-8390-EB88373749F4">
+                      <File Id="__INIT__.CPYTHON_36.PYC_1" Name="__init__.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\__pycache__\__init__.cpython-36.pyc" />
+                    </Component>
+                    <Component Id="__INIT__.CPYTHON_38.PYC_1" DiskId="1" Guid="CAE694C8-C5E7-46F0-AB98-446364E315F2">
+                      <File Id="__INIT__.CPYTHON_38.PYC_1" Name="__init__.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\plugins\__pycache__\__init__.cpython-38.pyc" />
+                    </Component>
+                  </Directory>
+                </Directory>
+                <Directory Id="RESOURCES" Name="resources">
+                  <Component Id="ARCHIVEMATICA_METS_POINTER_FILE_SCHEMATRON.XML" DiskId="1" Guid="C791A769-5BB5-4B7D-8D92-2CAA9FD9065E">
+                    <File Id="ARCHIVEMATICA_METS_POINTER_FILE_SCHEMATRON.XML" Name="archivematica_mets_pointer_file_schematron.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\resources\archivematica_mets_pointer_file_schematron.xml" />
+                  </Component>
+                  <Component Id="ARCHIVEMATICA_METS_SCHEMATRON.XML" DiskId="1" Guid="2C4C384F-CCD9-4899-B666-FB2767217B7E">
+                    <File Id="ARCHIVEMATICA_METS_SCHEMATRON.XML" Name="archivematica_mets_schematron.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\resources\archivematica_mets_schematron.xml" />
+                  </Component>
+                  <Component Id="METS.XSD" DiskId="1" Guid="D8416188-B2DD-48B5-A6D9-0257CEA6D492">
+                    <File Id="METS.XSD" Name="mets.xsd" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\resources\mets.xsd" />
+                  </Component>
+                </Directory>
+                <Directory Id="__PYCACHE___2" Name="__pycache__">
+                  <Component Id="DI.CPYTHON_36.PYC" DiskId="1" Guid="ABA6CA31-F265-4895-8E01-07A3635568D7">
+                    <File Id="DI.CPYTHON_36.PYC" Name="di.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\di.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="DI.CPYTHON_38.PYC" DiskId="1" Guid="09955EBE-FEF2-4744-99AC-50E8A2653EA5">
+                    <File Id="DI.CPYTHON_38.PYC" Name="di.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\di.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="EXCEPTIONS.CPYTHON_36.PYC" DiskId="1" Guid="89879A78-A113-4174-B4CD-FD4DD2829CBA">
+                    <File Id="EXCEPTIONS.CPYTHON_36.PYC" Name="exceptions.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\exceptions.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="EXCEPTIONS.CPYTHON_38.PYC" DiskId="1" Guid="F74E3BD1-F0AD-443C-BDBB-91CDA0B545DE">
+                    <File Id="EXCEPTIONS.CPYTHON_38.PYC" Name="exceptions.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\exceptions.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="FSENTRY.CPYTHON_36.PYC" DiskId="1" Guid="EFA2ADBA-738B-4B5D-95C2-406861868944">
+                    <File Id="FSENTRY.CPYTHON_36.PYC" Name="fsentry.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\fsentry.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="FSENTRY.CPYTHON_38.PYC" DiskId="1" Guid="019CB107-3706-4ACF-A8DD-6B0F2DE9C1E5">
+                    <File Id="FSENTRY.CPYTHON_38.PYC" Name="fsentry.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\fsentry.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="METADATA.CPYTHON_36.PYC" DiskId="1" Guid="CFF7E89F-EBDB-4134-BB67-61D9DDBAC2B5">
+                    <File Id="METADATA.CPYTHON_36.PYC" Name="metadata.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\metadata.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="METADATA.CPYTHON_38.PYC" DiskId="1" Guid="6CA8B6B5-829E-4816-8E4C-B130E2EF79FF">
+                    <File Id="METADATA.CPYTHON_38.PYC" Name="metadata.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\metadata.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="METS.CPYTHON_36.PYC" DiskId="1" Guid="AD97641F-5D7E-45AA-9392-4621EB056458">
+                    <File Id="METS.CPYTHON_36.PYC" Name="mets.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\mets.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="METS.CPYTHON_38.PYC" DiskId="1" Guid="E64FB64B-E4A7-47B3-B187-0B6210BA178C">
+                    <File Id="METS.CPYTHON_38.PYC" Name="mets.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\mets.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="UTILS.CPYTHON_36.PYC_1" DiskId="1" Guid="09C5D51D-E234-49C4-B9B1-073C87DDCFE4">
+                    <File Id="UTILS.CPYTHON_36.PYC_1" Name="utils.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\utils.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="UTILS.CPYTHON_38.PYC_1" DiskId="1" Guid="665611AE-7900-4FC8-921F-711A41C48F02">
+                    <File Id="UTILS.CPYTHON_38.PYC_1" Name="utils.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\utils.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="VALIDATE.CPYTHON_36.PYC" DiskId="1" Guid="72E3FCB6-6E06-46BA-B7ED-EDAC794814D1">
+                    <File Id="VALIDATE.CPYTHON_36.PYC" Name="validate.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\validate.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="VALIDATE.CPYTHON_38.PYC" DiskId="1" Guid="CAD0EAD7-2049-4FC7-85DE-45BFD4FF3FFA">
+                    <File Id="VALIDATE.CPYTHON_38.PYC" Name="validate.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\validate.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="__INIT__.CPYTHON_36.PYC_2" DiskId="1" Guid="2AB3FB9C-212E-489F-97BE-A4B40C89B3B4">
+                    <File Id="__INIT__.CPYTHON_36.PYC_2" Name="__init__.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\__init__.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="__INIT__.CPYTHON_38.PYC_2" DiskId="1" Guid="7A50542E-3258-41F4-9A8B-5E87D509A681">
+                    <File Id="__INIT__.CPYTHON_38.PYC_2" Name="__init__.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwrep\__pycache__\__init__.cpython-38.pyc" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="METSRWROOT" Name="metsrwroot">
+                <Component Id="DI.PY_1" DiskId="1" Guid="8D02A562-D439-4AF6-9771-80289012620D">
+                  <File Id="DI.PY_1" Name="di.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\di.py" />
+                </Component>
+                <Component Id="EXCEPTIONS.PY_1" DiskId="1" Guid="9B77B4F0-94C3-4457-AE99-9A9570426FD5">
+                  <File Id="EXCEPTIONS.PY_1" Name="exceptions.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\exceptions.py" />
+                </Component>
+                <Component Id="FSENTRY.PY_1" DiskId="1" Guid="D50D4426-D709-4A84-BF7E-C11A553EE045">
+                  <File Id="FSENTRY.PY_1" Name="fsentry.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\fsentry.py" />
+                </Component>
+                <Component Id="METADATA.PY_1" DiskId="1" Guid="98AAF49D-2712-4921-9BC5-4A9C357D36B8">
+                  <File Id="METADATA.PY_1" Name="metadata.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\metadata.py" />
+                </Component>
+                <Component Id="METS.PY_1" DiskId="1" Guid="FE8F7569-DA69-460C-8B12-0BFD80122563">
+                  <File Id="METS.PY_1" Name="mets.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\mets.py" />
+                </Component>
+                <Component Id="UTILS.PY_2" DiskId="1" Guid="38C9F5C9-8D2D-4E2A-9FCC-F154DC4A8E7E">
+                  <File Id="UTILS.PY_2" Name="utils.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\utils.py" />
+                </Component>
+                <Component Id="VALIDATE.PY_1" DiskId="1" Guid="2E3E0BAA-6035-4E87-8C6C-DA94CF391D75">
+                  <File Id="VALIDATE.PY_1" Name="validate.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\validate.py" />
+                </Component>
+                <Component Id="__INIT__.PY_3" DiskId="1" Guid="8FCEAFEC-904E-4A94-BDAE-EEF2328C4E93">
+                  <File Id="__INIT__.PY_3" Name="__init__.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__init__.py" />
+                </Component>
+                <Directory Id="_.IDEA_1" Name=".idea">
+                  <Component Id="_.GITIGNORE_1" DiskId="1" Guid="E31CB75A-DFDE-471E-ACF5-C33F2446C2B0">
+                    <File Id="_.GITIGNORE_1" Name=".gitignore" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\.idea\.gitignore" />
+                  </Component>
+                  <Component Id="METSRW.IML_1" DiskId="1" Guid="D7762FCB-B175-49E3-96A0-95ED110012B9">
+                    <File Id="METSRW.IML_1" Name="metsrw.iml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\.idea\metsrw.iml" />
+                  </Component>
+                  <Component Id="MISC.XML_1" DiskId="1" Guid="06CE2A53-BA91-429A-B584-99DF96E76A23">
+                    <File Id="MISC.XML_1" Name="misc.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\.idea\misc.xml" />
+                  </Component>
+                  <Component Id="MODULES.XML_1" DiskId="1" Guid="030B98FB-9F94-49ED-84F2-5F4DA1148C0A">
+                    <File Id="MODULES.XML_1" Name="modules.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\.idea\modules.xml" />
+                  </Component>
+                  <Component Id="WORKSPACE.XML_1" DiskId="1" Guid="2EA07138-8C61-4757-9336-BEB605D1146D">
+                    <File Id="WORKSPACE.XML_1" Name="workspace.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\.idea\workspace.xml" />
+                  </Component>
+                  <Directory Id="INSPECTIONPROFILES_1" Name="inspectionProfiles">
+                    <Component Id="PROFILES_SETTINGS.XML_1" DiskId="1" Guid="62DDCF2C-EBC3-43D5-8130-8DAC0C2F553D">
+                      <File Id="PROFILES_SETTINGS.XML_1" Name="profiles_settings.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\.idea\inspectionProfiles\profiles_settings.xml" />
+                    </Component>
+                  </Directory>
+                </Directory>
+                <Directory Id="PLUGINS_1" Name="plugins">
+                  <Component Id="__INIT__.PY_4" DiskId="1" Guid="EDBB0A6C-A779-4E81-8345-58FB17E6BEDD">
+                    <File Id="__INIT__.PY_4" Name="__init__.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\__init__.py" />
+                  </Component>
+                  <Directory Id="PREMISRW_1" Name="premisrw">
+                    <Component Id="PREMIS.PY_1" DiskId="1" Guid="651E7D9D-5FC3-49D6-BE76-94419F82A038">
+                      <File Id="PREMIS.PY_1" Name="premis.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\premis.py" />
+                    </Component>
+                    <Component Id="README.RST_1" DiskId="1" Guid="9BA6A8AA-AB46-4807-806E-847D33004120">
+                      <File Id="README.RST_1" Name="README.rst" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\README.rst" />
+                    </Component>
+                    <Component Id="UTILS.PY_3" DiskId="1" Guid="510DB2E0-342B-4D2A-A6F4-4F63F2F1AB5C">
+                      <File Id="UTILS.PY_3" Name="utils.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\utils.py" />
+                    </Component>
+                    <Component Id="__INIT__.PY_5" DiskId="1" Guid="B36ADDDC-1736-43E0-8B9A-BB155CB54871">
+                      <File Id="__INIT__.PY_5" Name="__init__.py" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__init__.py" />
+                    </Component>
+                    <Directory Id="__PYCACHE___3" Name="__pycache__">
+                      <Component Id="PREMIS.CPYTHON_36.PYC_1" DiskId="1" Guid="F0ED1643-9AFD-4BE1-87B1-86C82935F9C4">
+                        <File Id="PREMIS.CPYTHON_36.PYC_1" Name="premis.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__pycache__\premis.cpython-36.pyc" />
+                      </Component>
+                      <Component Id="PREMIS.CPYTHON_38.PYC_1" DiskId="1" Guid="3DF6B0F8-7C80-4839-8B16-7F1106671A19">
+                        <File Id="PREMIS.CPYTHON_38.PYC_1" Name="premis.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__pycache__\premis.cpython-38.pyc" />
+                      </Component>
+                      <Component Id="UTILS.CPYTHON_36.PYC_2" DiskId="1" Guid="F783A0CA-CB4F-4E05-A893-4B2FDAD5B8F1">
+                        <File Id="UTILS.CPYTHON_36.PYC_2" Name="utils.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__pycache__\utils.cpython-36.pyc" />
+                      </Component>
+                      <Component Id="UTILS.CPYTHON_38.PYC_2" DiskId="1" Guid="3914FA79-DC20-4587-B286-553724DA696B">
+                        <File Id="UTILS.CPYTHON_38.PYC_2" Name="utils.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__pycache__\utils.cpython-38.pyc" />
+                      </Component>
+                      <Component Id="__INIT__.CPYTHON_36.PYC_3" DiskId="1" Guid="B178A6D3-30D9-4AAB-B5B5-2C6F0DCA6D6C">
+                        <File Id="__INIT__.CPYTHON_36.PYC_3" Name="__init__.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__pycache__\__init__.cpython-36.pyc" />
+                      </Component>
+                      <Component Id="__INIT__.CPYTHON_38.PYC_3" DiskId="1" Guid="C53BEA46-364B-46F1-9709-FFF9781DCAB1">
+                        <File Id="__INIT__.CPYTHON_38.PYC_3" Name="__init__.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\premisrw\__pycache__\__init__.cpython-38.pyc" />
+                      </Component>
+                    </Directory>
+                  </Directory>
+                  <Directory Id="__PYCACHE___4" Name="__pycache__">
+                    <Component Id="__INIT__.CPYTHON_36.PYC_4" DiskId="1" Guid="5357363C-DB8B-4DA9-9C9B-C26C99C2E09D">
+                      <File Id="__INIT__.CPYTHON_36.PYC_4" Name="__init__.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\__pycache__\__init__.cpython-36.pyc" />
+                    </Component>
+                    <Component Id="__INIT__.CPYTHON_38.PYC_4" DiskId="1" Guid="1615BF49-605E-476A-A356-8E42AA923EF5">
+                      <File Id="__INIT__.CPYTHON_38.PYC_4" Name="__init__.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\plugins\__pycache__\__init__.cpython-38.pyc" />
+                    </Component>
+                  </Directory>
+                </Directory>
+                <Directory Id="RESOURCES_1" Name="resources">
+                  <Component Id="ARCHIVEMATICA_METS_POINTER_FILE_SCHEMATRON.XML_1" DiskId="1" Guid="25D83A56-41E4-45A1-8D17-3AC5ACD17609">
+                    <File Id="ARCHIVEMATICA_METS_POINTER_FILE_SCHEMATRON.XML_1" Name="archivematica_mets_pointer_file_schematron.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\resources\archivematica_mets_pointer_file_schematron.xml" />
+                  </Component>
+                  <Component Id="ARCHIVEMATICA_METS_SCHEMATRON.XML_1" DiskId="1" Guid="72582067-C73E-4217-A14A-0D92CCF6F184">
+                    <File Id="ARCHIVEMATICA_METS_SCHEMATRON.XML_1" Name="archivematica_mets_schematron.xml" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\resources\archivematica_mets_schematron.xml" />
+                  </Component>
+                  <Component Id="METS.XSD_1" DiskId="1" Guid="44BF631B-624B-43C3-AEEF-8ABD261E15CA">
+                    <File Id="METS.XSD_1" Name="mets.xsd" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\resources\mets.xsd" />
+                  </Component>
+                </Directory>
+                <Directory Id="__PYCACHE___5" Name="__pycache__">
+                  <Component Id="DI.CPYTHON_36.PYC_1" DiskId="1" Guid="FC683BEF-3187-485A-869B-6E9695171CD6">
+                    <File Id="DI.CPYTHON_36.PYC_1" Name="di.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\di.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="DI.CPYTHON_38.PYC_1" DiskId="1" Guid="04F10E8F-9069-4BE5-9F78-E5321660E8CA">
+                    <File Id="DI.CPYTHON_38.PYC_1" Name="di.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\di.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="EXCEPTIONS.CPYTHON_36.PYC_1" DiskId="1" Guid="4099BEE0-7747-46FE-A10E-081EEA632CA2">
+                    <File Id="EXCEPTIONS.CPYTHON_36.PYC_1" Name="exceptions.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\exceptions.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="EXCEPTIONS.CPYTHON_38.PYC_1" DiskId="1" Guid="45AC7C27-C371-43E0-9439-E0E6F4C6F064">
+                    <File Id="EXCEPTIONS.CPYTHON_38.PYC_1" Name="exceptions.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\exceptions.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="FSENTRY.CPYTHON_36.PYC_1" DiskId="1" Guid="2829F2D2-BBBE-4FA9-9201-B5E235835A37">
+                    <File Id="FSENTRY.CPYTHON_36.PYC_1" Name="fsentry.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\fsentry.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="FSENTRY.CPYTHON_38.PYC_1" DiskId="1" Guid="98A32EC2-112B-418B-A147-3993DAA29B98">
+                    <File Id="FSENTRY.CPYTHON_38.PYC_1" Name="fsentry.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\fsentry.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="METADATA.CPYTHON_36.PYC_1" DiskId="1" Guid="6C239E12-CD29-4D2E-8AE1-0512348DAF62">
+                    <File Id="METADATA.CPYTHON_36.PYC_1" Name="metadata.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\metadata.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="METADATA.CPYTHON_38.PYC_1" DiskId="1" Guid="624CD5A0-AF27-4AF9-9FA7-05C27D53F6D0">
+                    <File Id="METADATA.CPYTHON_38.PYC_1" Name="metadata.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\metadata.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="METS.CPYTHON_36.PYC_1" DiskId="1" Guid="B94C8BB7-8D59-4BBA-BBB8-1E203E62A7F3">
+                    <File Id="METS.CPYTHON_36.PYC_1" Name="mets.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\mets.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="METS.CPYTHON_38.PYC_1" DiskId="1" Guid="E4E5797A-06A3-42EA-8DF9-48744266D90B">
+                    <File Id="METS.CPYTHON_38.PYC_1" Name="mets.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\mets.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="UTILS.CPYTHON_36.PYC_3" DiskId="1" Guid="CAA60779-3152-42EE-BF0F-E45A89866F12">
+                    <File Id="UTILS.CPYTHON_36.PYC_3" Name="utils.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\utils.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="UTILS.CPYTHON_38.PYC_3" DiskId="1" Guid="CA82FCB3-33E2-41BC-BE4F-BB03F34424FF">
+                    <File Id="UTILS.CPYTHON_38.PYC_3" Name="utils.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\utils.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="VALIDATE.CPYTHON_36.PYC_1" DiskId="1" Guid="C4818066-D96B-4B01-B6EC-2BF7A971B7D8">
+                    <File Id="VALIDATE.CPYTHON_36.PYC_1" Name="validate.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\validate.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="VALIDATE.CPYTHON_38.PYC_1" DiskId="1" Guid="B2C8C52C-7601-4119-B9B3-5C0F032CC1C3">
+                    <File Id="VALIDATE.CPYTHON_38.PYC_1" Name="validate.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\validate.cpython-38.pyc" />
+                  </Component>
+                  <Component Id="__INIT__.CPYTHON_36.PYC_5" DiskId="1" Guid="D9A963C8-8D8B-4277-BC5B-5519754F73A5">
+                    <File Id="__INIT__.CPYTHON_36.PYC_5" Name="__init__.cpython-36.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\__init__.cpython-36.pyc" />
+                  </Component>
+                  <Component Id="__INIT__.CPYTHON_38.PYC_5" DiskId="1" Guid="19022DE8-6BC1-449E-B0EA-4845B0DB50EE">
+                    <File Id="__INIT__.CPYTHON_38.PYC_5" Name="__init__.cpython-38.pyc" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\metsrwroot\__pycache__\__init__.cpython-38.pyc" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="SF" Name="sf">
+                <Component Id="ROY.EXE" DiskId="1" Guid="4644B979-115F-4841-A27A-0B6C30752AB1">
+                  <File Id="ROY.EXE" Name="roy.exe" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\sf\roy.exe" />
+                </Component>
+                <Component Id="SF.EXE" DiskId="1" Guid="3A440278-C669-4174-8913-CECA23F31E06">
+                  <File Id="SF.EXE" Name="sf.exe" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\sf\sf.exe" />
+                </Component>
+                <Directory Id="OUTPUT" Name="output">
+                  <Component Id="SF_OUTPUT.JSON" DiskId="1" Guid="9642308E-2F88-47D7-A7EA-5C53A77D30A2">
+                    <File Id="SF_OUTPUT.JSON" Name="sf_output.json" Source="..\..\piql_ingest_1.0.2\thirdparty\metsgen\sf\output\sf_output.json" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="PHPSECLIB" Name="phpseclib">
+              <Component Id="BOOTSTRAP.PHP" DiskId="1" Guid="9C423738-2FAD-47BC-9BA4-F079B091A437">
+                <File Id="BOOTSTRAP.PHP" Name="bootstrap.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\bootstrap.php" />
+              </Component>
+              <Component Id="OPENSSL.CNF_1" DiskId="1" Guid="2F79C3F0-5E96-4AA9-915F-A1D933692DB3">
+                <File Id="OPENSSL.CNF_1" Name="openssl.cnf" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\openssl.cnf" />
+              </Component>
+              <Directory Id="CRYPT" Name="Crypt">
+                <Component Id="AES.PHP" DiskId="1" Guid="357C10EE-A9A4-431B-9087-D9336AFE8E14">
+                  <File Id="AES.PHP" Name="AES.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\AES.php" />
+                </Component>
+                <Component Id="BASE.PHP" DiskId="1" Guid="2A21FDDB-7696-4CD5-BC26-6D32F5FFA5B8">
+                  <File Id="BASE.PHP" Name="Base.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\Base.php" />
+                </Component>
+                <Component Id="BLOWFISH.PHP" DiskId="1" Guid="7E582CF3-31AE-4B1C-8F35-855C3FA8C59E">
+                  <File Id="BLOWFISH.PHP" Name="Blowfish.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\Blowfish.php" />
+                </Component>
+                <Component Id="DES.PHP" DiskId="1" Guid="2A8C021A-69CA-49A4-BA70-308F90951DE5">
+                  <File Id="DES.PHP" Name="DES.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\DES.php" />
+                </Component>
+                <Component Id="HASH.PHP" DiskId="1" Guid="1D2E41F0-08CD-4DAF-BD85-4B9449AD5A1B">
+                  <File Id="HASH.PHP" Name="Hash.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\Hash.php" />
+                </Component>
+                <Component Id="RANDOM.PHP" DiskId="1" Guid="85DDC5A6-48C9-4B40-8CC5-BF0F43CE81CB">
+                  <File Id="RANDOM.PHP" Name="Random.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\Random.php" />
+                </Component>
+                <Component Id="RC2.PHP" DiskId="1" Guid="09A4364F-1492-4090-9F96-4BD7E5C5B45A">
+                  <File Id="RC2.PHP" Name="RC2.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\RC2.php" />
+                </Component>
+                <Component Id="RC4.PHP" DiskId="1" Guid="B23B4615-A07E-4344-918F-017FE8FC7B23">
+                  <File Id="RC4.PHP" Name="RC4.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\RC4.php" />
+                </Component>
+                <Component Id="RIJNDAEL.PHP" DiskId="1" Guid="07DAA075-E1BF-423B-BE8B-E94FB619FFB4">
+                  <File Id="RIJNDAEL.PHP" Name="Rijndael.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\Rijndael.php" />
+                </Component>
+                <Component Id="RSA.PHP" DiskId="1" Guid="71B50160-6435-46F4-9D8D-8C21B427BB43">
+                  <File Id="RSA.PHP" Name="RSA.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\RSA.php" />
+                </Component>
+                <Component Id="TRIPLEDES.PHP" DiskId="1" Guid="ADD0DF0B-2F9C-4502-B18B-EB16887342CF">
+                  <File Id="TRIPLEDES.PHP" Name="TripleDES.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\TripleDES.php" />
+                </Component>
+                <Component Id="TWOFISH.PHP" DiskId="1" Guid="44CD36DE-3CA7-4496-AC59-86B2BC88B16A">
+                  <File Id="TWOFISH.PHP" Name="Twofish.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Crypt\Twofish.php" />
+                </Component>
+              </Directory>
+              <Directory Id="FILE" Name="File">
+                <Component Id="ANSI.PHP" DiskId="1" Guid="2FB85F2A-AE31-4066-BE5A-969238553E2B">
+                  <File Id="ANSI.PHP" Name="ANSI.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\File\ANSI.php" />
+                </Component>
+                <Component Id="ASN1.PHP" DiskId="1" Guid="D563ACE0-9B09-4AEA-96DA-BEA7D9811643">
+                  <File Id="ASN1.PHP" Name="ASN1.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\File\ASN1.php" />
+                </Component>
+                <Component Id="X509.PHP" DiskId="1" Guid="63C0FF56-9B27-4A7E-BCCD-429452868712">
+                  <File Id="X509.PHP" Name="X509.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\File\X509.php" />
+                </Component>
+              </Directory>
+              <Directory Id="MATH" Name="Math">
+                <Component Id="BIGINTEGER.PHP" DiskId="1" Guid="9B62F907-1A16-4AC2-BA0F-6112CEA41890">
+                  <File Id="BIGINTEGER.PHP" Name="BigInteger.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Math\BigInteger.php" />
+                </Component>
+              </Directory>
+              <Directory Id="NET" Name="Net">
+                <Component Id="SCP.PHP" DiskId="1" Guid="51030B3B-3402-4763-A87B-D9B29AC5F646">
+                  <File Id="SCP.PHP" Name="SCP.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Net\SCP.php" />
+                </Component>
+                <Component Id="SFTP.PHP" DiskId="1" Guid="06D98193-E0B5-40A2-AF75-FECB8307F356">
+                  <File Id="SFTP.PHP" Name="SFTP.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Net\SFTP.php" />
+                </Component>
+                <Component Id="SSH1.PHP" DiskId="1" Guid="0DA9C5F3-F45C-4C7B-BE59-7125570EA130">
+                  <File Id="SSH1.PHP" Name="SSH1.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Net\SSH1.php" />
+                </Component>
+                <Component Id="SSH2.PHP" DiskId="1" Guid="64F46D61-1742-4573-A598-1A2529CCBB75">
+                  <File Id="SSH2.PHP" Name="SSH2.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Net\SSH2.php" />
+                </Component>
+                <Directory Id="SFTP" Name="SFTP">
+                  <Component Id="STREAM.PHP" DiskId="1" Guid="A6B7C9AE-C82E-4BC3-8C30-CAEFF2C0C5B4">
+                    <File Id="STREAM.PHP" Name="Stream.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\Net\SFTP\Stream.php" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="SYSTEM" Name="System">
+                <Component Id="SSH_AGENT.PHP" DiskId="1" Guid="0CE4C542-5178-467D-A685-C1025E9A6837">
+                  <File Id="SSH_AGENT.PHP" Name="SSH_Agent.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\System\SSH_Agent.php" />
+                </Component>
+                <Directory Id="SSH" Name="SSH">
+                  <Component Id="AGENT.PHP" DiskId="1" Guid="6ED0334D-BB96-453F-9830-1FABFEBB2899">
+                    <File Id="AGENT.PHP" Name="Agent.php" Source="..\..\piql_ingest_1.0.2\thirdparty\phpseclib\System\SSH\Agent.php" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+          <Directory Id="TRANSLATIONS" Name="translations">
+            <Component Id="QT_AR.QM" DiskId="1" Guid="5BFA0761-8EA4-41D7-A073-56EE4ECA5E70">
+              <File Id="QT_AR.QM" Name="qt_ar.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_ar.qm" />
+            </Component>
+            <Component Id="QT_BG.QM" DiskId="1" Guid="8F3C3F72-B8C1-4DD9-AE55-E386E5B9686E">
+              <File Id="QT_BG.QM" Name="qt_bg.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_bg.qm" />
+            </Component>
+            <Component Id="QT_CA.QM" DiskId="1" Guid="56D3D905-0D19-4A41-9A07-90A6DC9A2600">
+              <File Id="QT_CA.QM" Name="qt_ca.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_ca.qm" />
+            </Component>
+            <Component Id="QT_CS.QM" DiskId="1" Guid="18F96DB1-E963-45B4-A71B-7EC15FCBE897">
+              <File Id="QT_CS.QM" Name="qt_cs.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_cs.qm" />
+            </Component>
+            <Component Id="QT_DA.QM" DiskId="1" Guid="A6AD6924-F5C7-4D0C-9331-A49A3C8EC42F">
+              <File Id="QT_DA.QM" Name="qt_da.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_da.qm" />
+            </Component>
+            <Component Id="QT_DE.QM" DiskId="1" Guid="1DE1B311-6B29-49B2-842B-4C93D57358D6">
+              <File Id="QT_DE.QM" Name="qt_de.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_de.qm" />
+            </Component>
+            <Component Id="QT_EN.QM" DiskId="1" Guid="3230B71E-CBB1-4956-8049-A5095B4C150A">
+              <File Id="QT_EN.QM" Name="qt_en.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_en.qm" />
+            </Component>
+            <Component Id="QT_ES.QM" DiskId="1" Guid="223EE895-32A8-4A5A-95EC-AA059CBFBE31">
+              <File Id="QT_ES.QM" Name="qt_es.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_es.qm" />
+            </Component>
+            <Component Id="QT_FI.QM" DiskId="1" Guid="514AA6AC-BD41-4EA4-A72F-93B498C68C3F">
+              <File Id="QT_FI.QM" Name="qt_fi.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_fi.qm" />
+            </Component>
+            <Component Id="QT_FR.QM" DiskId="1" Guid="1AACCF02-7816-48E4-A775-33913C9D3693">
+              <File Id="QT_FR.QM" Name="qt_fr.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_fr.qm" />
+            </Component>
+            <Component Id="QT_GD.QM" DiskId="1" Guid="FAF22154-8EDE-4C4F-9810-F6AD5CA6AAE4">
+              <File Id="QT_GD.QM" Name="qt_gd.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_gd.qm" />
+            </Component>
+            <Component Id="QT_HE.QM" DiskId="1" Guid="51EB6F84-D8C7-4C5C-9FAC-8E175A5A5CCB">
+              <File Id="QT_HE.QM" Name="qt_he.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_he.qm" />
+            </Component>
+            <Component Id="QT_HU.QM" DiskId="1" Guid="EFAF21E5-F9AF-406F-A205-0ED450CD985C">
+              <File Id="QT_HU.QM" Name="qt_hu.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_hu.qm" />
+            </Component>
+            <Component Id="QT_IT.QM" DiskId="1" Guid="3E9F5F42-7597-425C-BC28-E39F23FCA8B6">
+              <File Id="QT_IT.QM" Name="qt_it.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_it.qm" />
+            </Component>
+            <Component Id="QT_JA.QM" DiskId="1" Guid="D492D9EA-2436-4694-9141-4F01D136D3CD">
+              <File Id="QT_JA.QM" Name="qt_ja.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_ja.qm" />
+            </Component>
+            <Component Id="QT_KO.QM" DiskId="1" Guid="B14876D7-54A3-4595-B03D-83F594894D6A">
+              <File Id="QT_KO.QM" Name="qt_ko.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_ko.qm" />
+            </Component>
+            <Component Id="QT_LV.QM" DiskId="1" Guid="8DB1B95A-FDC3-4B38-A097-D4AA50DC2992">
+              <File Id="QT_LV.QM" Name="qt_lv.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_lv.qm" />
+            </Component>
+            <Component Id="QT_PL.QM" DiskId="1" Guid="F951990E-A083-4B49-8DBF-C98D519C31F6">
+              <File Id="QT_PL.QM" Name="qt_pl.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_pl.qm" />
+            </Component>
+            <Component Id="QT_RU.QM" DiskId="1" Guid="7C0527C8-0485-4013-ABA1-AC86667AB124">
+              <File Id="QT_RU.QM" Name="qt_ru.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_ru.qm" />
+            </Component>
+            <Component Id="QT_SK.QM" DiskId="1" Guid="FB8A8EF5-AD95-4620-8DE2-1780C0E0C486">
+              <File Id="QT_SK.QM" Name="qt_sk.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_sk.qm" />
+            </Component>
+            <Component Id="QT_UK.QM" DiskId="1" Guid="33A5CE6E-0836-4D82-9664-24BC8C7F767E">
+              <File Id="QT_UK.QM" Name="qt_uk.qm" Source="..\..\piql_ingest_1.0.2\translations\qt_uk.qm" />
+            </Component>
+          </Directory>
+          <Component Id="root_files" DiskId="1" KeyPath="no" Guid="a2ba86da-17b7-45d5-9746-457a661eb8cc">
+            <File Id="CLEANUP_TRANSACTION.PHP" Name="cleanup-transaction.php" Source="..\..\piql_ingest_1.0.2\cleanup-transaction.php" />
+            <File Id="COMMIT_TRANSACTION.PHP" Name="commit-transaction.php" Source="..\..\piql_ingest_1.0.2\commit-transaction.php" />
+            <File Id="CONFIG.PHP" Name="config.php" Source="..\..\piql_ingest_1.0.2\config.php" />
+            <File Id="D3DCOMPILER_47.DLL" Name="d3dcompiler_47.dll" Source="..\..\piql_ingest_1.0.2\d3dcompiler_47.dll" />
+            <File Id="LIBEGL.DLL" Name="libEGL.dll" Source="..\..\piql_ingest_1.0.2\libEGL.dll" />
+            <File Id="LIBGLESV2.DLL" Name="libGLESV2.dll" Source="..\..\piql_ingest_1.0.2\libGLESV2.dll" />
+            <File Id="LIBICONV_2.DLL" Name="libiconv-2.dll" Source="..\..\piql_ingest_1.0.2\libiconv-2.dll" />
+            <File Id="LIBINTL_2.DLL" Name="libintl-2.dll" Source="..\..\piql_ingest_1.0.2\libintl-2.dll" />
+            <File Id="METADATA_DESCRIPTION.PHP" Name="metadata-description.php" Source="..\..\piql_ingest_1.0.2\metadata-description.php" />
+            <File Id="METADATA_DESCRIPTION_DUBLIN_CORE.PHP" Name="metadata-description-dublin-core.php" Source="..\..\piql_ingest_1.0.2\metadata-description-dublin-core.php" />
+            <File Id="METADATA_DESCRIPTION_PACKAGE.PHP" Name="metadata-description-package.php" Source="..\..\piql_ingest_1.0.2\metadata-description-package.php" />
+            <File Id="METADATA_DESCRIPTION_SIMPLE.PHP" Name="metadata-description-simple.php" Source="..\..\piql_ingest_1.0.2\metadata-description-simple.php" />
+            <File Id="OPENGL32SW.DLL" Name="opengl32sw.dll" Source="..\..\piql_ingest_1.0.2\opengl32sw.dll" />
+            <File Id="PIQL_INGEST.EXE" Name="piql_ingest.exe" Source="..\..\piql_ingest_1.0.2\piql_ingest.exe" KeyPath='yes'>
+              <Shortcut Id="desktopShortcut" Directory="DesktopFolder" Name="$(var.ProductName)" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Icon="DesktopIcon.exe" IconIndex="0" />
+              <Shortcut Id="ProgramMenuShortcut" Directory="ProgramMenuDir" Name="$(var.ProductName)" WorkingDirectory="INSTALLFOLDER" Advertise="yes" Icon="StartMenuIcon.exe" IconIndex="0" />
+            </File>
+            <File Id="PIQL_INGEST.INI" Name="piql_ingest.ini" Source="..\..\piql_ingest_1.0.2\piql_ingest.ini" />
+            <File Id="PIQL_INGEST.PDB" Name="piql_ingest.pdb" Source="..\..\piql_ingest_1.0.2\piql_ingest.pdb" />
+            <File Id="QT5CORE.DLL" Name="Qt5Core.dll" Source="..\..\piql_ingest_1.0.2\Qt5Core.dll" />
+            <File Id="QT5GUI.DLL" Name="Qt5Gui.dll" Source="..\..\piql_ingest_1.0.2\Qt5Gui.dll" />
+            <File Id="QT5SVG.DLL" Name="Qt5Svg.dll" Source="..\..\piql_ingest_1.0.2\Qt5Svg.dll" />
+            <File Id="QT5WIDGETS.DLL" Name="Qt5Widgets.dll" Source="..\..\piql_ingest_1.0.2\Qt5Widgets.dll" />
+            <File Id="QT5XML.DLL" Name="Qt5Xml.dll" Source="..\..\piql_ingest_1.0.2\Qt5Xml.dll" />
+            <File Id="TAR.EXE" Name="tar.exe" Source="..\..\piql_ingest_1.0.2\tar.exe" />
+            <File Id="VCREDIST_X64.EXE" Name="vcredist_x64.exe" Source="..\..\piql_ingest_1.0.2\vcredist_x64.exe" />
+            <File Id="VCRUNTIME140.DLL" Name="vcruntime140.dll" Source="..\..\piql_ingest_1.0.2\vcruntime140.dll" />
+            <File Id="WINRAR.EXE" Name="WinRAR.exe" Source="..\..\piql_ingest_1.0.2\WinRAR.exe" />
+          </Component>
+        </Directory>
+      </Directory>
+
+      <Directory Id="DesktopFolder" />
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuDir" Name="$(var.ProductName)">
+          <Component Id="StartMenuShortcuts" Guid="F7C08C1E-549E-437C-9484-1863A91ABB08">
+            <RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Type="string" Value="" />
+            <Shortcut Id="UninstallProduct" Name="Uninstall" Description="Uninstalls the application" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
+          </Component>
+        </Directory>
+      </Directory>
+
+    </Directory>
+  </Fragment>
+
+</Wix>
