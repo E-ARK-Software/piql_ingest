@@ -7,6 +7,7 @@ class Ehealth1SipPatient
     private $m_PatientId = '';
     private $m_LastError = '';
     private $m_DescriptiveMetadataFilePaths = [];
+    private $m_SchemaFilePaths = [];
 
     public function __construct($patientId)
     {
@@ -24,6 +25,11 @@ class Ehealth1SipPatient
     public function files()
     {
         return $this->m_DataFilePaths;
+    }
+
+    public function addSchemaFile($filePath)
+    {
+        array_push($this->m_SchemaFilePaths, $filePath);
     }
 
     public function produceSip($outBaseDirectory)
@@ -47,6 +53,19 @@ class Ehealth1SipPatient
         if (!$this->generateMetadata($metadataPath))
         {
             $this->setError("Failed to generate metadata");
+            return false;
+        }
+
+        // Generate schemas
+        $schemasPath = "{$patientBasePath}/schemas";
+        if (!mkdir($schemasPath))
+        {
+            $this->setError("Failed to create directory: {$schemasPath}");
+            return false;
+        }
+        if (!$this->generateSchemas($schemasPath))
+        {
+            $this->setError("Failed to generate schemas");
             return false;
         }
 
@@ -143,6 +162,21 @@ class Ehealth1SipPatient
     private function generatePreservationMetadata($outputDirectory)
     {
         // TODO
+        return true;
+    }
+
+    private function generateSchemas($outputDirectory)
+    {
+        foreach($this->m_SchemaFilePaths as $filePath)
+        {
+            $fileName = basename($filePath);
+            $destination = "{$outputDirectory}/{$fileName}";
+            if (!copy($filePath, $destination))
+            {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -342,6 +376,10 @@ class Ehealth1Sip
         }
         foreach($this->m_Patients as $patient)
         {
+            foreach ($this->m_SchemaFilePaths as $schemaFilePath)
+            {
+                $patient->addSchemaFile($schemaFilePath);
+            }
             if (!$patient->produceSip($representationsPath))
             {
                 $patientError = $patient->error();
