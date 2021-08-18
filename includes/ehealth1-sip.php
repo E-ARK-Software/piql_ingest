@@ -357,6 +357,15 @@ class Ehealth1Sip
             return false;
         }
 
+        // Cleanup temp files
+        // TODO: Metadata file should be created as a temp file outside of SIP directory
+        //       and passed to METS generator as input
+        $metadataFilePath = "{$sipBasePath}/metadata.xml";
+        if (file_exists($metadataFilePath) && !unlink($metadataFilePath))
+        {
+            $this->setError("Failed to delete metadata file: {$metadataFilePath}");
+        }
+
         // Set output path
         $outPath = $sipBasePath;
 
