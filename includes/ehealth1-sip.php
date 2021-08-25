@@ -395,15 +395,6 @@ class Ehealth1Sip
             return false;
         }
 
-        // Cleanup temp files
-        // TODO: Metadata file should be created as a temp file outside of SIP directory
-        //       and passed to METS generator as input
-        $metadataFilePath = "{$sipBasePath}/metadata.xml";
-        if (file_exists($metadataFilePath) && !unlink($metadataFilePath))
-        {
-            $this->setError("Failed to delete metadata file: {$metadataFilePath}");
-        }
-
         // Set output path
         $outPath = $sipBasePath;
 
@@ -447,19 +438,11 @@ class Ehealth1Sip
     {
         $runner = new PythonRunner();
 
-        $scriptPath = __DIR__ . '/../thirdparty/metsgen/genrepmets.py';
+        $scriptPath = __DIR__ . '/../thirdparty/metsgen/metsgen.py';
         $arguments = [$sipPath];
         if (!$runner->executeScript($scriptPath, $arguments))
         {
-            $this->setError('Failed to generate patient METS: ' . $runner->error());
-            return false;
-        }
-
-        $scriptPath = __DIR__ . '/../thirdparty/metsgen/genrootmets.py ';
-        $arguments = [$sipPath];
-        if (!$runner->executeScript($scriptPath, $arguments))
-        {
-            $this->setError('Failed to generate root METS: ' . $runner->error());
+            $this->setError('Failed to generate METS: ' . $runner->error());
             return false;
         }
 
