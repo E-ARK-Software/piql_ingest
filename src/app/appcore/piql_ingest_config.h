@@ -44,6 +44,7 @@ public:
     bool                        autoOpenMetadataEdit();
     bool                        autoOpenPackageMetadataEdit();
     bool                        commitSinglePackage();
+    bool                        enableFileMetadataEdit();
     std::string                 applicationStyleSheet();
     std::string                 tempFilesDirectory();
     std::string                 userDataDirectory();
@@ -67,6 +68,7 @@ private:
     bool                        m_AutoOpenMetadataEdit;
     bool                        m_AutoOpenPackageMetadataEdit;
     bool                        m_CommitSinglePackage;
+    bool                        m_EnableFileMetadataEdit;
     std::string                 m_ApplicationStyleSheet;
     std::string                 m_TempFilesDirectory;
     std::string                 m_UserDataDirectory;

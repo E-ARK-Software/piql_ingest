@@ -186,6 +186,9 @@ D_NAMESPACE_USING( D_NAMESPACE )
     m_Ui.placeHolderButton->setSizePolicy( sizePolicy );
     m_Ui.placeHolderButton->setVisible( false );
 
+    // Setup which buttons should be visible
+    m_Ui.editMetadataButton->setVisible( m_Config->enableFileMetadataEdit() );
+
     // Accept dropping files on main window
     setAcceptDrops( true );
 

@@ -58,6 +58,7 @@ DPiqlIngestConfig::DPiqlIngestConfig( const std::string& filename )
     m_AutoOpenMetadataEdit = settings.value( "AUTO_OPEN_METADATA_EDIT", true ).toBool();
     m_AutoOpenPackageMetadataEdit = settings.value("AUTO_OPEN_PACKAGE_METADATA_EDIT", false).toBool();
     m_CommitSinglePackage = settings.value( "COMMIT_SINGLE_PACKAGE", false ).toBool();
+    m_EnableFileMetadataEdit = settings.value( "ENABLE_FILE_METADATA_EDIT", true ).toBool();
     m_ApplicationStyleSheet = settings.value( "APPLICATION_STYLE_SHEET", "").toString().toStdString();
     m_TempFilesDirectory = settings.value("TEMP_FILES_DIRECTORY", QStandardPaths::writableLocation(QStandardPaths::TempLocation)).toString().append(QDir::separator()).append("piql_ingest").toLocal8Bit().toStdString();
     m_UserDataDirectory = settings.value("USER_DATA_DIRECTORY", QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).toString().append(QDir::separator()).toLocal8Bit().toStdString();
@@ -142,6 +143,16 @@ bool DPiqlIngestConfig::autoOpenPackageMetadataEdit()
 bool DPiqlIngestConfig::commitSinglePackage()
 {
     return m_CommitSinglePackage;
+}
+
+//----------------------------------------------------------------------------
+/*!
+*  Enable the user to edit file metadata
+*/
+
+bool DPiqlIngestConfig::enableFileMetadataEdit()
+{
+    return m_EnableFileMetadataEdit;
 }
 
 //----------------------------------------------------------------------------
