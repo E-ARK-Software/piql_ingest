@@ -7,6 +7,7 @@ class Ehealth1SipPatient
     private $m_PatientId = '';
     private $m_LastError = '';
     private $m_DescriptiveMetadataFilePaths = [];
+    private $m_SchemaFilePaths = [];
 
     public function __construct($patientId)
     {
@@ -24,6 +25,11 @@ class Ehealth1SipPatient
     public function files()
     {
         return $this->m_DataFilePaths;
+    }
+
+    public function addSchemaFile($filePath)
+    {
+        array_push($this->m_SchemaFilePaths, $filePath);
     }
 
     public function produceSip($outBaseDirectory)
@@ -47,6 +53,19 @@ class Ehealth1SipPatient
         if (!$this->generateMetadata($metadataPath))
         {
             $this->setError("Failed to generate metadata");
+            return false;
+        }
+
+        // Generate schemas
+        $schemasPath = "{$patientBasePath}/schemas";
+        if (!mkdir($schemasPath))
+        {
+            $this->setError("Failed to create directory: {$schemasPath}");
+            return false;
+        }
+        if (!$this->generateSchemas($schemasPath))
+        {
+            $this->setError("Failed to generate schemas");
             return false;
         }
 
@@ -146,6 +165,21 @@ class Ehealth1SipPatient
         return true;
     }
 
+    private function generateSchemas($outputDirectory)
+    {
+        foreach($this->m_SchemaFilePaths as $filePath)
+        {
+            $fileName = basename($filePath);
+            $destination = "{$outputDirectory}/{$fileName}";
+            if (!copy($filePath, $destination))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private function generateData($outputDirectory)
     {
         foreach ($this->m_DataFilePaths as $path)
@@ -191,23 +225,23 @@ class Ehealth1Sip
     private $m_SubmissionAgreementFilePaths = [];
     private $m_DescriptiveMetadataFilePaths = [];
     private $m_SchemaFilePaths = [];
-    private $m_InformationPackageId = '';
+    private $m_TransferName = '';
     private $m_PackageMetadata = [];
     private $m_LastError = '';
 
-    public function __construct($informationPackageId='')
+    public function __construct($transferName='')
     {
-        $this->m_InformationPackageId = $informationPackageId;
+        $this->m_TransferName = $transferName;
     }
 
-    public function informationPackageId()
+    public function transferName()
     {
-        return $this->m_InformationPackageId;
+        return $this->m_TransferName;
     }
 
-    public function setInformationPackageId($id)
+    public function setTransferName($name)
     {
-        $this->m_InformationPackageId = $id;
+        $this->m_TransferName = $name;
     }
 
     public function addPackageMetadata($key, $value)
@@ -276,9 +310,9 @@ class Ehealth1Sip
             return false;
         }
 
-        // Define base output path for SIP - full/output/dir/<packageID>
+        // Define base output path for SIP - full/output/dir/<transferName>
         $sipBasePath = rtrim($outBaseDirectory, '/') . '/';
-        $sipBasePath .= $this->m_InformationPackageId;
+        $sipBasePath .= "IP_" . $this->m_TransferName;
 
         // Create SIP root directory
         if (!mkdir($sipBasePath))
@@ -342,6 +376,10 @@ class Ehealth1Sip
         }
         foreach($this->m_Patients as $patient)
         {
+            foreach ($this->m_SchemaFilePaths as $schemaFilePath)
+            {
+                $patient->addSchemaFile($schemaFilePath);
+            }
             if (!$patient->produceSip($representationsPath))
             {
                 $patientError = $patient->error();
@@ -355,6 +393,15 @@ class Ehealth1Sip
         if (!$this->generateMets($sipBasePath))
         {
             return false;
+        }
+
+        // Cleanup temp files
+        // TODO: Metadata file should be created as a temp file outside of SIP directory
+        //       and passed to METS generator as input
+        $metadataFilePath = "{$sipBasePath}/metadata.xml";
+        if (file_exists($metadataFilePath) && !unlink($metadataFilePath))
+        {
+            $this->setError("Failed to delete metadata file: {$metadataFilePath}");
         }
 
         // Set output path

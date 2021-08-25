@@ -152,11 +152,21 @@ D_NAMESPACE_USING( D_NAMESPACE )
     }
 
     // Set commit button icon
-    QPixmap commitButtonPixmap( ":/images/gui/resources/commit_button.png" );
-    QIcon commitButtonIcon( commitButtonPixmap );
-    m_Ui.commitButton->setIcon( commitButtonIcon );
-    m_Ui.commitButton->setIconSize( commitButtonPixmap.rect().size() );
-    m_Ui.commitButton->setFixedSize( commitButtonPixmap.rect().size() );
+    string commitButtonText = m_Config->commitButtonText();
+    if ( commitButtonText.empty() )
+    {
+        QPixmap commitButtonPixmap( ":/images/gui/resources/commit_button.png" );
+        QIcon commitButtonIcon( commitButtonPixmap );
+        m_Ui.commitButton->setIcon( commitButtonIcon );
+        m_Ui.commitButton->setIconSize( commitButtonPixmap.rect().size() );
+        m_Ui.commitButton->setFixedSize( commitButtonPixmap.rect().size() );
+    }
+    else
+    {
+        const int padding = 10;
+        m_Ui.commitButton->setText( QString::fromStdString(commitButtonText) );
+        m_Ui.commitButton->setFixedSize( m_Ui.commitButton->sizeHint().width() + padding, m_Ui.commitButton->sizeHint().height() + padding );
+    }
 
     // Set window icon
     if ( !m_Config->mainWindowIcon().empty() )

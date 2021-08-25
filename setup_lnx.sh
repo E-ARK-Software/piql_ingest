@@ -53,6 +53,10 @@ else
     export CV_THIRDPARTY=$CV_THIRDPARTY_DIR
 fi
 
+if [ "$CV_PIQLINGEST_THIRDPARTY_DIR" == "" ] ; then
+    export CV_PIQLINGEST_THIRDPARTY_DIR="$CV_ROOT/../piql_ingest_thirdparty"
+fi
+
 if [ "$CV_PHPSECLIB_ROOT" == "" ] ; then
     export CV_PHPSECLIB_ROOT="$CV_THIRDPARTY/archivator/client_tools/piql_ingest/phpseclib_1_0_6"
 fi
@@ -75,7 +79,7 @@ if [ ! -d "$CV_BOOST_ROOT" -o ! -d "$CV_BOOST_INCLUDE" -o ! -d "$CV_BOOST_LIBS" 
 fi
 
 if [ "$CV_METSGEN_ROOT" == "" ] ; then
-    export CV_METSGEN_ROOT="$CV_THIRDPARTY/metsgen"
+    export CV_METSGEN_ROOT="$CV_PIQLINGEST_THIRDPARTY_DIR/metsgen"
 fi
 
 # Add doc folder to path, contains class templates
