@@ -475,9 +475,9 @@ void DPiqlIngestMainWindow::commitButtonPressed()
         QString errorMessage;
         
         // Create dialog
-        DEditMetadataWindowBase * editMetadataDialog = new DEditMetadataWindowPackage(this, m_packageMetadata, phpPath(), m_TempDir, m_Config);
+        DEditMetadataWindowBase * editMetadataDialog = new DEditMetadataWindowPackage(this, m_PackageMetadata, phpPath(), m_TempDir, m_Config);
 
-        if (!createEditMetadataDialog(errorMessage, editMetadataDialog, m_packageMetadata))
+        if (!createEditMetadataDialog(errorMessage, editMetadataDialog, m_PackageMetadata))
         {
             error << ERRinfo << "Error creating edit metadata dialog" << endl;
             showInfoMessage(QMessageBox::tr("Edit package metadata dialog"), QString(QMessageBox::tr("%1")).arg(errorMessage.toStdString().c_str()));
@@ -772,7 +772,7 @@ bool DPiqlIngestMainWindow::commit(bool& canceled, QString& errorMessage, vector
         {
             // Write package metadata
             ostringstream metadata;
-            if (!m_packageMetadata.write(metadata, false))
+            if (!m_PackageMetadata.write(metadata, false))
             {
                 errorMessage = QMessageBox::tr("Failed to write package metadata");
                 error << ERRerror << "Failed to write package metadata to stream" << endl;

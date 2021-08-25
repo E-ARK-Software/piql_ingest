@@ -155,7 +155,7 @@ private:
     int                        m_CommitStatus;
     bool                       m_CommitCanceled;
     FileTreeMap                m_FileTreeMap;
-    DMetadataItemGroupList     m_packageMetadata;
+    DMetadataItemGroupList     m_PackageMetadata;
 
     friend class WorkerThread;
 };
