@@ -145,7 +145,7 @@ bool DEditMetadataWindowPackage::FillStackedWidget(const std::string& phpBinPath
         return false;
     }
 
-    if (!CreateMetadataForm(metadataTemplate, DMetadataItemGroupList(), layout, 0))
+    if (!CreateMetadataForm(metadataTemplate, m_MetadataGroupList, layout, 0))
     {
         setError("Error creating metadata form");
         return false;
