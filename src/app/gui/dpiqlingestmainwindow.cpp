@@ -473,7 +473,13 @@ void DPiqlIngestMainWindow::commitButtonPressed()
     if (metadataPackageTemplateFile.length() != 0 && m_Config->autoOpenPackageMetadataEdit())
     {
         QString errorMessage;
-        
+
+        // Clear package metadata if the dialog is not instructed to remember the last input
+        if ( !m_Config->autofillLastInputPackageMetadata() )
+        {
+            m_PackageMetadata = DMetadataItemGroupList();
+        }
+
         // Create dialog
         DEditMetadataWindowBase * editMetadataDialog = new DEditMetadataWindowPackage(this, m_PackageMetadata, phpPath(), m_TempDir, m_Config);
 
