@@ -472,13 +472,9 @@ void DPiqlIngestMainWindow::commitButtonPressed()
     string metadataPackageTemplateFile = DPhpUtils::GetScriptPath("metadata-description-package.php");
     if (metadataPackageTemplateFile.length() != 0 && m_Config->autoOpenPackageMetadataEdit())
     {
+        // TODO: Verify that the metadata description we have data for corresponds to the currently
+        // used metadata description (e.g. by checksum validation). Otherwise clear m_PackageMetadata.
         QString errorMessage;
-
-        // Clear package metadata if the dialog is not instructed to remember the last input
-        if ( !m_Config->autofillLastInputPackageMetadata() )
-        {
-            m_PackageMetadata = DMetadataItemGroupList();
-        }
 
         // Create dialog
         DEditMetadataWindowBase * editMetadataDialog = new DEditMetadataWindowPackage(this, m_PackageMetadata, phpPath(), m_TempDir, m_Config);
@@ -556,6 +552,12 @@ void DPiqlIngestMainWindow::commitButtonPressed()
                     error << ERRerror << "Failed to remove file from list" << endl;
                     break;
                 }
+            }
+
+            // Clear package metadata if the dialog is not instructed to remember the last input
+            if ( !m_Config->autofillLastInputPackageMetadata() )
+            {
+                m_PackageMetadata = DMetadataItemGroupList();
             }
 
             // Save context
@@ -1765,7 +1767,7 @@ bool DPiqlIngestMainWindow::saveContext() const
     xml <<
         "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
         "<context>"
-        "<version>1.0.1</version>"
+        "<version>1.0.2</version>"
         "<transaction>" << m_Transaction << "</transaction>";
 
     if ( !m_FileList.write( xml, false ) )
@@ -1773,6 +1775,14 @@ bool DPiqlIngestMainWindow::saveContext() const
         error << ERRerror << "Failed to write file list" << endl;
         return false;
     }
+
+    xml << "<package-metadata>";
+    if ( !m_PackageMetadata.write( xml, false ) )
+    {
+        error << ERRerror << "Failed to write package metadata" << endl;
+        return false;
+    }
+    xml << "</package-metadata>";
 
     xml << "</context>" << endl;
 
@@ -1853,44 +1863,23 @@ bool DPiqlIngestMainWindow::loadContext()
     {
         string version = docElem.elementsByTagName("version").at(0).toElement().text().toStdString();
         error << ERRinfo << "Version is " << version << endl;
-        if ( version == "1.0.0" )
+        if ( version != "1.0.2" )
         {
-            // Add element <group>
-            QFile inFile( QString::fromStdString(filePath.path()) );
-            if ( !inFile.open(QIODevice::ReadOnly | QIODevice::Text) )
+            // Context is outdated - replace it with a blank one
+            if ( !saveContext() )
             {
-                error << ERRerror << "Failed to read context: " << filePath.path() << endl;
+                error << ERRerror << "Failed to create default context: " << filePath.path() << endl;
                 return false;
             }
-            QString newXml;
-            QTextStream in(&inFile);
-            while ( !in.atEnd() )
-            {
-                QString line = in.readLine();
-                line.replace( "<metadata>", "<metadata><group name=\"undefined\">" );
-                line.replace("</metadata>", "</metadata></group>");
-                newXml += line;
-            }
-            inFile.close();
 
-            QFile outFile( QString::fromStdString(filePath.path()) );
-            if ( !inFile.open(QIODevice::WriteOnly | QIODevice::Text) )
+            // Reload the newly created context
+            if ( !loadContext() )
             {
-                error << ERRerror << "Failed to write context: " << filePath.path() << endl;
+                error << ERRerror << "Failed to load context: " << filePath.path() << endl;
                 return false;
             }
-            QTextStream out(&outFile);
-            out << newXml;
-            outFile.close();
-        }
-        else if (version == "1.0.1")
-        {
-            // Do nothing
-        }
-        else
-        {
-            error << ERRerror << "Invalid context version: " << version << endl;
-            return false;
+
+            return true;
         }
     }
 
@@ -1913,6 +1902,43 @@ bool DPiqlIngestMainWindow::loadContext()
     else
     {
         error << ERRinfo << "No files tag found" << endl;
+        return false;
+    }
+
+    // Read package metadata
+    QDomNodeList packageMetadataWrapper = docElem.elementsByTagName("package-metadata");
+    if ( packageMetadataWrapper.size() == 1 )
+    {
+        QDomElement packageMetadataWrapperElem = packageMetadataWrapper.at(0).toElement();
+        QDomNodeList packageMetadata = packageMetadataWrapperElem.elementsByTagName("metadata");
+        if ( packageMetadata.size() == 1 )
+        {
+            QDomElement packageMetadataElement = packageMetadata.at(0).toElement();
+            if ( !DMetadataItemGroupList::Read(m_PackageMetadata, packageMetadataElement) )
+            {
+                error << ERRerror << "failed to read metadata section" << endl;
+                return false;
+            }
+        }
+        else if ( packageMetadata.size() > 1 )
+        {
+            error << ERRerror << "more than one metadata tag found" << endl;
+            return false;
+        }
+        else
+        {
+            error << ERRinfo << "No metadata tag found" << endl;
+            return false;
+        }
+    }
+    else if ( packageMetadataWrapper.size() > 1 )
+    {
+        error << ERRerror << "more than one package-metadata tag found" << endl;
+        return false;
+    }
+    else
+    {
+        error << ERRinfo << "No package-metadata tag found" << endl;
         return false;
     }
 
