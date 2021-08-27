@@ -43,7 +43,7 @@ function preProcessInputData(&$errorMessage, &$filePathList, &$relativeFilePathL
 
     // Hack to move the output to expected path
     // TODO: Remove this hack when output path can be defined in script
-    rename(__DIR__ . "/../../../output/" basename($rootPath), $newRootPath);
+    rename(__DIR__ . "/../../../output/" . basename($rootPath), $newRootPath);
 
     // Set new root path
     for ($i = 0; $i < count($filePathList); $i++)

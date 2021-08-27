@@ -24,7 +24,7 @@ $configuration->add("MetadataOutputFormat", METADATA_OUTPUT_FORMAT_DUBLINCORE_CS
 //$configuration->add("MetadataOutputItemOrder", array(0, 1, 6, 4, 5, 9, 10, 11, 13, 14, 16, 17, 8, 18, 2, 3, 12, 7, 15));
 //$configuration->add("MetadataCsvFondPosition", 14);
 $configuration->add("Ehealth1SipSchemaDirectory", "./data/ehealth1/schemas");
-$configuration->add("PreProcessInputDataScript", "./data/ehealth1/customisation/prorenata_metsmapper.py");
+$configuration->add("PreProcessInputDataScript", "./data/ehealth1/customisation/prorenata_prorenata.php");
 
 function outputArchiveFileName($filePaths)
 {

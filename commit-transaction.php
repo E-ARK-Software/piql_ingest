@@ -180,13 +180,6 @@ try {
         $packageMetadata = "";
     }
 
-    // Include script for pre-processing metadata
-    if ($configuration->exists("PreProcessInputDataScript"))
-    {
-        $scriptPath = $configuration->getValue("PreProcessInputDataScript");
-        include_once($scriptPath);
-    }
-
     // Functions
     //
 
@@ -371,10 +364,17 @@ try {
     logInfo("Identified OS: {$platform}");
 
     // Pre-process input data
-    $communicator->sendProgress(0, gettext("Pre-processing data"));
-    if (!preProcessInputData($errorMessage, $filePathList, $relativeFilePathList, $tempDirectoryPath))
+    if ($configuration->exists("PreProcessInputDataScript"))
     {
-        exitWithError("Failed to pre-process input data: {$errorMessage}");
+        $communicator->sendProgress(0, gettext("Pre-processing data"));
+
+        $scriptPath = $configuration->getValue("PreProcessInputDataScript");
+        include_once($scriptPath);
+
+        if (!preProcessInputData($errorMessage, $filePathList, $relativeFilePathList, $tempDirectoryPath))
+        {
+            exitWithError("Failed to pre-process input data: {$errorMessage}");
+        }
     }
 
     // Build data for archive
