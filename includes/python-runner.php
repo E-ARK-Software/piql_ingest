@@ -17,6 +17,8 @@ class PythonRunner
         }
 
         // Compile command
+        $pythonPath = normalizeFilePath($pythonPath);
+        $path = normalizeFilePath($path);
         $command = "\"{$pythonPath}\" \"{$path}\"";
         foreach ($arguments as $argument)
         {

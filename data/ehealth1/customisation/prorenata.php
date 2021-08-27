@@ -21,6 +21,11 @@ function preProcessInputData(&$errorMessage, &$filePathList, &$relativeFilePathL
             $rootPath = $filePath;
         }
     }
+    if (strlen($rootPath) == 0)
+    {
+        $errorMessage = "No root directory was found";
+        return false;
+    }
 
     // Create destination directory
     $destination = "{$tempDirectoryPath}/input";
@@ -34,29 +39,51 @@ function preProcessInputData(&$errorMessage, &$filePathList, &$relativeFilePathL
     $newRootPath = "{$destination}/" . basename($rootPath);
     $runner = new PythonRunner();
     $scriptPath = __DIR__ . "/prorenata_metsmapper.py";
-    $arguments = [$rootPath];
+    $arguments = [$rootPath, $destination];
     if (!$runner->executeScript($scriptPath, $arguments))
     {
         $errorMessage = "Failed to generate METS: " . $runner->error();
         return false;
     }
 
-    // Hack to move the output to expected path
-    // TODO: Remove this hack when output path can be defined in script
-    rename(__DIR__ . "/../../../output/" . basename($rootPath), $newRootPath);
-
-    // Set new root path
-    for ($i = 0; $i < count($filePathList); $i++)
+    // Update paths
+    // Parse directory recursively and add all files and directories
+    $filePathList = [$newRootPath];
+    $relativeFilePathList = [basename($newRootPath)];
+    $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($newRootPath, RecursiveDirectoryIterator::SKIP_DOTS), RecursiveIteratorIterator::SELF_FIRST);
+    foreach ($rii as $file)
     {
-        $filePath = $filePathList[$i];
-        if (substr($filePath, 0, strlen($rootPath)) != $rootPath)
+        $filePath = $file->getPathname();
+        $relativeFilePath = basename($newRootPath) . "/" . substr($filePath, strlen($newRootPath)+1);
+
+        $filePath = normalizeFilePath($filePath);
+        $relativeFilePath = normalizeFilePath($relativeFilePath);
+
+        if (!file_exists($filePath))
         {
-            $errorMessage = "Found file that is not in root directory";
+            $errorMessage = "The file to be added to archive does not exist: {$filePath}";
             return false;
         }
-        $newFilePath = $newRootPath . substr($filePath, strlen($rootPath));
-        $filePathList[$i] = $newFilePath;
+
+        array_push($filePathList, $filePath);
+        array_push($relativeFilePathList, $relativeFilePath);
     }
+
+    // Add submission agreement
+    $submissionAgreementSourcePath = "{$rootPath}/submissionagreement.pdf";
+    $submissionAgreementDestinationPath = "{$newRootPath}/" . basename($submissionAgreementSourcePath);
+    if (!file_exists($submissionAgreementSourcePath))
+    {
+        $errorMessage = "Submission agreement not found, expected in: {$submissionAgreementSourcePath}";
+        return false;
+    }
+    if (!copy($submissionAgreementSourcePath, $submissionAgreementDestinationPath))
+    {
+        $errorMessage = "Failed to add submission agreement";
+        return false;
+    }
+    array_push($filePathList, $submissionAgreementDestinationPath);
+    array_push($relativeFilePathList, basename($newRootPath) . "/" . basename($submissionAgreementDestinationPath));
 
     return true;
 }

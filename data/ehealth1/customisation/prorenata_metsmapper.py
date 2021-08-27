@@ -22,13 +22,13 @@ def transform(directory):
     package_id = os.path.normpath(os.path.basename(directory))
 
     # OVERWRITE
-    if os.path.isdir("output/" + package_id):
-        shutil.rmtree("output/" + package_id)
+    if os.path.isdir(os.path.join(output_directory, package_id)):
+        shutil.rmtree(os.path.join(output_directory, package_id))
 
     for file in os.listdir(directory):
         patient_id = get_file_id(file)
         if os.path.isdir(os.path.join(directory,file)):
-            os.makedirs(os.path.join("output", package_id, "patientrecord_"+patient_id, "case", "document"))
+            os.makedirs(os.path.join(output_directory, package_id, "patientrecord_"+patient_id, "case", "document"))
 
     # TODO Overwrite Y/N?
 
@@ -44,19 +44,18 @@ def move_files(directory):
                         if nextfile == "medicinsk-elevhalsa":
                             for datafile in os.listdir(os.path.join(directory, file, nextfile)):    # Copy each document to output folder
                                 # print("DATA: "+datafile)
-                                shutil.copy(os.path.join(directory, file, nextfile, datafile), os.path.join("output", package_id, "patientrecord_"+patient_id, "case", "document"))
+                                shutil.copy(os.path.join(directory, file, nextfile, datafile), os.path.join(output_directory, package_id, "patientrecord_"+patient_id, "case", "document"))
                         else:
                             print("Error with data file - medicinsk-elevhalsa - move_files()")
                     else:
-                        shutil.copy(os.path.join(directory, file, nextfile), os.path.join("output", package_id, "patientrecord_"+patient_id,))
+                        shutil.copy(os.path.join(directory, file, nextfile), os.path.join(output_directory, package_id, "patientrecord_"+patient_id,))
             elif os.path.isfile(os.path.join(directory, file)):
                 print("An error occurred - move-files()")
                 sys.exit(1)
         elif os.path.isfile(os.path.join(directory, file)):
             print(file)
             if file == "manifest.xml":
-                print("HEY")
-                shutil.copy(os.path.join(directory, file), os.path.join("output", package_id, "Patients.xml"))
+                shutil.copy(os.path.join(directory, file), os.path.join(output_directory, package_id, "Patients.xml"))
 
 
 def create_xml(directory):
@@ -87,22 +86,17 @@ def create_xml(directory):
                         for element in additional_xml.iter():
                             if 'objects' in element.tag:
                                 xml_tree.append(element)
-    ElementTree.ElementTree(xml_tree).write(os.path.join("output", package_id, "patients.xml"), encoding="UTF-8")
+    ElementTree.ElementTree(xml_tree).write(os.path.join(output_directory, package_id, "patients.xml"), encoding="UTF-8")
 
 
 if __name__ == '__main__':
-    try:
-        if os.path.isdir(argv[1]):
+    if len(argv) > 1 and os.path.isdir(argv[1]):
+        if len(argv) > 2 and os.path.isdir(argv[2]):
+            output_directory = argv[2]
             transform(argv[1])
             move_files(argv[1])
             # create_xml(argv[1])
         else:
-            raise NotADirectoryError
-    except IndexError:
-        print("Insert a directory")
-        raise
-    except NotADirectoryError:
-        print("Not a directory")
-        raise
-    finally:
-        print("Program ended")
+            print("Output directory error")
+    else:
+        print("Input directory error")
