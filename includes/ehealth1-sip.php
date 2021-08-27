@@ -1,6 +1,4 @@
 <?php
-include_once(__DIR__ . "/python-runner.php");
-
 class Ehealth1SipPatient
 {
     private $m_DataFilePaths = [];
