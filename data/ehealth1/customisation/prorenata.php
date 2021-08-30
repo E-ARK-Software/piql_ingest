@@ -28,7 +28,7 @@ function preProcessInputData(&$errorMessage, &$filePathList, &$relativeFilePathL
     }
 
     // Create destination directory
-    $destination = "{$tempDirectoryPath}/input";
+    $destination = "{$tempDirectoryPath}/input_" . substr(md5(rand()), 0, 7);
     if (!mkdir($destination))
     {
         $errorMessage = "Failed to create directory: {$destination}";
