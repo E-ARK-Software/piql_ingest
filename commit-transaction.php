@@ -18,6 +18,7 @@ try {
     include_once("includes/general-functions.php");
     include_once("includes/script-context.php");
     include_once("includes/ehealth1-sip.php");
+    include_once("includes/python-runner.php");
     include_once("metadata-description.php");
     include_once("metadata-description-package.php");
     include_once("config.php");
@@ -362,11 +363,23 @@ try {
     }
     logInfo("Identified OS: {$platform}");
 
-    // Send first progress
-    $communicator->sendProgress(0, gettext("Preparing data"));
+    // Pre-process input data
+    if ($configuration->exists("PreProcessInputDataScript"))
+    {
+        $communicator->sendProgress(0, gettext("Pre-processing data"));
+
+        $scriptPath = $configuration->getValue("PreProcessInputDataScript");
+        include_once($scriptPath);
+
+        if (!preProcessInputData($errorMessage, $filePathList, $relativeFilePathList, $tempDirectoryPath))
+        {
+            exitWithError("Failed to pre-process input data: {$errorMessage}");
+        }
+    }
 
     // Build data for archive
     logInfo("Building SIP");
+    $communicator->sendProgress(0, gettext("Preparing data"));
     $archiveFiles = array();
     {
         // Create package files

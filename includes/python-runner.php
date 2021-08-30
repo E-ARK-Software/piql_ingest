@@ -17,6 +17,8 @@ class PythonRunner
         }
 
         // Compile command
+        $pythonPath = normalizeFilePath($pythonPath);
+        $path = normalizeFilePath($path);
         $command = "\"{$pythonPath}\" \"{$path}\"";
         foreach ($arguments as $argument)
         {
@@ -34,6 +36,7 @@ class PythonRunner
             $this->setError("Failed to execute command: '{$command}' returncode: '{$returnCode}' output: '{$json}'");
             return false;
         }
+        $json = json_encode($output);
         logInfo("Executed command: '{$command}' returncode: '{$returnCode}' output: '{$json}'");
 
         return true;

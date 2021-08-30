@@ -21,6 +21,7 @@ $configuration->add("SenderFailDelay", 30);
 $configuration->add("MetadataOutputFormat", METADATA_OUTPUT_FORMAT_DUBLINCORE_CSV);
 //$configuration->add("MetadataOutputItemOrder", array(0, 1, 6, 4, 5, 9, 10, 11, 13, 14, 16, 17, 8, 18, 2, 3, 12, 7, 15));
 //$configuration->add("MetadataCsvFondPosition", 14);
+//$configuration->add("PreProcessInputDataScript", "");
 
 function outputArchiveFileName($filePaths)
 {

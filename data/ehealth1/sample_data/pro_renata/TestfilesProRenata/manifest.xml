@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml-stylesheet type="text/xsl" href="manifest.xslt"?>
+<JournalArchiveManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://journal.prorenata.se/static/xml/journal_archive/1.0.3/manifest">
+  <organization></organization>
+  <created_by>
+    <first_name></first_name>
+    <last_name></last_name>
+    <title></title>
+  </created_by>
+  <created_date_time>2021-03-29T11:05:10.011553</created_date_time>
+  <health_care_unit_types>
+    <health_care_unit_type>
+      <label></label>
+    </health_care_unit_type>
+  </health_care_unit_types>
+  <criteria>
+    <criterion>
+      <type_id>by_org_unit</type_id>
+      <options>
+        <organization_unit>
+          <name>Testskola</name>
+          <prorenata_id></prorenata_id>
+          <external_id>Testskola</external_id>
+        </organization_unit>
+      </options>
+    </criterion>
+  </criteria>
+  <exclude_confidential>true</exclude_confidential>
+  <exclude_empty_journals>true</exclude_empty_journals>
+  <report/>
+  <errors/>
+  <warnings>
+    <warning>Patient had no archivable data and was skipped</warning>
+    <warning>Patient had no archivable data and was skipped</warning>
+  </warnings>
+  <patients>
+    <patient>
+      <first_name>William</first_name>
+      <last_name>Berglund</last_name>
+      <personal_id>20080716TU98</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20080716TU98 william-berglund, testskola/20080716TU98 william-berglund, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>Caroline</first_name>
+      <last_name>Bergström</last_name>
+      <personal_id>20080811BG46</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20080811BG46 caroline-bergstrom, testskola/20080811BG46 caroline-bergstrom, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>Emelie</first_name>
+      <last_name>Karlsson</last_name>
+      <personal_id>20081004BI25</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20081004BI25 emelie-karlsson, testskola/20081004BI25 emelie-karlsson, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>Maja</first_name>
+      <last_name>Lundberg</last_name>
+      <personal_id>20081123VS68</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20081123VS68 maja-lundberg, testskola/20081123VS68 maja-lundberg, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>Oliver</first_name>
+      <last_name>Lundberg</last_name>
+      <personal_id>20081113JK35</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20081113JK35 oliver-lundberg, testskola/20081113JK35 oliver-lundberg, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>m</first_name>
+      <last_name>m</last_name>
+      <personal_id>20050505A000</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20050505A000 m-m, testskola/20050505A000 m-m, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>Johan</first_name>
+      <last_name>Olofsson</last_name>
+      <personal_id>20080725YE76</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20080725YE76 johan-olofsson, testskola/20080725YE76 johan-olofsson, testskola.xml</archive_path>
+    </patient>
+    <patient>
+      <first_name>Ludvig</first_name>
+      <last_name>Persson</last_name>
+      <personal_id>20080804FY14</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20080804FY14 ludvig-persson, testskola/20080804FY14 ludvig-persson, testskola.xml</archive_path>
+    </patient>
+	<patient>
+      <first_name>Max</first_name>
+      <last_name>Pettersson</last_name>
+      <personal_id>20080715IU96</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20080715IU96 max-pettersson, testskola/20080715IU96 max-pettersson, testskola.xml</archive_path>
+    </patient>
+  </patients>
+</JournalArchiveManifest>
