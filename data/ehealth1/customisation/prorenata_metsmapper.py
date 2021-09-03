@@ -38,7 +38,7 @@ def move_files(directory):
     for file in os.listdir(directory):  # For each file in given directory
         if os.path.isdir(os.path.join(directory, file)):
             patient_id = file.split(" ")[0]
-            if os.path.isdir(os.path.join("output", package_id)):   # If the directory exits in the output folder
+            if os.path.isdir(os.path.join(output_directory, package_id)):   # If the directory exits in the output folder
                 for nextfile in os.listdir(os.path.join(directory, file)):  # For each file in patient folder
                     if os.path.isdir(os.path.join(directory, file, nextfile)):  # Get medicinsk-elevhalsa folder
                         if nextfile == "medicinsk-elevhalsa":
