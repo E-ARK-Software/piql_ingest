@@ -197,10 +197,13 @@ D_NAMESPACE_USING( D_NAMESPACE )
     QObject::connect( m_Ui.deleteFilesButton, SIGNAL(clicked()), this, SLOT(deleteFilesButtonPressed()) );
     QObject::connect( m_Ui.editMetadataButton, SIGNAL(clicked()), this, SLOT(editMetadataButtonPressed()) );
     QObject::connect( m_Ui.commitButton, SIGNAL(clicked()), this, SLOT(commitButtonPressed()) );
-    QObject::connect( m_Ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), this, SLOT(editMetadataButtonPressed()) );
     QObject::connect( m_Ui.treeWidget, SIGNAL(itemActivated(QTreeWidgetItem*,int)), this, SLOT(activatedTreeItem(QTreeWidgetItem*,int)) );
     QObject::connect( m_Ui.treeWidget, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(activatedTreeItem(QTreeWidgetItem*,int)) );
     QObject::connect( m_Ui.treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(activatedTreeItem()) );
+    if (m_Config->enableFileMetadataEdit())
+    {
+        QObject::connect(m_Ui.treeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(editMetadataButtonPressed()));
+    }
 
     // Update GUI
     updateGui();
