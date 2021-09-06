@@ -101,7 +101,7 @@ $item->setFontSize($textFontSize);
 $metadataGroup->addItem($item);
 
 // Archive ID
-$item = new MetadataTemplateItemString("achiveID", "Archive identifier", "");
+$item = new MetadataTemplateItemString("archiveID", "Archive identifier", "");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
