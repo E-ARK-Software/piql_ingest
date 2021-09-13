@@ -763,18 +763,6 @@ try {
             }
 
             // Remove submission agreement metadata
-            $temporaryMetadataList = $metadataList;
-            $temporaryFileNames = $fileNames;
-            for ($i = 0; $i < count($fileNames); $i++)
-            {
-                if (!isSubmissionAgreement($fileNames[$i]))
-                {
-                    array_push($temporaryFileNames, $fileNames[$i]);
-                    array_push($temporaryMetadataList, $metadataList[$i]);
-                }
-            }
-
-            // Create metadata file
             $temporaryFileNames = array();
             $temporaryMetadataList = array();
             for ($i = 0; $i < count($filePathList); $i++)
@@ -785,6 +773,8 @@ try {
                     array_push($temporaryMetadataList, $metadataList[$i]);
                 }
             }
+
+            // Create metadata file
             $metadataOut = "$metadataPath/metadata.csv";
             if (!createMetadata($temporaryMetadataList, $metadataOut, $temporaryFileNames, $metadataTemplate, $configuration))
             {
@@ -1224,6 +1214,7 @@ try {
                     $tar->addFile($filePath, $relativeFilePath);
                 }
             }
+            unset($tar);
         } catch (Exception $e) {
             exitWithError("Failed to create TAR archive: " . $e->getMessage());
         }
@@ -1541,7 +1532,7 @@ try {
     $deleteFiles = array();
     array_push($deleteFiles, "metadata.xml");
     array_push($deleteFiles, "$fileNameBase");
-    array_push($deleteFiles, $archiveFileName);
+    array_push($deleteFiles, $archiveFilePath);
     for ($i = 0; $i < count($deleteFiles); $i++)
     {
         if (strlen($deleteFiles[$i]) > 0 && !deleteFromDisk("$tempDirectoryPath/" . $deleteFiles[$i], false))
