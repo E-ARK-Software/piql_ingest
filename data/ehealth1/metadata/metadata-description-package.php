@@ -22,7 +22,10 @@ $textFontSize = 14;
 // Define groups
 //
 
-$metadataGroup = new MetadataTemplateItemGroup("metadata", "Metadata");
+$softwareGroup = new MetadataTemplateItemGroup("software", "Software");
+$submissionAgreementsGroup = new MetadataTemplateItemGroup("submissionAgreements", "Submission Agreements");
+$agentsGroup = new MetadataTemplateItemGroup("agents", "Agents");
+$metadataSchemasGroup = new MetadataTemplateItemGroup("metadataSchemas", "Metadata Schemas");
 
 
 // Define metadata
@@ -35,7 +38,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$softwareGroup->addItem($item);
 
 // Submission agreement
 $item = new MetadataTemplateItemString("submissionagreement", "Path or URL to Submission Agreement", "\\documentation");
@@ -44,7 +47,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$submissionAgreementsGroup->addItem($item);
 
 // Reference code
 $item = new MetadataTemplateItemString("referencecode", "Submission agreement reference code", "");
@@ -53,7 +56,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$submissionAgreementsGroup->addItem($item);
 
 // Previous submission agreement
 $item = new MetadataTemplateItemString("previoussubmissionagreement", "Path or URL to Previous Submission Agreement", "");
@@ -62,7 +65,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$submissionAgreementsGroup->addItem($item);
 
 // Previous reference code
 $item = new MetadataTemplateItemString("previousreferencecode", "Previous submission agreement reference code", "");
@@ -71,7 +74,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$submissionAgreementsGroup->addItem($item);
 
 // Creator name
 $item = new MetadataTemplateItemString("creatorName", "Creator organisation name", "");
@@ -80,7 +83,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Creator ID
 $item = new MetadataTemplateItemString("creatorID", "Creator organisation identifier", "");
@@ -89,7 +92,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Archive name
 $item = new MetadataTemplateItemString("archiveName", "Archive organisation name", "");
@@ -98,7 +101,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Archive ID
 $item = new MetadataTemplateItemString("archiveID", "Archive identifier", "");
@@ -107,7 +110,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Preservation
 $item = new MetadataTemplateItemString("preservation", "Preservation organisation name", "");
@@ -116,7 +119,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Preservation ID
 $item = new MetadataTemplateItemString("preservationID", "Preservation organisation identifier", "");
@@ -125,7 +128,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Submitter name
 $item = new MetadataTemplateItemString("submitterName", "Submitter name", "");
@@ -134,7 +137,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Submitter details
 $item = new MetadataTemplateItemString("submitterdetails", "Submitter details", "");
@@ -143,7 +146,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$agentsGroup->addItem($item);
 
 // Patient schema name
 $item = new MetadataTemplateItemString("patientschemaName", "Patient Personal Information schema name", "Patients.xsd");
@@ -152,7 +155,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$metadataSchemasGroup->addItem($item);
 
 // Patient schema data link
 $item = new MetadataTemplateItemString("patientschemaDataLink", "Path or URL to Patient Personal Information schema", "/schemas/Patients.xsd");
@@ -161,7 +164,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$metadataSchemasGroup->addItem($item);
 
 // Patient clinical schema name
 $item = new MetadataTemplateItemString("patientclinicalschemaName", "Patient Clincal Information schema name", "condition.xsd");
@@ -170,7 +173,7 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$metadataSchemasGroup->addItem($item);
 
 // Patient clinical schema data link
 $item = new MetadataTemplateItemString("patientclinicalschemaDataLink", "Patient clinical schema data link URL", "");
@@ -179,12 +182,15 @@ $item->setReadOnly(false);
 $item->setVisible(true);
 $item->setLabelFontSize($labelFontSize);
 $item->setFontSize($textFontSize);
-$metadataGroup->addItem($item);
+$metadataSchemasGroup->addItem($item);
 
 // Add groups
 //
 
-$packageMetadataTemplate->addGroup($metadataGroup);
+$packageMetadataTemplate->addGroup($softwareGroup);
+$packageMetadataTemplate->addGroup($submissionAgreementsGroup);
+$packageMetadataTemplate->addGroup($agentsGroup);
+$packageMetadataTemplate->addGroup($metadataSchemasGroup);
 
 include_once("includes/metadata-description-package-footer.php");
 ?>
