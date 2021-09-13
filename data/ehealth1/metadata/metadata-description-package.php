@@ -38,7 +38,7 @@ $item->setFontSize($textFontSize);
 $metadataGroup->addItem($item);
 
 // Submission agreement
-$item = new MetadataTemplateItemString("submissionagreement", "Submission agreement URL", "\\documentation\\");
+$item = new MetadataTemplateItemString("submissionagreement", "Path or URL to Submission Agreement", "\\documentation");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
@@ -56,7 +56,7 @@ $item->setFontSize($textFontSize);
 $metadataGroup->addItem($item);
 
 // Previous submission agreement
-$item = new MetadataTemplateItemString("previoussubmissionagreement", "URL to previous submission agreement", "");
+$item = new MetadataTemplateItemString("previoussubmissionagreement", "Path or URL to Previous Submission Agreement", "");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
@@ -146,7 +146,7 @@ $item->setFontSize($textFontSize);
 $metadataGroup->addItem($item);
 
 // Patient schema name
-$item = new MetadataTemplateItemString("patientschemaName", "Name of patient personal schema", "");
+$item = new MetadataTemplateItemString("patientschemaName", "Patient Personal Information schema name", "Patients.xsd");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
@@ -155,7 +155,7 @@ $item->setFontSize($textFontSize);
 $metadataGroup->addItem($item);
 
 // Patient schema data link
-$item = new MetadataTemplateItemString("patientschemaDataLink", "Patient schema data link URL", "");
+$item = new MetadataTemplateItemString("patientschemaDataLink", "Path or URL to Patient Personal Information schema", "/schemas/Patients.xsd");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
@@ -164,7 +164,7 @@ $item->setFontSize($textFontSize);
 $metadataGroup->addItem($item);
 
 // Patient clinical schema name
-$item = new MetadataTemplateItemString("patientclinicalschemaName", "Patient clinical schema name", "");
+$item = new MetadataTemplateItemString("patientclinicalschemaName", "Patient Clincal Information schema name", "condition.xsd");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
