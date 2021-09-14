@@ -52,7 +52,7 @@ class DEditMetadataWindowBase;
 class FileTreeMap
 {
 public:
-    void add( const QTreeWidgetItem* node, int id )
+    void add( QTreeWidgetItem* node, int id )
     {
         m_Nodes.push_back( node );
         m_Ids.push_back( id );
@@ -62,7 +62,7 @@ public:
         m_Nodes.clear();
         m_Ids.clear();
     };
-    bool getId( int& id, const QTreeWidgetItem* node ) const
+    bool getId( int& id, QTreeWidgetItem* node ) const
     {
         id = -1;
         if ( m_Nodes.size() != m_Ids.size() )
@@ -79,10 +79,33 @@ public:
         }
         return false;
     };
+    QTreeWidgetItem* getNode( int id )
+    {
+        for ( unsigned int i = 0; i < m_Ids.size(); i++ )
+        {
+            if ( m_Ids[i] == id )
+            {
+                return m_Nodes[i];
+            }
+        }
+        return NULL;
+    }
+    std::vector<int> getExpandedIds() const
+    {
+        std::vector<int> ids;
+        for (unsigned int i = 0; i < m_Nodes.size(); i++)
+        {
+            if ( m_Nodes[i]->isExpanded() )
+            {
+                ids.push_back( m_Ids[i] );
+            }
+        }
+        return ids;
+    }
 
 private:
-    std::vector<const QTreeWidgetItem*> m_Nodes;
-    std::vector<int>                    m_Ids;
+    std::vector<QTreeWidgetItem*> m_Nodes;
+    std::vector<int>              m_Ids;
 };
 
 //============================================================================
@@ -136,7 +159,7 @@ private:
     bool              saveContext() const;
     bool              loadContext();
     bool              writeTransactionReport( int transactionId, std::vector<int>& fileIds, bool commitOk, bool canceled );
-    bool              populateTree();
+    bool              populateTree( bool rememberState );
     bool              populateTreeAddNode( QTreeWidget* tree, DIngestFile file, QTreeWidgetItem* parent=NULL );
     bool              hasDuplicates( const std::vector< int >& selectedIds ) const;
     void              removeDuplicates( std::vector< int >& selectedIds ) const;
