@@ -424,7 +424,7 @@ class Ehealth1Sip
 
     public function isDescriptiveMetadata($path)
     {
-        if (basename($path) == 'Patients.xml')
+        if (strtolower(basename($path)) == 'patients.xml')
         {
             return true;
         }
