@@ -1300,8 +1300,10 @@ void DPiqlIngestMainWindow::updateGui()
 {
      ERROR_F( "DPiqlIngestMainWindow::updateGui" );
 
+     const bool rememberTreeState = true;
+
     // Populate tree
-    populateTree();
+    populateTree( rememberTreeState );
 
     // Clear information view
     m_Ui.informationView->clear();
@@ -1318,9 +1320,11 @@ void DPiqlIngestMainWindow::updateGui()
  *  Update file tree
  */
 
-bool DPiqlIngestMainWindow::populateTree()
+bool DPiqlIngestMainWindow::populateTree( bool rememberState )
 {
     ERROR_F( "DPiqlIngestMainWindow::populateTree" );
+
+    vector<int> expandedIds = m_FileTreeMap.getExpandedIds();
 
     // Clear tree
     m_Ui.treeWidget->clear();
@@ -1328,19 +1332,42 @@ bool DPiqlIngestMainWindow::populateTree()
 
     if ( m_FileList.count() > 0 )
     {
-        for ( unsigned int i = 0; i < m_FileList.count(); i++ )
+        // Add nodes to tree
+        for ( unsigned int pass = 0; pass < 2; pass++ )
         {
-            DIngestFile file;
-            if ( !m_FileList.getFileByIndex(file, i) )
+            for ( unsigned int i = 0; i < m_FileList.count(); i++ )
             {
-                error << ERRerror << "Failed to get file from list" << endl;
-                showErrorMessage(QMessageBox::tr("Failed to update list"), QMessageBox::tr("Failed to update file list"));
-                return false;
-            }
+                DIngestFile file;
+                if ( !m_FileList.getFileByIndex(file, i) )
+                {
+                    error << ERRerror << "Failed to get file from list" << endl;
+                    showErrorMessage(QMessageBox::tr("Failed to update list"), QMessageBox::tr("Failed to update file list"));
+                    return false;
+                }
 
-            if ( !file.hasParent() )
-            {
-                populateTreeAddNode( m_Ui.treeWidget, file );
+                if ( pass == 0 )
+                {
+                    // Add root node and all its children
+                    if ( !file.hasParent() )
+                    {
+                        populateTreeAddNode( m_Ui.treeWidget, file );
+                    }
+                }
+                else if ( pass == 1 && rememberState )
+                {
+                    // Expand nodes to restore the original state of the tree
+                    if ( std::find(expandedIds.begin(), expandedIds.end(), file.id()) != expandedIds.end() )
+                    {
+                        QTreeWidgetItem* node = m_FileTreeMap.getNode( file.id() );
+                        if ( node == NULL )
+                        {
+                            error << ERRerror << "Failed to get node from list" << endl;
+                            showErrorMessage(QMessageBox::tr("Failed to update list"), QMessageBox::tr("Failed to update file list"));
+                            return false;
+                        }
+                        m_Ui.treeWidget->expandItem( node );
+                    }
+                }
             }
         }
 
