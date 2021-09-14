@@ -1797,7 +1797,7 @@ bool DPiqlIngestMainWindow::saveContext() const
     xml <<
         "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
         "<context>"
-        "<version>1.0.2</version>"
+        "<version>1.0.3</version>"
         "<transaction>" << m_Transaction << "</transaction>";
 
     if ( !m_FileList.write( xml, false ) )
@@ -1893,7 +1893,7 @@ bool DPiqlIngestMainWindow::loadContext()
     {
         string version = docElem.elementsByTagName("version").at(0).toElement().text().toStdString();
         error << ERRinfo << "Version is " << version << endl;
-        if ( version != "1.0.2" )
+        if ( version != "1.0.3" )
         {
             // Context is outdated - replace it with a blank one
             if ( !saveContext() )
