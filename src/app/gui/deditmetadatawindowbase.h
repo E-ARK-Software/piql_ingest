@@ -78,7 +78,7 @@ public:
     
     
 protected:
-    virtual bool FillStackedWidget(const std::string& phpBinPath);
+    virtual bool FillStackedWidget(const std::string& phpBinPath) = 0;
 
 protected:
     void ConstructorSetup(const std::string& phpBinPath);

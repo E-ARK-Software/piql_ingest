@@ -153,26 +153,6 @@ void DEditMetadataWindowBase::clearError()
 
 //----------------------------------------------------------------------------
 /*!
- *  \brief Fills QStackedWidget object with all necessary components.
- *
- *  Fills QStackedWidget object with all necessary components.
- *  This object contains an object for navigating metadata groups 
- *  and all metadata input fields.
- *
- *  \param[in]  phpBinPath  The path to the executable php file.
- *  \return Returns true if successful.
- */
-
-
-bool DEditMetadataWindowBase::FillStackedWidget(const std::string& phpBinPath)
-{
-    UNUSED_PARAMETER(phpBinPath);
-    return true;
-}
-
-
-//----------------------------------------------------------------------------
-/*!
  *  \brief All necessary settings are performed when creating a new instance of the class.
  *
  *  All necessary settings are performed when creating a new instance of the class.
