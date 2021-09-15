@@ -54,8 +54,8 @@ D_NAMESPACE_USING( D_NAMESPACE )
  */
 
 DEditMetadataWindowFile::DEditMetadataWindowFile(QWidget * parent, DIngestFileList& ingestFiles, const std::string& phpBinPath, const DPath& tempDir, DPiqlIngestConfig * config) :
-    m_IngestFiles(ingestFiles),
-    DEditMetadataWindowBase(parent, tempDir, config)
+    DEditMetadataWindowBase(parent, tempDir, config),
+    m_IngestFiles(ingestFiles)
 {
     constructorSetup(phpBinPath);
 }
