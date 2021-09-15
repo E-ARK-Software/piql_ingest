@@ -56,7 +56,7 @@ D_NAMESPACE_USING( D_NAMESPACE )
     DEditMetadataWindowBase(parent, tempDir, config),
     m_MetadataGroupList(metadataGroupList)
 {
-    ConstructorSetup(phpBinPath);
+    constructorSetup(phpBinPath);
 }
 
 
@@ -140,7 +140,7 @@ bool DEditMetadataWindowPackage::FillStackedWidget(const std::string& phpBinPath
     // Load template
     DMetadataTemplate metadataTemplate;
     const std::string scriptName = "metadata-description-package.php";
-    if (!ReadMetadataTemplate(metadataTemplate, phpBinPath, scriptName))
+    if (!readMetadataTemplate(metadataTemplate, phpBinPath, scriptName))
     {
         setError("Error reading metadata template: " + scriptName);
         return false;
@@ -153,7 +153,7 @@ bool DEditMetadataWindowPackage::FillStackedWidget(const std::string& phpBinPath
     }
 
     // Create form and populate default values
-    if (!CreateMetadataForm(metadataTemplate, m_MetadataGroupList, layout, 0))
+    if (!createMetadataForm(metadataTemplate, m_MetadataGroupList, layout, 0))
     {
         setError("Error creating metadata form");
         return false;

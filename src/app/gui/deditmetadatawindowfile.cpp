@@ -57,7 +57,7 @@ DEditMetadataWindowFile::DEditMetadataWindowFile(QWidget * parent, DIngestFileLi
     m_IngestFiles(ingestFiles),
     DEditMetadataWindowBase(parent, tempDir, config)
 {
-    ConstructorSetup(phpBinPath);
+    constructorSetup(phpBinPath);
 }
 
 
@@ -176,7 +176,7 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         // Load template
         DMetadataTemplate metadataTemplate;
         const std::string scriptName = "metadata-description.php";
-        if (!ReadMetadataTemplate(metadataTemplate, phpBinPath, scriptName, ingestFile.fileName(true)))
+        if (!readMetadataTemplate(metadataTemplate, phpBinPath, scriptName, ingestFile.fileName(true)))
         {
             setError("Error reading metadata template: " + scriptName);
             return false;
@@ -189,7 +189,7 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         }
 
         // Create form and populate default values
-        if (!CreateMetadataForm(metadataTemplate, ingestFile.metadataGroupList(), layout, i))
+        if (!createMetadataForm(metadataTemplate, ingestFile.metadataGroupList(), layout, i))
         {
             setError("Error creating metadata form");
             return false;

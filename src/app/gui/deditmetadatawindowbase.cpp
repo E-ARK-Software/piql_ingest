@@ -88,7 +88,7 @@ DEditMetadataWindowBase::~DEditMetadataWindowBase()
 
 bool DEditMetadataWindowBase::validate() const
 {
-    ERROR_F( "DEditMetadataWindow::validate" );
+    ERROR_F( "DEditMetadataWindowBase::validate" );
     
     if ( hasError().length() )
     {
@@ -108,7 +108,7 @@ bool DEditMetadataWindowBase::validate() const
 
 void DEditMetadataWindowBase::showForm()
 {
-    ERROR_F( "DEditMetadataWindow::showForm" );
+    ERROR_F( "DEditMetadataWindowBase::showForm" );
 
     if ( m_CurrentForm >= m_Forms.size() )
     {
@@ -161,9 +161,9 @@ void DEditMetadataWindowBase::clearError()
  *  \param[in]  phpBinPath  The path to the executable php file.
  */
 
-void DEditMetadataWindowBase::ConstructorSetup(const std::string& phpBinPath)
+void DEditMetadataWindowBase::constructorSetup(const std::string& phpBinPath)
 {
-    ERROR_F("DEditMetadataWindowBase::DEditMetadataWindowBase");
+    ERROR_F("DEditMetadataWindowBase::constructorSetup");
 
     m_Ui.setupUi(this);
 
@@ -230,9 +230,9 @@ void DEditMetadataWindowBase::ConstructorSetup(const std::string& phpBinPath)
  *  \return Returns true if successful.
  */
 
-bool DEditMetadataWindowBase::ReadMetadataTemplate(DMetadataTemplate& metadataTemplate, const std::string& phpBinPath, const std::string scriptName, const std::string ingestFileName)
+bool DEditMetadataWindowBase::readMetadataTemplate(DMetadataTemplate& metadataTemplate, const std::string& phpBinPath, const std::string scriptName, const std::string ingestFileName)
 {
-    ERROR_F("DEditMetadataWindow::DEditMetadataWindow");
+    ERROR_F("DEditMetadataWindowBase::readMetadataTemplate");
 
     string metadataTemplateFile = DPhpUtils::GetScriptPath(scriptName);
     if (!metadataTemplateFile.length())
@@ -316,7 +316,7 @@ bool DEditMetadataWindowBase::ReadMetadataTemplate(DMetadataTemplate& metadataTe
  *  \return Returns true if successful.
  */
 
-bool DEditMetadataWindowBase::CreateMetadataForm(const DMetadataTemplate& metadataTemplate, const DMetadataItemGroupList& initialMetadataGroupList, QVBoxLayout * layout, int formIndex)
+bool DEditMetadataWindowBase::createMetadataForm(const DMetadataTemplate& metadataTemplate, const DMetadataItemGroupList& initialMetadataGroupList, QVBoxLayout * layout, int formIndex)
 {
     // Create file metadata form
     m_FileMetadataTemplateGroupList = metadataTemplate.fileMetadataGroups();
@@ -337,7 +337,7 @@ bool DEditMetadataWindowBase::CreateMetadataForm(const DMetadataTemplate& metada
         }
 
         // Create group layout item
-        if (!CreateGroupLayoutItem(group, initialMetadataGroupList, labels, metadataTabWidget, labelWidth, formIndex, i))
+        if (!createGroupLayoutItem(group, initialMetadataGroupList, labels, metadataTabWidget, labelWidth, formIndex, i))
         {
             setError("Create group layout item error");
             return false;
@@ -368,7 +368,7 @@ bool DEditMetadataWindowBase::CreateMetadataForm(const DMetadataTemplate& metada
 
 void DEditMetadataWindowBase::setError(const string& errorText)
 {
-    ERROR_F( "DEditMetadataWindow::setError" );
+    ERROR_F( "DEditMetadataWindowBase::setError" );
     
     error << ERRerror << errorText << endl;
     m_HasError = errorText;
@@ -386,7 +386,7 @@ void DEditMetadataWindowBase::setError(const string& errorText)
 
 void DEditMetadataWindowBase::editAllFormValueEdited(bool init)
 {
-    ERROR_F( "DEditMetadataWindow::editAllFormValueEdited" );
+    ERROR_F( "DEditMetadataWindowBase::editAllFormValueEdited" );
 
     // Initialize form
     if ( init && m_CurrentForm == 0 )
@@ -553,7 +553,7 @@ bool DEditMetadataWindowBase::isCompatible( const DMetadataItemGroupList& groupL
  *  \return Returns true if successful.
  */
 
-bool DEditMetadataWindowBase::CreateGroupLayoutItem(DMetadataTemplateItemGroup& group,
+bool DEditMetadataWindowBase::createGroupLayoutItem(DMetadataTemplateItemGroup& group,
     const DMetadataItemGroupList& initialMetadataGroupList,
     vector<QLabel*>& labels,
     QTabWidget* metadataTabWidget,
@@ -572,7 +572,7 @@ bool DEditMetadataWindowBase::CreateGroupLayoutItem(DMetadataTemplateItemGroup& 
     bool visibleItemsAdded = false;
     for (unsigned int k = 0; k < group.itemCount(); k++)
     {
-        if (!CreateGuiItem(group, initialMetadataGroupList, labels, labelWidth, metadataLayout, formIndex, groupIndex, k, visibleItemsAdded))
+        if (!createGuiItem(group, initialMetadataGroupList, labels, labelWidth, metadataLayout, formIndex, groupIndex, k, visibleItemsAdded))
         {
             setError("Create gui item error");
             return false;
@@ -613,7 +613,7 @@ bool DEditMetadataWindowBase::CreateGroupLayoutItem(DMetadataTemplateItemGroup& 
  *  \return Returns true if successful.
  */
 
-bool DEditMetadataWindowBase::CreateGuiItem(DMetadataTemplateItemGroup& group, const DMetadataItemGroupList& initialMetadataGroupList, vector<QLabel*>& labels, int& labelWidth, QVBoxLayout * metadataLayout, unsigned int formIndex, unsigned int groupIndex, unsigned int itemIndex, bool& visibleItemsAdded)
+bool DEditMetadataWindowBase::createGuiItem(DMetadataTemplateItemGroup& group, const DMetadataItemGroupList& initialMetadataGroupList, vector<QLabel*>& labels, int& labelWidth, QVBoxLayout * metadataLayout, unsigned int formIndex, unsigned int groupIndex, unsigned int itemIndex, bool& visibleItemsAdded)
 {
     // Create gui item
     DEditMetadataWindowGuiItem guiItem;
@@ -639,7 +639,7 @@ bool DEditMetadataWindowBase::CreateGuiItem(DMetadataTemplateItemGroup& group, c
     QHBoxLayout * itemLayout = new QHBoxLayout();
 
     // Add label
-    QLabel * label = CreateLabelItem(itemLayout, item, labels, labelWidth);
+    QLabel * label = createLabelItem(itemLayout, item, labels, labelWidth);
     if (!label)
     {
         setError("Get label element error");
@@ -647,7 +647,7 @@ bool DEditMetadataWindowBase::CreateGuiItem(DMetadataTemplateItemGroup& group, c
     }
 
     // Add input field
-    guiItem.m_InputElement = CreateInputFieldItem(itemLayout, item, metadata, formIndex);
+    guiItem.m_InputElement = createInputFieldItem(itemLayout, item, metadata, formIndex);
     if (!guiItem.m_InputElement)
     {
         setError("Get input field element error");
@@ -765,7 +765,7 @@ std::string DEditMetadataWindowBase::GetMetadata(const DMetadataItemGroupList& i
  *  \return Returns new label object.
  */
 
-QLabel * DEditMetadataWindowBase::CreateLabelItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, vector<QLabel*>& labels, int& labelWidth)
+QLabel * DEditMetadataWindowBase::createLabelItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, vector<QLabel*>& labels, int& labelWidth)
 {
     // Add label
     QHBoxLayout * labelLayout = new QHBoxLayout();
@@ -803,7 +803,7 @@ QLabel * DEditMetadataWindowBase::CreateLabelItem(QHBoxLayout * itemLayout, DMet
  *  \return Returns new input filed object.
  */
 
-QWidget * DEditMetadataWindowBase::CreateInputFieldItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, string metadata, unsigned int formIndex)
+QWidget * DEditMetadataWindowBase::createInputFieldItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, string metadata, unsigned int formIndex)
 {
     // Add input field
     QWidget * inputElement = NULL;
@@ -811,17 +811,17 @@ QWidget * DEditMetadataWindowBase::CreateInputFieldItem(QHBoxLayout * itemLayout
     {
     case DMetadataTemplateItem::METADATA_TEMPLATE_ITEM_TYPE_STRING:
     {
-        CreateTextInputField(item, &inputElement, metadata, formIndex);
+        createTextInputField(item, &inputElement, metadata, formIndex);
         break;
     }
     case DMetadataTemplateItem::METADATA_TEMPLATE_ITEM_TYPE_DROPDOWN:
     {
-        CreateDropDownInputField(item, &inputElement, metadata, formIndex);
+        createDropDownInputField(item, &inputElement, metadata, formIndex);
         break;
     }
     case DMetadataTemplateItem::METADATA_TEMPLATE_ITEM_TYPE_DATETIME:
     {
-        CreateDateTimeInputField(item, &inputElement, metadata, formIndex);
+        createDateTimeInputField(item, &inputElement, metadata, formIndex);
         break;
     }
     default:
@@ -849,7 +849,7 @@ QWidget * DEditMetadataWindowBase::CreateInputFieldItem(QHBoxLayout * itemLayout
  *  \param[in]  formIndex    Form index.
  */
 
-void DEditMetadataWindowBase::CreateTextInputField(DMetadataTemplateItem& item, QWidget ** inputElement, string metadata, unsigned int formIndex)
+void DEditMetadataWindowBase::createTextInputField(DMetadataTemplateItem& item, QWidget ** inputElement, string metadata, unsigned int formIndex)
 {
     QLineEdit * textBox = new QLineEdit(QString::fromStdString(metadata), this);
     textBox->setFixedWidth(item.width());
@@ -876,7 +876,7 @@ void DEditMetadataWindowBase::CreateTextInputField(DMetadataTemplateItem& item, 
  *  \param[in]  formIndex    Form index.
  */
 
-void DEditMetadataWindowBase::CreateDropDownInputField(DMetadataTemplateItem& item, QWidget ** inputElement, string metadata, unsigned int formIndex)
+void DEditMetadataWindowBase::createDropDownInputField(DMetadataTemplateItem& item, QWidget ** inputElement, string metadata, unsigned int formIndex)
 {
     // Get options
     vector<string> optionNames;
@@ -935,7 +935,7 @@ void DEditMetadataWindowBase::CreateDropDownInputField(DMetadataTemplateItem& it
  *  \param[in]  formIndex    Form index.
  */
 
-void DEditMetadataWindowBase::CreateDateTimeInputField(DMetadataTemplateItem& item, QWidget ** inputElement, string metadata, unsigned int formIndex)
+void DEditMetadataWindowBase::createDateTimeInputField(DMetadataTemplateItem& item, QWidget ** inputElement, string metadata, unsigned int formIndex)
 {
     QDateTimeEdit * dateBox = new QDateTimeEdit(this);
     dateBox->setFixedWidth(item.width());
@@ -1077,7 +1077,7 @@ void DEditMetadataWindowBase::CreateDateTimeInputField(DMetadataTemplateItem& it
 
 bool DEditMetadataWindowBase::eventFilter( QObject* object, QEvent* event )
 {
-    ERROR_F( "DEditMetadataWindow::eventFilter" );
+    ERROR_F( "DEditMetadataWindowBase::eventFilter" );
 
     if ( event->type() == QEvent::KeyPress )
     {
