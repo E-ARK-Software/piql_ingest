@@ -87,6 +87,7 @@ protected:
 
     void setError(const std::string& errorText);
     void editAllFormValueEdited(bool init);
+    bool isCompatible(const DMetadataItemGroupList& groupList, const DMetadataTemplateItemGroupList& templateGroupList) const;
 
 private:
     bool CreateGroupLayoutItem(DMetadataTemplateItemGroup& group, 

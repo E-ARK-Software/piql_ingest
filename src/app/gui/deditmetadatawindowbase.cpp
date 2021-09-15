@@ -483,6 +483,74 @@ void DEditMetadataWindowBase::editAllFormValueEdited(bool init)
 }
 
 
+//----------------------------------------------------------------------------
+/*!
+ *  \brief Check if a metadata group list is compatible with a template group list.
+ *
+ *  Check if a metadata group lists is built from the given template.
+ *
+ *  \param[in]  groupList         Metadata list to compare.
+ *  \param[in]  templateGroupList Template list to compare.
+ *  \return Returns true if the two lists are compatible.
+ */
+
+bool DEditMetadataWindowBase::isCompatible( const DMetadataItemGroupList& groupList, const DMetadataTemplateItemGroupList& templateGroupList ) const
+{
+    ERROR_F( "DEditMetadataWindowBase::isCompatible" );
+
+    if ( groupList.groupCount() != templateGroupList.groupCount() )
+    {
+        return false;
+    }
+
+    for ( unsigned int i = 0; i < groupList.groupCount(); i++ )
+    {
+        DMetadataItemGroup group1;
+        if ( !groupList.getGroup(group1, i) )
+        {
+            error << ERRwarning << "Failed to get group with index " << i << " from first list" << endl;
+            return false;
+        }
+
+        DMetadataTemplateItemGroup group2;
+        if ( !templateGroupList.getGroup(group2, i) )
+        {
+            error << ERRwarning << "Failed to get group with index " << i << " from second list" << endl;
+            return false;
+        }
+
+        if ( group1.name() != group2.name() || group1.itemCount() != group2.itemCount() )
+        {
+            return false;
+        }
+
+        for ( unsigned int j = 0; j < group1.itemCount(); j++ )
+        {
+            DMetadataItem item1;
+            if ( !group1.getItem(item1, j) )
+            {
+                error << ERRwarning << "Failed to get item with index " << j << " from group " << i << " of first list" << endl;
+                return false;
+            }
+
+            DMetadataTemplateItem item2;
+            if ( !group2.getItem(item2, j) )
+            {
+                error << ERRwarning << "Failed to get item with index " << j << " from group " << i << " of second list" << endl;
+                return false;
+            }
+
+            if ( item1.key() != item2.name() )
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
 //===================================
 //  P R I V A T E   I N T E R F A C E
 //===================================

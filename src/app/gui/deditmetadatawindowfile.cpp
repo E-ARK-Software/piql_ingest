@@ -173,6 +173,7 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
         QVBoxLayout * layout = new QVBoxLayout();
         widget->setLayout(layout);
 
+        // Load template
         DMetadataTemplate metadataTemplate;
         const std::string scriptName = "metadata-description.php";
         if (!ReadMetadataTemplate(metadataTemplate, phpBinPath, scriptName, ingestFile.fileName(true)))
@@ -181,6 +182,13 @@ bool DEditMetadataWindowFile::FillStackedWidget(const std::string& phpBinPath)
             return false;
         }
 
+        // Validate cached metadata - clear if it's not compatible with template
+        if ( !isCompatible(ingestFile.metadataGroupList(), metadataTemplate.fileMetadataGroups()) )
+        {
+            ingestFile.setMetadataGroups( DMetadataItemGroupList() );
+        }
+
+        // Create form and populate default values
         if (!CreateMetadataForm(metadataTemplate, ingestFile.metadataGroupList(), layout, i))
         {
             setError("Error creating metadata form");
