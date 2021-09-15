@@ -78,40 +78,41 @@ public:
     
     
 protected:
-    virtual bool FillStackedWidget(const std::string& phpBinPath);
+    virtual bool FillStackedWidget(const std::string& phpBinPath) = 0;
 
 protected:
-    void ConstructorSetup(const std::string& phpBinPath);
-    bool ReadMetadataTemplate(DMetadataTemplate& metadataTemplate, const std::string& phpBinPath, const std::string phpScriptName, const std::string ingestFileName = "");
-    bool CreateMetadataForm(const DMetadataTemplate& metadataTemplate, const DMetadataItemGroupList& initialMetadataGroupList, QVBoxLayout * layout, int formIndex = 0);
+    void constructorSetup(const std::string& phpBinPath);
+    bool readMetadataTemplate(DMetadataTemplate& metadataTemplate, const std::string& phpBinPath, const std::string phpScriptName, const std::string ingestFileName = "");
+    bool createMetadataForm(const DMetadataTemplate& metadataTemplate, const DMetadataItemGroupList& initialMetadataGroupList, QVBoxLayout * layout, int formIndex = 0);
 
     void setError(const std::string& errorText);
     void editAllFormValueEdited(bool init);
+    bool isCompatible(const DMetadataItemGroupList& groupList, const DMetadataTemplateItemGroupList& templateGroupList) const;
 
 private:
-    bool CreateGroupLayoutItem(DMetadataTemplateItemGroup& group, 
+    bool createGroupLayoutItem(DMetadataTemplateItemGroup& group,
                                const DMetadataItemGroupList& initialMetadataGroupList,
                                std::vector<QLabel*>& labels,
                                QTabWidget* metadataTabWidget,
                                int& labelWidth,
-                               unsigned int formIndex, 
+                               unsigned int formIndex,
                                unsigned int groupIndex
                                );
-    bool CreateGuiItem(DMetadataTemplateItemGroup& group, 
-                       const DMetadataItemGroupList& initialMetadataGroupList, 
-                       std::vector<QLabel*>& labels, 
-                       int& labelWidth, 
-                       QVBoxLayout * metadataLayout, 
-                       unsigned int formIndex, 
-                       unsigned int groupIndex, 
-                       unsigned int itemIndex, 
+    bool createGuiItem(DMetadataTemplateItemGroup& group,
+                       const DMetadataItemGroupList& initialMetadataGroupList,
+                       std::vector<QLabel*>& labels,
+                       int& labelWidth,
+                       QVBoxLayout * metadataLayout,
+                       unsigned int formIndex,
+                       unsigned int groupIndex,
+                       unsigned int itemIndex,
                        bool& visibleItemsAdded);
     std::string GetMetadata(const DMetadataItemGroupList& initialMetadataGroupList, const DMetadataTemplateItem& item, unsigned int groupIndex, unsigned int itemIndex);
-    QLabel * CreateLabelItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, std::vector<QLabel*>& labels, int& labelWidth);
-    QWidget * CreateInputFieldItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, std::string metadata, unsigned int formIndex);
-    void CreateTextInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
-    void CreateDropDownInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
-    void CreateDateTimeInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
+    QLabel * createLabelItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, std::vector<QLabel*>& labels, int& labelWidth);
+    QWidget * createInputFieldItem(QHBoxLayout * itemLayout, DMetadataTemplateItem& item, std::string metadata, unsigned int formIndex);
+    void createTextInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
+    void createDropDownInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
+    void createDateTimeInputField(DMetadataTemplateItem& item, QWidget ** inputElement, std::string metadata, unsigned int formIndex);
     bool eventFilter(QObject* object, QEvent* event);
 
 private slots:
