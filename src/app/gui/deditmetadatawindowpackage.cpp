@@ -53,8 +53,8 @@ D_NAMESPACE_USING( D_NAMESPACE )
  */
 
  DEditMetadataWindowPackage::DEditMetadataWindowPackage(QWidget * parent, DMetadataItemGroupList& metadataGroupList, const std::string& phpBinPath, const DPath& tempDir, DPiqlIngestConfig * config) :
-    m_MetadataGroupList(metadataGroupList),
-    DEditMetadataWindowBase(parent, tempDir, config)
+    DEditMetadataWindowBase(parent, tempDir, config),
+    m_MetadataGroupList(metadataGroupList)
 {
     ConstructorSetup(phpBinPath);
 }
