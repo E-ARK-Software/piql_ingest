@@ -113,9 +113,9 @@ HEADERS           =   appcore/piql_ingest_config.h \
                       appcore/dphputils.h \
                       $$GUI_HEADERS
 
-macx:ICON=resources/icon_32x32.icns
+macx:ICON=gui/resources/icon_32x32.icns
 macx:QMAKE_EXTRA_TARGETS += createicons
-macx:PRE_TARGETDEPS      += resources/icon_32x32.icns
-win32:RC_ICONS=resources/icon_32x32.ico
+macx:PRE_TARGETDEPS      += gui/resources/icon_32x32.icns
+win32:RC_ICONS=gui/resources/icon_32x32.ico
 
-include(add_app_paths.pri)
+include(app.pri)

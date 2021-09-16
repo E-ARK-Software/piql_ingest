@@ -1,3 +1,14 @@
+##############################################################################
+#
+#   Creation date:  2021-07-17
+#   Created by:     Oleksandr Ivanov
+#
+#   Copyright (c) 2021 Piql AS, Norway. All rights reserved.
+#
+##############################################################################
+
+# Add the value of the environment variable CV_QTDIR to the visual studio project properties.
+
 # test if windows
 win32 {
 contains( PLATFORM, W32 ) {
