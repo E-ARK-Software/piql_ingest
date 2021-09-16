@@ -18,6 +18,7 @@ try {
     include_once("includes/general-functions.php");
     include_once("includes/script-context.php");
     include_once("includes/ehealth1-sip.php");
+    include_once("includes/python-runner.php");
     include_once("metadata-description.php");
     include_once("metadata-description-package.php");
     include_once("config.php");
@@ -362,11 +363,23 @@ try {
     }
     logInfo("Identified OS: {$platform}");
 
-    // Send first progress
-    $communicator->sendProgress(0, gettext("Preparing data"));
+    // Pre-process input data
+    if ($configuration->exists("PreProcessInputDataScript"))
+    {
+        $communicator->sendProgress(0, gettext("Pre-processing data"));
+
+        $scriptPath = $configuration->getValue("PreProcessInputDataScript");
+        include_once($scriptPath);
+
+        if (!preProcessInputData($errorMessage, $filePathList, $relativeFilePathList, $tempDirectoryPath))
+        {
+            exitWithError("Failed to pre-process input data: {$errorMessage}");
+        }
+    }
 
     // Build data for archive
     logInfo("Building SIP");
+    $communicator->sendProgress(0, gettext("Preparing data"));
     $archiveFiles = array();
     {
         // Create package files
@@ -376,29 +389,51 @@ try {
             // The payload can contain files or directory stuctures
             //
             // SIP structure:
-            //   IP_{ID}
-            //    METS.xml
+            //   {TRANSFER_NAME}
+            //    mets.xml
             //    metadata/
             //     descriptive/
-            //      patient1.xml
+            //      Patients.xml
             //     preservation/
-            //      PREMIS1.xml
             //    schemas/
-            //     Fhir.patient.xsd
-            //     Fhir.condition.xsd
-            //     PREMIS.xsd
+            //     condition.xsd
+            //     DILCISExtensionMETS.xsd
+            //     DILCISExtensionSIPMETS.xsd
+            //     patient.xsd
+            //     xlink.xsd
+            //     xml.xsd
             //    documentation/
-            //     Submissionagreement_{ID}.pdf
+            //     submissionagreement.pdf
             //    representations/
             //     Patientrecord_{ID}
-            //      METS.xml
+            //      mets.xml
             //      metadata/
             //       descriptive/
-            //        condition1.xml
+            //        Patient1_condition.xml
             //       preservation/
-            //        PREMIS_R1.xml
             //      data/
             //       {PAYLOAD}
+            //
+            // Input structure:
+            //   eHealth1_Transfer_{ID}
+            //    Patients.xml
+            //    submissionagreement.pdf
+            //    patientrecord_1/
+            //     Patient1_condition.xml
+            //     Patient1Case1/
+            //      Patient1Case1Document1/
+            //       patient1_record1.pdf
+            //     Patient1Case2/
+            //      Patient1Case2Document1/
+            //       patient1_record2.pdf
+            //    patientrecord_2/
+            //     Patient2_condition.xml
+            //     Patient2Case1/
+            //      Patient2Case1Subcase1/
+            //       Patient2Case1Subcase1Document1/
+            //        patient2_record1.pdf
+            //       Patient2Case1Subcase1Document2/
+            //        patient2_record2.pdf
 
             // Define SIP
             $sip = new Ehealth1Sip();
@@ -415,9 +450,8 @@ try {
                     // This is a SIP
                     //
 
-                    // Set informationpackage ID
-                    // Expecting directory with name some_name_{ID}
-                    if (strlen($sip->informationPackageId()) > 0)
+                    // Set transfer name
+                    if (strlen($sip->transferName()) > 0)
                     {
                         exitWithError('Only one SIP per commit is allowed');
                     }
@@ -426,7 +460,7 @@ try {
                     {
                         exitWithError("SIP name is in wrong format: {$relativeFilePath}");
                     }
-                    $sip->setInformationPackageId($parts[count($parts)-1]);
+                    $sip->setTransferName($relativeFilePath);
                 }
                 else if ($directoryDepth == 1)
                 {
@@ -540,7 +574,7 @@ try {
             }
 
             // Check that the SIP has an ID
-            if (strlen($sip->informationPackageId()) == 0)
+            if (strlen($sip->transferName()) == 0)
             {
                 exitWithError('The SIP does not have an ID');
             }
@@ -729,18 +763,6 @@ try {
             }
 
             // Remove submission agreement metadata
-            $temporaryMetadataList = $metadataList;
-            $temporaryFileNames = $fileNames;
-            for ($i = 0; $i < count($fileNames); $i++)
-            {
-                if (!isSubmissionAgreement($fileNames[$i]))
-                {
-                    array_push($temporaryFileNames, $fileNames[$i]);
-                    array_push($temporaryMetadataList, $metadataList[$i]);
-                }
-            }
-
-            // Create metadata file
             $temporaryFileNames = array();
             $temporaryMetadataList = array();
             for ($i = 0; $i < count($filePathList); $i++)
@@ -751,6 +773,8 @@ try {
                     array_push($temporaryMetadataList, $metadataList[$i]);
                 }
             }
+
+            // Create metadata file
             $metadataOut = "$metadataPath/metadata.csv";
             if (!createMetadata($temporaryMetadataList, $metadataOut, $temporaryFileNames, $metadataTemplate, $configuration))
             {
@@ -1190,6 +1214,7 @@ try {
                     $tar->addFile($filePath, $relativeFilePath);
                 }
             }
+            unset($tar);
         } catch (Exception $e) {
             exitWithError("Failed to create TAR archive: " . $e->getMessage());
         }
@@ -1507,7 +1532,7 @@ try {
     $deleteFiles = array();
     array_push($deleteFiles, "metadata.xml");
     array_push($deleteFiles, "$fileNameBase");
-    array_push($deleteFiles, $archiveFileName);
+    array_push($deleteFiles, $archiveFilePath);
     for ($i = 0; $i < count($deleteFiles); $i++)
     {
         if (strlen($deleteFiles[$i]) > 0 && !deleteFromDisk("$tempDirectoryPath/" . $deleteFiles[$i], false))

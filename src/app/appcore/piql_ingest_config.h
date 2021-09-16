@@ -44,18 +44,21 @@ public:
     bool                        autoOpenMetadataEdit();
     bool                        autoOpenPackageMetadataEdit();
     bool                        commitSinglePackage();
+    bool                        enableFileMetadataEdit();
+    bool                        autofillLastInputPackageMetadata();
+    unsigned int                maxBundleSize();
     std::string                 applicationStyleSheet();
     std::string                 tempFilesDirectory();
     std::string                 userDataDirectory();
     std::string                 reportsDirectory();
     std::string                 validateFilenameRegex();
-    unsigned int                maxBundleSize();
     std::string                 primaryLogo();
     std::string                 secondaryLogo();
     std::string                 rightLogo();
     std::string                 mainWindowTitle();
     std::string                 mainWindowIcon();
     std::string                 applicationLanguage();
+    std::string                 commitButtonText();
 
 private:
 
@@ -66,18 +69,21 @@ private:
     bool                        m_AutoOpenMetadataEdit;
     bool                        m_AutoOpenPackageMetadataEdit;
     bool                        m_CommitSinglePackage;
+    bool                        m_EnableFileMetadataEdit;
+    bool                        m_AutofillLastInputPackageMetadata;
+    unsigned int                m_MaxBundleSize;
     std::string                 m_ApplicationStyleSheet;
     std::string                 m_TempFilesDirectory;
     std::string                 m_UserDataDirectory;
     std::string                 m_ReportsDirectory;
     std::string                 m_ValidateFilenameRegex;
-    unsigned int                m_MaxBundleSize;
     std::string                 m_PrimaryLogo;
     std::string                 m_SecondaryLogo;
     std::string                 m_RightLogo;
     std::string                 m_MainWindowTitle;
     std::string                 m_MainWindowIcon;
     std::string                 m_ApplicationLanguage;
+    std::string                 m_CommitButtonText;
 
 private: // DISABLE
     

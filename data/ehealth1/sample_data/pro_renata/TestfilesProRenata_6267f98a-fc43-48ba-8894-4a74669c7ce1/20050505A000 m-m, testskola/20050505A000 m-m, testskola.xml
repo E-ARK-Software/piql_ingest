@@ -1,0 +1,634 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml-stylesheet type="text/xsl" href="../patient.xslt"?>
+<JournalArchive xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../patient.xsd" xmlns="https://journal.prorenata.se/static/xml/journal_archive/1.0.3/patients">
+  <created_date_time>2021-03-29T13:28:07.901795</created_date_time>
+  <file_type>JournalArchive</file_type>
+  <version>1.0.3</version>
+  <objects>
+    <organization_units>
+      <organizationunit id="z79qWaSntB1Z">
+        <name>Testskola</name>
+        <unit_id>kommun.testskola</unit_id>
+        <uuid>50d42d7d-bcb4-4adc-8f9e-8f39e30a7055</uuid>
+        <description></description>
+        <archived>false</archived>
+        <test_unit>true</test_unit>
+        <external_id>Testskola</external_id>
+        <custom_fields/>
+      </organizationunit>
+    </organization_units>
+    <school_classes/>
+    <health_care_units>
+      <healthcareunit id="kWyeqYIQI1DD">
+        <unit_name>Testskola</unit_name>
+        <journal_label>Medicinsk Elevhälsa</journal_label>
+        <journal_id>med-eh</journal_id>
+        <is_medical>true</is_medical>
+      </healthcareunit>
+    </health_care_units>
+    <patients>
+      <patient id="58ZxgBt0uZYRM">
+        <organization_unit related_id="z79qWaSntB1Z"/>
+        <current_school_class/>
+        <school_classes/>
+        <organization_unit_name>Testskola</organization_unit_name>
+        <current_school_class_name/>
+        <first_name>m</first_name>
+        <last_name>m</last_name>
+        <personal_id>20050505A000</personal_id>
+        <birth_date>2005-05-05T00:00:00</birth_date>
+        <sex>F</sex>
+        <uuid>7fb15bc3-5eef-40c9-889a-1760afaf79f0</uuid>
+        <deceased>false</deceased>
+        <protected_identity>true</protected_identity>
+        <import_note/>
+        <archived>false</archived>
+        <locked>false</locked>
+        <external_id/>
+      </patient>
+    </patients>
+    <admissions>
+      <admission id="B3QjpBCZUZap9P">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <health_care_unit related_id="kWyeqYIQI1DD"/>
+        <growth_curve_archive_path>medicinsk-elevhalsa/growth_curve_Z9e5gvIeS3OzSPAdbn.pdf</growth_curve_archive_path>
+        <vaccination_card_archive_path>medicinsk-elevhalsa/vaccination_card_mVA90kf7SyljS9VEmz.pdf</vaccination_card_archive_path>
+        <pdf_archive_path>medicinsk-elevhalsa/20050505A000, m-m, testskola-medicinsk-elevhalsa.pdf</pdf_archive_path>
+      </admission>
+    </admissions>
+    <patient_images/>
+    <entries>
+      <journalentry id="gYwVqZIEFJYpax">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <health_care_unit related_id="kWyeqYIQI1DD"/>
+        <html>&lt;table class="otb-journalEntryArchive"&gt;
+	
+
+&lt;tr&gt;
+&lt;td class="otb-journalEntryArchive-info"&gt;
+	&lt;h5&gt;Administrativ anteckning&lt;/h5&gt;
+	&lt;dl&gt;
+		&lt;dt&gt;Händelsetid:&lt;/dt&gt;&lt;dd&gt;2020-06-16 14:54&lt;/dd&gt;
+		&lt;dt&gt;Ansvarig: &lt;/dt&gt;&lt;dd&gt;Skolsköterska &lt;/dd&gt;
+		&lt;dt&gt;Skapad av: &lt;/dt&gt;&lt;dd&gt;Skolsköterska  (2020-06-16 14:54)&lt;/dd&gt;
+    
+		&lt;dt&gt;Senast redigerad av: &lt;/dt&gt;&lt;dd&gt;Ej redigerad &lt;/dd&gt;
+        
+		&lt;dt&gt;Signerad av: &lt;/dt&gt;&lt;dd&gt;Skolsköterska  (2020-06-18 06:53)&lt;/dd&gt;
+		
+	&lt;/dl&gt;
+&lt;/td&gt;
+&lt;td class="otb-journalEntryArchive-entry"&gt;
+	
+		&lt;table class="otb-journalEntryArchive-entryTable"&gt;
+			&lt;tbody&gt;
+                
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Anteckning&lt;/th&gt;&lt;td&gt;&lt;p&gt;Deltagit i kropp och knopp.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                
+                
+                    
+                        
+                    
+                
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;</html>
+        <calendar_event_duration>20</calendar_event_duration>
+        <charge_entry>false</charge_entry>
+        <charge_entry_bill_item_created_date_time/>
+        <charge_entry_cost>0</charge_entry_cost>
+        <co_responsible_name/>
+        <co_signed_by_name/>
+        <co_signed_by_signature/>
+        <co_signed_date_time/>
+        <contact_type>Administrativ anteckning</contact_type>
+        <create_calendar_event>false</create_calendar_event>
+        <created_date_time>2020-06-16T14:54:51</created_date_time>
+        <creator_name>Skolsköterska </creator_name>
+        <description/>
+        <editable>true</editable>
+        <edited_by_name/>
+        <edited_date_time/>
+        <entry_date_time>2020-06-16T14:54:50</entry_date_time>
+        <entry_type>DFLT</entry_type>
+        <exported_date_time/>
+        <exported_note/>
+        <external_id/>
+        <external_source/>
+        <followup_done>false</followup_done>
+        <followup_done_date_time/>
+        <followup_done_note></followup_done_note>
+        <followup_due_date_time/>
+        <followup_note></followup_note>
+        <hcu_name>Medicinsk Elevhälsa</hcu_name>
+        <icon>fugue-document-attribute</icon>
+        <import_info/>
+        <is_confidential>false</is_confidential>
+        <locked_date_time/>
+        <meta_data>
+          <attachedFilesLimit>-1</attachedFilesLimit>
+          <allowAttachedFiles>true</allowAttachedFiles>
+        </meta_data>
+        <next_attached_entry_tag_counter>1</next_attached_entry_tag_counter>
+        <patient_current_school_class_name></patient_current_school_class_name>
+        <patient_first_name>m</patient_first_name>
+        <patient_id>20050505A000</patient_id>
+        <patient_last_name>m</patient_last_name>
+        <patient_organization_unit_name>Testskola</patient_organization_unit_name>
+        <permanent>false</permanent>
+        <readonly>false</readonly>
+        <responsible_name>Skolsköterska </responsible_name>
+        <show_empty_rows>false</show_empty_rows>
+        <signed_by_name>Skolsköterska </signed_by_name>
+        <signed_by_signature></signed_by_signature>
+        <signed_date_time>2020-06-18T06:53:39</signed_date_time>
+        <strikeout_by_name/>
+        <strikeout_comment/>
+        <strikeout_date_time/>
+        <tag/>
+        <tag_label></tag_label>
+        <title>Administrativ anteckning</title>
+        <row_groups/>
+        <rows>
+          <journalentryrow id="8ZVzQBfrT3DLw12">
+            <advanced>false</advanced>
+            <data>
+              <value>&lt;p&gt;Deltagit i kropp och knopp.&lt;/p&gt;</value>
+            </data>
+            <group/>
+            <label>Anteckning</label>
+            <order>0</order>
+            <row_tag>0_anteckning</row_tag>
+            <row_type>TEXT</row_type>
+            <meta_data/>
+          </journalentryrow>
+        </rows>
+        <attachments/>
+        <archives>
+          <journalentryarchive id="9PYlpBsRsjDkdO">
+            <archived_by_name>Skolsköterska </archived_by_name>
+            <archived_date_time>2020-06-18T06:53:39</archived_date_time>
+            <entry_archive>&lt;table class="otb-journalEntryArchive"&gt;
+	
+
+&lt;tr&gt;
+&lt;td class="otb-journalEntryArchive-info"&gt;
+	&lt;h5&gt;Administrativ anteckning&lt;/h5&gt;
+	&lt;dl&gt;
+		&lt;dt&gt;Händelsetid:&lt;/dt&gt;&lt;dd&gt;2020-06-16 14:54&lt;/dd&gt;
+		&lt;dt&gt;Ansvarig: &lt;/dt&gt;&lt;dd&gt;Skolsköterska &lt;/dd&gt;
+		&lt;dt&gt;Skapat av: &lt;/dt&gt;&lt;dd&gt;Skolsköterska  (2020-06-16 14:54)&lt;/dd&gt;
+		&lt;dt&gt;Senast redigerad av: &lt;/dt&gt;&lt;dd&gt;Ej redigerad &lt;/dd&gt;
+        
+		&lt;dt&gt;Signerad av: &lt;/dt&gt;&lt;dd&gt;Ej signerad (2020-06-18 06:53)&lt;/dd&gt;
+	&lt;/dl&gt;
+&lt;/td&gt;
+&lt;td class="otb-journalEntryArchive-entry"&gt;
+	
+		&lt;table class="otb-journalEntryArchive-entryTable"&gt;
+			&lt;tbody&gt;
+                
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Anteckning&lt;/th&gt;&lt;td&gt;&lt;p&gt;Deltagit i kropp och knopp.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                
+                
+                    
+                        
+                    
+                
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;</entry_archive>
+          </journalentryarchive>
+        </archives>
+      </journalentry>
+      <journalentry id="B3QjpBCrFl1yd6">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <health_care_unit related_id="kWyeqYIQI1DD"/>
+        <html>&lt;table class="otb-journalEntryArchive"&gt;
+	
+
+&lt;tr&gt;
+&lt;td class="otb-journalEntryArchive-info"&gt;
+	&lt;h5&gt;Elevkort Medicinskt&lt;/h5&gt;
+	&lt;dl&gt;
+		&lt;dt&gt;Händelsetid:&lt;/dt&gt;&lt;dd&gt;2018-11-08 10:48&lt;/dd&gt;
+		&lt;dt&gt;Ansvarig: &lt;/dt&gt;&lt;dd&gt;Okänt&lt;/dd&gt;
+		&lt;dt&gt;Skapad av: &lt;/dt&gt;&lt;dd&gt;Okänt (2018-11-08 10:48)&lt;/dd&gt;
+    
+		&lt;dt&gt;Senast redigerad av: &lt;/dt&gt;&lt;dd&gt;Ej redigerad &lt;/dd&gt;
+        
+		&lt;dt&gt;Signerad av: &lt;/dt&gt;&lt;dd&gt;Ej signerad &lt;/dd&gt;
+		
+	&lt;/dl&gt;
+&lt;/td&gt;
+&lt;td class="otb-journalEntryArchive-entry"&gt;
+	
+		&lt;table class="otb-journalEntryArchive-entryTable"&gt;
+			&lt;tbody&gt;
+                
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Pappersjournal&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Socialt&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Diagnoser&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Medicinering&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Övrigt&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                
+                
+                    
+                        
+                    
+                
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;</html>
+        <calendar_event_duration>20</calendar_event_duration>
+        <charge_entry>false</charge_entry>
+        <charge_entry_bill_item_created_date_time/>
+        <charge_entry_cost>0</charge_entry_cost>
+        <co_responsible_name/>
+        <co_signed_by_name/>
+        <co_signed_by_signature/>
+        <co_signed_date_time/>
+        <contact_type>Okänd</contact_type>
+        <create_calendar_event>false</create_calendar_event>
+        <created_date_time>2018-11-08T10:48:23</created_date_time>
+        <creator_name/>
+        <description/>
+        <editable>true</editable>
+        <edited_by_name/>
+        <edited_date_time/>
+        <entry_date_time>2018-11-08T10:48:23</entry_date_time>
+        <entry_type>DFLT</entry_type>
+        <exported_date_time/>
+        <exported_note/>
+        <external_id/>
+        <external_source/>
+        <followup_done>false</followup_done>
+        <followup_done_date_time/>
+        <followup_done_note></followup_done_note>
+        <followup_due_date_time/>
+        <followup_note></followup_note>
+        <hcu_name>Medicinsk Elevhälsa</hcu_name>
+        <icon>fugue-document</icon>
+        <import_info/>
+        <is_confidential>false</is_confidential>
+        <locked_date_time>2018-11-23T02:07:10</locked_date_time>
+        <meta_data/>
+        <next_attached_entry_tag_counter>1</next_attached_entry_tag_counter>
+        <patient_current_school_class_name></patient_current_school_class_name>
+        <patient_first_name>m</patient_first_name>
+        <patient_id>20050505A000</patient_id>
+        <patient_last_name>m</patient_last_name>
+        <patient_organization_unit_name>Testskola</patient_organization_unit_name>
+        <permanent>true</permanent>
+        <readonly>false</readonly>
+        <responsible_name/>
+        <show_empty_rows>true</show_empty_rows>
+        <signed_by_name/>
+        <signed_by_signature/>
+        <signed_date_time/>
+        <strikeout_by_name/>
+        <strikeout_comment/>
+        <strikeout_date_time/>
+        <tag/>
+        <tag_label></tag_label>
+        <title>Elevkort Medicinskt</title>
+        <row_groups/>
+        <rows>
+          <journalentryrow id="o1zbgjhETy3Byq">
+            <advanced>false</advanced>
+            <data>
+              <value></value>
+            </data>
+            <group/>
+            <label>Pappersjournal</label>
+            <order>0</order>
+            <row_tag>0_pappersjournal</row_tag>
+            <row_type>CHAR</row_type>
+            <meta_data/>
+          </journalentryrow>
+          <journalentryrow id="b7MzgwS3Tbg1bq">
+            <advanced>false</advanced>
+            <data>
+              <value></value>
+            </data>
+            <group/>
+            <label>Socialt</label>
+            <order>1</order>
+            <row_tag>1_socialt</row_tag>
+            <row_type>TEXT</row_type>
+            <meta_data/>
+          </journalentryrow>
+          <journalentryrow id="vw1m0MtvTn3B3P">
+            <advanced>false</advanced>
+            <data>
+              <value></value>
+            </data>
+            <group/>
+            <label>Diagnoser</label>
+            <order>4</order>
+            <row_tag>4_diagnoser</row_tag>
+            <row_type>TEXT</row_type>
+            <meta_data/>
+          </journalentryrow>
+          <journalentryrow id="QYz3RVIPTQ3j3m">
+            <advanced>false</advanced>
+            <data>
+              <value></value>
+            </data>
+            <group/>
+            <label>Medicinering</label>
+            <order>5</order>
+            <row_tag>5_medicinering</row_tag>
+            <row_type>TEXT</row_type>
+            <meta_data/>
+          </journalentryrow>
+          <journalentryrow id="pBlvq9u6TWEkEq">
+            <advanced>false</advanced>
+            <data>
+              <value></value>
+            </data>
+            <group/>
+            <label>Övrigt</label>
+            <order>6</order>
+            <row_tag>6_ovrigt</row_tag>
+            <row_type>TEXT</row_type>
+            <meta_data/>
+          </journalentryrow>
+        </rows>
+        <attachments/>
+        <archives>
+          <journalentryarchive id="P38qw2CBsWzWLK">
+            <archived_by_name/>
+            <archived_date_time>2018-11-23T02:07:10</archived_date_time>
+            <entry_archive>&lt;table class="otb-journalEntryArchive"&gt;
+	
+
+&lt;tr&gt;
+&lt;td class="otb-journalEntryArchive-info"&gt;
+	&lt;h5&gt;Elevkort Medicinskt&lt;/h5&gt;
+	&lt;dl&gt;
+		&lt;dt&gt;Händelsetid:&lt;/dt&gt;&lt;dd&gt;2018-11-08 10:48&lt;/dd&gt;
+		&lt;dt&gt;Ansvarig: &lt;/dt&gt;&lt;dd&gt;Okänt&lt;/dd&gt;
+		&lt;dt&gt;Skapat av: &lt;/dt&gt;&lt;dd&gt;Okänt (2018-11-08 10:48)&lt;/dd&gt;
+		&lt;dt&gt;Senast redigerad av: &lt;/dt&gt;&lt;dd&gt;Ej redigerad &lt;/dd&gt;
+        
+		&lt;dt&gt;Signerad av: &lt;/dt&gt;&lt;dd&gt;Ej signerad &lt;/dd&gt;
+	&lt;/dl&gt;
+&lt;/td&gt;
+&lt;td class="otb-journalEntryArchive-entry"&gt;
+	
+		&lt;table class="otb-journalEntryArchive-entryTable"&gt;
+			&lt;tbody&gt;
+                
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Pappersjournal&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Socialt&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Diagnoser&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Medicinering&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                        
+                        
+                            
+&lt;tr&gt;&lt;th &gt;Övrigt&lt;/th&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
+                        
+                    
+                
+                
+                    
+                        
+                    
+                
+			&lt;/tbody&gt;
+		&lt;/table&gt;
+	
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;</entry_archive>
+          </journalentryarchive>
+        </archives>
+      </journalentry>
+    </entries>
+    <attached_entries/>
+    <watches/>
+    <tasks/>
+    <custodians/>
+    <contact_info>
+      <contactinfo id="gYwVqZIMhYERK8">
+        <object related_id="z79qWaSntB1Z"/>
+        <addresses>
+          <address id="3ZzPABfqiqJ92o">
+            <description>Postadress</description>
+            <primary>true</primary>
+            <imported_date_time/>
+            <order>0</order>
+            <address1>Testgatan 30</address1>
+            <address2></address2>
+            <zip>333 30</zip>
+            <city>Teststad</city>
+            <region/>
+            <country></country>
+          </address>
+        </addresses>
+        <phone_numbers>
+          <phonenumber id="b7MzgwSZcy735Rb">
+            <description>Telefon</description>
+            <primary>true</primary>
+            <imported_date_time/>
+            <order>0</order>
+            <number/>
+            <can_receive_sms>false</can_receive_sms>
+          </phonenumber>
+        </phone_numbers>
+        <e_mails>
+          <email id="dj6Zq8iRHbPJnx">
+            <description>Mail</description>
+            <primary>true</primary>
+            <imported_date_time/>
+            <order>0</order>
+            <mail/>
+          </email>
+        </e_mails>
+      </contactinfo>
+      <contactinfo id="P38qw2CPhkxQ8g8">
+        <object related_id="58ZxgBt0uZYRM"/>
+        <addresses>
+          <address id="lOWjq1hKiv0OgMK">
+            <description>Postadress</description>
+            <primary>true</primary>
+            <imported_date_time/>
+            <order>0</order>
+            <address1></address1>
+            <address2></address2>
+            <zip></zip>
+            <city></city>
+            <region/>
+            <country/>
+          </address>
+        </addresses>
+        <phone_numbers>
+          <phonenumber id="6P7rQgsOczB8ll3">
+            <description>Telefon</description>
+            <primary>true</primary>
+            <imported_date_time/>
+            <order>0</order>
+            <number></number>
+            <can_receive_sms>false</can_receive_sms>
+          </phonenumber>
+        </phone_numbers>
+        <e_mails>
+          <email id="vw1m0MtWHYrqzvq">
+            <description>Mail</description>
+            <primary>true</primary>
+            <imported_date_time/>
+            <order>0</order>
+            <mail></mail>
+          </email>
+        </e_mails>
+      </contactinfo>
+    </contact_info>
+    <activity_log_items>
+      <activitylogitem id="z79qWaSDCWPPrD">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <health_care_unit related_id="kWyeqYIQI1DD"/>
+        <user_name></user_name>
+        <action_type_text>Skapande</action_type_text>
+        <action_id_text>Skapande av anteckning</action_id_text>
+        <timestamp>2018-11-08T10:48:23.499560</timestamp>
+        <client_activity>false</client_activity>
+        <success>true</success>
+        <denied>false</denied>
+        <description>Skapande av journalanteckning</description>
+      </activitylogitem>
+      <activitylogitem id="e2O7qzFvCxJb6Z">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <health_care_unit related_id="kWyeqYIQI1DD"/>
+        <user_name></user_name>
+        <action_type_text>Skapande</action_type_text>
+        <action_id_text>Skapande av anteckning</action_id_text>
+        <timestamp>2020-06-16T14:54:50.705044</timestamp>
+        <client_activity>false</client_activity>
+        <success>true</success>
+        <denied>false</denied>
+        <description>Skapande av anteckning</description>
+      </activitylogitem>
+      <activitylogitem id="r57pAbiWC0z2wo">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <health_care_unit related_id="kWyeqYIQI1DD"/>
+        <user_name></user_name>
+        <action_type_text>Signering</action_type_text>
+        <action_id_text>Signering av anteckning</action_id_text>
+        <timestamp>2020-06-18T06:53:39.338767</timestamp>
+        <client_activity>false</client_activity>
+        <success>true</success>
+        <denied>false</denied>
+        <description>Signering av anteckning</description>
+      </activitylogitem>
+    </activity_log_items>
+    <patient_log_items>
+      <patientlog id="OpmLB7tMfBWjPL">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <patient_last_name>m</patient_last_name>
+        <patient_first_name>m</patient_first_name>
+        <patient_personal_id>20050505A000</patient_personal_id>
+        <patient_orgunit_name>Testskola</patient_orgunit_name>
+        <patient_school_class_name/>
+        <user_first_name></user_first_name>
+        <user_last_name></user_last_name>
+        <super_user_first_name></super_user_first_name>
+        <super_user_last_name></super_user_last_name>
+        <protected_identity_patient>true</protected_identity_patient>
+        <inside_users_organization_units>true</inside_users_organization_units>
+        <timestamp>2019-05-14T10:31:17</timestamp>
+        <timestamp_left>2019-05-14T10:31:57.488647</timestamp_left>
+        <ip_address/>
+      </patientlog>
+      <patientlog id="B3QjpBCKfZrJa0">
+        <patient related_id="58ZxgBt0uZYRM"/>
+        <patient_last_name>m</patient_last_name>
+        <patient_first_name>m</patient_first_name>
+        <patient_personal_id>20050505A000</patient_personal_id>
+        <patient_orgunit_name>Testskola</patient_orgunit_name>
+        <patient_school_class_name/>
+        <user_first_name>Maria</user_first_name>
+        <user_last_name></user_last_name>
+        <super_user_first_name></super_user_first_name>
+        <super_user_last_name></super_user_last_name>
+        <protected_identity_patient>false</protected_identity_patient>
+        <inside_users_organization_units>true</inside_users_organization_units>
+        <timestamp>2018-11-08T10:48:24</timestamp>
+        <timestamp_left>2018-11-08T10:49:40.029914</timestamp_left>
+        <ip_address/>
+      </patientlog>
+    </patient_log_items>
+  </objects>
+</JournalArchive>

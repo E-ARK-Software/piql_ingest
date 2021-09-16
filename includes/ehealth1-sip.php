@@ -5,6 +5,7 @@ class Ehealth1SipPatient
     private $m_PatientId = '';
     private $m_LastError = '';
     private $m_DescriptiveMetadataFilePaths = [];
+    private $m_SchemaFilePaths = [];
 
     public function __construct($patientId)
     {
@@ -24,6 +25,11 @@ class Ehealth1SipPatient
         return $this->m_DataFilePaths;
     }
 
+    public function addSchemaFile($filePath)
+    {
+        array_push($this->m_SchemaFilePaths, $filePath);
+    }
+
     public function produceSip($outBaseDirectory)
     {
         $patientBasePath = "{$outBaseDirectory}/Patientrecord_{$this->m_PatientId}";
@@ -32,13 +38,6 @@ class Ehealth1SipPatient
         if (!mkdir($patientBasePath))
         {
             $this->setError("Failed to create directory: {$patientBasePath}");
-            return false;
-        }
-
-        // Generate METS
-        if (!$this->generateMets($patientBasePath))
-        {
-            $this->setError("Failed to generate METS file");
             return false;
         }
 
@@ -52,6 +51,19 @@ class Ehealth1SipPatient
         if (!$this->generateMetadata($metadataPath))
         {
             $this->setError("Failed to generate metadata");
+            return false;
+        }
+
+        // Generate schemas
+        $schemasPath = "{$patientBasePath}/schemas";
+        if (!mkdir($schemasPath))
+        {
+            $this->setError("Failed to create directory: {$schemasPath}");
+            return false;
+        }
+        if (!$this->generateSchemas($schemasPath))
+        {
+            $this->setError("Failed to generate schemas");
             return false;
         }
 
@@ -103,12 +115,6 @@ class Ehealth1SipPatient
         $this->m_LastError = $errorText;
     }
 
-    private function generateMets($outputDirectory)
-    {
-        // TODO
-        return true;
-    }
-
     private function generateMetadata($outputDirectory)
     {
         // Generate descriptive metadata
@@ -157,6 +163,21 @@ class Ehealth1SipPatient
         return true;
     }
 
+    private function generateSchemas($outputDirectory)
+    {
+        foreach($this->m_SchemaFilePaths as $filePath)
+        {
+            $fileName = basename($filePath);
+            $destination = "{$outputDirectory}/{$fileName}";
+            if (!copy($filePath, $destination))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private function generateData($outputDirectory)
     {
         foreach ($this->m_DataFilePaths as $path)
@@ -202,23 +223,23 @@ class Ehealth1Sip
     private $m_SubmissionAgreementFilePaths = [];
     private $m_DescriptiveMetadataFilePaths = [];
     private $m_SchemaFilePaths = [];
-    private $m_InformationPackageId = '';
+    private $m_TransferName = '';
     private $m_PackageMetadata = [];
     private $m_LastError = '';
 
-    public function __construct($informationPackageId='')
+    public function __construct($transferName='')
     {
-        $this->m_InformationPackageId = $informationPackageId;
+        $this->m_TransferName = $transferName;
     }
 
-    public function informationPackageId()
+    public function transferName()
     {
-        return $this->m_InformationPackageId;
+        return $this->m_TransferName;
     }
 
-    public function setInformationPackageId($id)
+    public function setTransferName($name)
     {
-        $this->m_InformationPackageId = $id;
+        $this->m_TransferName = $name;
     }
 
     public function addPackageMetadata($key, $value)
@@ -287,9 +308,9 @@ class Ehealth1Sip
             return false;
         }
 
-        // Define base output path for SIP - full/output/dir/<packageID>
+        // Define base output path for SIP - full/output/dir/<transferName>
         $sipBasePath = rtrim($outBaseDirectory, '/') . '/';
-        $sipBasePath .= $this->m_InformationPackageId;
+        $sipBasePath .= "IP_" . $this->m_TransferName;
 
         // Create SIP root directory
         if (!mkdir($sipBasePath))
@@ -298,36 +319,11 @@ class Ehealth1Sip
             return false;
         }
 
-        // Generate METS
-        if (!$this->generateMets($sipBasePath))
-        {
-            $this->setError("Failed to generate METS file");
-            return false;
-        }
-
         // Generate package metadata
         if (!$this->generatePackageMetadata($sipBasePath))
         {
             $this->setError("Failed to generate package metadata");
             return false;
-        }
-
-        // Generate representations
-        $representationsPath = "{$sipBasePath}/representations";
-        if (!mkdir($representationsPath))
-        {
-            $this->setError("Failed to create directory: {$representationsPath}");
-            return false;
-        }
-        foreach($this->m_Patients as $patient)
-        {
-            if (!$patient->produceSip($representationsPath))
-            {
-                $patientError = $patient->error();
-                $patientId = $patient->patientId();
-                $this->setError("Failed to produce patient data for patient {$patientId}: {$patientError}");
-                return false;
-            }
         }
 
         // Generate schemas
@@ -369,6 +365,34 @@ class Ehealth1Sip
             return false;
         }
 
+        // Generate representations
+        $representationsPath = "{$sipBasePath}/representations";
+        if (!mkdir($representationsPath))
+        {
+            $this->setError("Failed to create directory: {$representationsPath}");
+            return false;
+        }
+        foreach($this->m_Patients as $patient)
+        {
+            foreach ($this->m_SchemaFilePaths as $schemaFilePath)
+            {
+                $patient->addSchemaFile($schemaFilePath);
+            }
+            if (!$patient->produceSip($representationsPath))
+            {
+                $patientError = $patient->error();
+                $patientId = $patient->patientId();
+                $this->setError("Failed to produce patient data for patient {$patientId}: {$patientError}");
+                return false;
+            }
+        }
+
+        // Generate METS
+        if (!$this->generateMets($sipBasePath))
+        {
+            return false;
+        }
+
         // Set output path
         $outPath = $sipBasePath;
 
@@ -400,7 +424,7 @@ class Ehealth1Sip
 
     public function isDescriptiveMetadata($path)
     {
-        if (basename($path) == 'Patients.xml')
+        if (strtolower(basename($path)) == 'patients.xml')
         {
             return true;
         }
@@ -408,9 +432,18 @@ class Ehealth1Sip
         return false;
     }
 
-    private function generateMets($outputDirectory)
+    private function generateMets($sipPath)
     {
-        // TODO
+        $runner = new PythonRunner();
+
+        $scriptPath = __DIR__ . '/../thirdparty/metsgen/metsgen.py';
+        $arguments = [$sipPath];
+        if (!$runner->executeScript($scriptPath, $arguments))
+        {
+            $this->setError('Failed to generate METS: ' . $runner->error());
+            return false;
+        }
+
         return true;
     }
 
@@ -424,14 +457,16 @@ class Ehealth1Sip
 
         $metadata = "";
         $metadata .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        $metadata .= " <metadata>\n";
+        $metadata .= "<systemData>\n";
         foreach ($this->m_PackageMetadata as $md)
         {
             $key = $md["key"];
             $value = $md["value"];
-            $metadata .= "  <{$key}><![CDATA[{$value}]]></{$key}>\n";
+            $metadata .= "    <{$key}>\n";
+            $metadata .= "        <![CDATA[{$value}]]>\n";
+            $metadata .= "    </{$key}>\n";
         }
-        $metadata .= " </metadata>\n";
+        $metadata .= "</systemData>\n";
 
         $filePath = "{$outputDirectory}/metadata.xml";
         return file_put_contents($filePath, $metadata, LOCK_EX) !== false;

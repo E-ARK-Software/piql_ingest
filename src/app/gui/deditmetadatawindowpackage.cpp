@@ -53,10 +53,10 @@ D_NAMESPACE_USING( D_NAMESPACE )
  */
 
  DEditMetadataWindowPackage::DEditMetadataWindowPackage(QWidget * parent, DMetadataItemGroupList& metadataGroupList, const std::string& phpBinPath, const DPath& tempDir, DPiqlIngestConfig * config) :
-    m_MetadataGroupList(metadataGroupList),
-    DEditMetadataWindowBase(parent, tempDir, config)
+    DEditMetadataWindowBase(parent, tempDir, config),
+    m_MetadataGroupList(metadataGroupList)
 {
-    ConstructorSetup(phpBinPath);
+    constructorSetup(phpBinPath);
 }
 
 
@@ -137,15 +137,23 @@ bool DEditMetadataWindowPackage::FillStackedWidget(const std::string& phpBinPath
     QVBoxLayout * layout = new QVBoxLayout();
     widget->setLayout(layout);
 
+    // Load template
     DMetadataTemplate metadataTemplate;
     const std::string scriptName = "metadata-description-package.php";
-    if (!ReadMetadataTemplate(metadataTemplate, phpBinPath, scriptName))
+    if (!readMetadataTemplate(metadataTemplate, phpBinPath, scriptName))
     {
         setError("Error reading metadata template: " + scriptName);
         return false;
     }
 
-    if (!CreateMetadataForm(metadataTemplate, DMetadataItemGroupList(), layout, 0))
+    // Validate cached metadata - clear if it's not compatible with template
+    if ( !isCompatible(m_MetadataGroupList, metadataTemplate.fileMetadataGroups()) )
+    {
+        m_MetadataGroupList.clear();
+    }
+
+    // Create form and populate default values
+    if (!createMetadataForm(metadataTemplate, m_MetadataGroupList, layout, 0))
     {
         setError("Error creating metadata form");
         return false;
