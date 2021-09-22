@@ -32,7 +32,7 @@ $metadataSchemasGroup = new MetadataTemplateItemGroup("metadataSchemas", "Metada
 //
 
 // Software version
-$item = new MetadataTemplateItemString("softwareVersion", "Software version", "1.1.0");
+$item = new MetadataTemplateItemString("softwareVersion", "Software version", "1.0.1");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
@@ -167,7 +167,7 @@ $item->setFontSize($textFontSize);
 $metadataSchemasGroup->addItem($item);
 
 // Patient clinical schema name
-$item = new MetadataTemplateItemString("patientclinicalschemaName", "Patient Clincal Information schema name", "condition.xsd");
+$item = new MetadataTemplateItemString("patientclinicalschemaName", "Patient Clinical Information schema name", "condition.xsd");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
@@ -176,7 +176,7 @@ $item->setFontSize($textFontSize);
 $metadataSchemasGroup->addItem($item);
 
 // Patient clinical schema data link
-$item = new MetadataTemplateItemString("patientclinicalschemaDataLink", "Patient clinical schema data link URL", "");
+$item = new MetadataTemplateItemString("patientclinicalschemaDataLink", "Path or URL to Patient Clinical Information Schema", "/schemas/condition.xsd");
 $item->setWidth($fieldWidth);
 $item->setReadOnly(false);
 $item->setVisible(true);
