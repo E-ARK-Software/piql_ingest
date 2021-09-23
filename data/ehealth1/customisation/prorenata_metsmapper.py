@@ -43,12 +43,17 @@ def move_files(directory):
                     if os.path.isdir(os.path.join(directory, file, nextfile)):  # Get medicinsk-elevhalsa folder
                         if nextfile == "medicinsk-elevhalsa":
                             for datafile in os.listdir(os.path.join(directory, file, nextfile)):    # Copy each document to output folder
-                                # print("DATA: "+datafile)
                                 shutil.copy(os.path.join(directory, file, nextfile, datafile), os.path.join(output_directory, package_id, "patientrecord_"+patient_id, "case", "document"))
                         else:
                             print("Error with data file - medicinsk-elevhalsa - move_files()")
+                            sys.exit(1)
+                    elif os.path.splitext(nextfile)[1] == ".xml" and nextfile.split(" ")[0] == patient_id:
+                        print(nextfile)
+                        clinicalinfofile = nextfile.split(",")[0]+"_condition.xml"
+                        shutil.copy(os.path.join(directory, file, nextfile), os.path.join(output_directory, package_id, "patientrecord_"+patient_id,clinicalinfofile))
                     else:
-                        shutil.copy(os.path.join(directory, file, nextfile), os.path.join(output_directory, package_id, "patientrecord_"+patient_id,))
+                        print("Found unexpected file: "+nextfile)
+                        sys.exit(1)
             elif os.path.isfile(os.path.join(directory, file)):
                 print("An error occurred - move-files()")
                 sys.exit(1)
@@ -98,5 +103,7 @@ if __name__ == '__main__':
             # create_xml(argv[1])
         else:
             print("Output directory error")
+            sys.exit(1)
     else:
         print("Input directory error")
+        sys.exit(1)
