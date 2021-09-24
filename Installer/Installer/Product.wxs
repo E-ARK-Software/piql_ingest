@@ -1294,10 +1294,8 @@
             <File Id="QT5SVG.DLL" Name="Qt5Svg.dll" Source="..\..\piql_ingest_1.0.2\Qt5Svg.dll" />
             <File Id="QT5WIDGETS.DLL" Name="Qt5Widgets.dll" Source="..\..\piql_ingest_1.0.2\Qt5Widgets.dll" />
             <File Id="QT5XML.DLL" Name="Qt5Xml.dll" Source="..\..\piql_ingest_1.0.2\Qt5Xml.dll" />
-            <File Id="TAR.EXE" Name="tar.exe" Source="..\..\piql_ingest_1.0.2\tar.exe" />
             <File Id="VCREDIST_X64.EXE" Name="vcredist_x64.exe" Source="..\..\piql_ingest_1.0.2\vcredist_x64.exe" />
             <File Id="VCRUNTIME140.DLL" Name="vcruntime140.dll" Source="..\..\piql_ingest_1.0.2\vcruntime140.dll" />
-            <File Id="WINRAR.EXE" Name="WinRAR.exe" Source="..\..\piql_ingest_1.0.2\WinRAR.exe" />
           </Component>
         </Directory>
       </Directory>
