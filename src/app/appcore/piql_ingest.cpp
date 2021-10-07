@@ -215,6 +215,12 @@ int  main( int argc, char* argv[] )
 {
     DPiqlIngest app;
 
+#if _DEBUG
+#if defined ( D_OS_WIN32 )
+    SetCurrentDirectory(L"..\\..");
+#endif
+#endif
+
     int retval = app.launch( argc, argv );
 
     return retval;
