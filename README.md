@@ -62,6 +62,33 @@ Windows:
 
 Done!
 
+
+Updating translation files for PHP scripts in Windows.
+
+1. You need to install tool Cygwin. https://cygwin.com/install.html
+2. For Cygwin, install packages "gettext" and "gettext_devel" required to work with translation files.
+3. Launch Windows console. To do this, you can just use batch file "setup_vs2013.cmd" or "setup_vs2017_64.cmd".
+4. In the Windows console you need to add the path to folder "cygwin64\bin" to environment variable "PATH".
+   For example by running the following command: set path=C:\cygwin64\bin;%path%
+5. You need to go to the folder containing the translation files for the PHP scripts. 
+   This is the folder containing two files "messages.po" and "messages.mo".
+   To do this, run the following command in the console (this is an example for Norwegian):
+   cd <path to the project folder>\locale\nb_NO\LC_MESSAGES\
+6. Save a copy of the old translation file. To do this, run the following command in an open console:
+   mv messages.po old.po
+7. Create a blank translation file from source code. To do this, run the following command in the console:
+   find ./../../../ -iname "*.php" -not -path "*piql_ingest*" | xargs xgettext -n
+8. Merge the old translation file with the blank one. To do this, run the following command in the console:
+   msgmerge old.po messages.po --output-file=new.po
+9. Modify the file new.po using a gettext editor or a text editor (make sure you save as UTF-8).
+10.Rename the final output to messages.po:
+   mv new.po messages.po
+11.Compile the file into machine readable (messages.mo):
+   msgfmt messages.po
+   
+Done!
+
+
 Note: This instruction is valid for the current version of the project, 
       it will be edited as changes are made to the project.
 Important: All libraries must be built using the same version of visual studio.
