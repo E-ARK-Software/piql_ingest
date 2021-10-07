@@ -228,8 +228,9 @@ function createFileSender(&$fileSender, $configuration, $logger, $progressCallba
 
 function selectLanguage($language)
 {
-    $language = $language . '.utf8';
+    $language = $language . '.UTF-8';
     putenv("LANG=$language");
+    putenv("LC_ALL=$language");
     setlocale(LC_ALL, $language);
 
     // Set the text domain as 'messages'
