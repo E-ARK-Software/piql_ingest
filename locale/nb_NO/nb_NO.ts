@@ -211,10 +211,6 @@
         <translation>Udefinert feil</translation>
     </message>
     <message>
-        <source>Failed to acknowledge</source>
-        <translation>Klarte ikke å bekrefte transaksjonen</translation>
-    </message>
-    <message>
         <source>Cleanup error</source>
         <translation>Oppryddningsfeil</translation>
     </message>
@@ -296,7 +292,7 @@
     </message>
     <message>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1</translation>
     </message>
     <message>
         <source>Failed to write package metadata</source>
@@ -339,10 +335,6 @@
     <message>
         <source>Finished successfully</source>
         <translation>Fullført</translation>
-    </message>
-    <message>
-        <source>Handshaking with server</source>
-        <translation>Håndhilser på server</translation>
     </message>
     <message>
         <source>Cleaning up</source>

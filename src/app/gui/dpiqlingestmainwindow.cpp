@@ -800,8 +800,16 @@ bool DPiqlIngestMainWindow::commit(bool& canceled, QString& errorMessage, vector
         }
         else
         {
+            string applicationLanguage = m_Config->applicationLanguage();
+
+            // PHP translation files in Windows are expected in a different path.
+            // Since the abbreviation of the current language has a delimiter character '-' instead of '_'
+#if defined ( D_OS_WIN32 )
+            DStringTools::stringReplace(applicationLanguage, "_", "-");
+#endif
+
             // Execute script: script.php <context path>
-            string command = phpPath() + " -f \"" + scriptFile + "\" \"" + m_Config->applicationLanguage() + "\" \"" + contextPath.path() + "\"";
+            string command = phpPath() + " -f \"" + scriptFile + "\" \"" + applicationLanguage + "\" \"" + contextPath.path() + "\"";
             WorkerThread *workerThread = new WorkerThread(this, command);
             workerThread->start();
 
@@ -862,7 +870,7 @@ bool DPiqlIngestMainWindow::commit(bool& canceled, QString& errorMessage, vector
                     }
                     else
                     {
-                        command = phpPath() + " -f \"" + scriptFile + "\" \"" + m_Config->applicationLanguage() + "\" \"" + contextPath.path() + "\"";
+                        command = phpPath() + " -f \"" + scriptFile + "\" \"" + applicationLanguage + "\" \"" + contextPath.path() + "\"";
                         string scriptErrorMessage;
                         if ( DSystemTools::doShellCommand(scriptErrorMessage, command) )
                         {

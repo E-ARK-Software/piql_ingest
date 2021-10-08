@@ -17,6 +17,15 @@ system(lrelease -verbose app.pro)
 system(lrelease $$(CV_ROOT)/locale/sv_SE/qt_sv_SE.ts)
 system(lrelease $$(CV_ROOT)/locale/nb_NO/qt_nb_NO.ts)
 
+# PHP translation files in Windows are expected in a different path.
+##  WIN PLATFORM  ##
+win32 {
+    system(mkdir $$(CV_ROOT)\locale\sv-SE\Lc_messages)
+    system(xcopy /d /s /e /y $$(CV_ROOT)\locale\sv_SE\Lc_messages $$(CV_ROOT)\locale\sv-SE\Lc_messages)
+    system(mkdir $$(CV_ROOT)\locale\nb-NO\Lc_messages)
+    system(xcopy /d /s /e /y $$(CV_ROOT)\locale\nb_NO\Lc_messages $$(CV_ROOT)\locale\nb-NO\Lc_messages)
+}
+
 QT               +=   xml widgets gui core svg
 TEMPLATE          =   app
 CONFIG           +=   console qt no_lflags_merge debug_and_release
