@@ -188,6 +188,7 @@ D_NAMESPACE_USING( D_NAMESPACE )
 
     // Setup which buttons should be visible
     m_Ui.editMetadataButton->setVisible( m_Config->enableFileMetadataEdit() );
+    m_Ui.addFilesButton->setVisible( m_Config->showAddFilesButton() );
 
     // Accept dropping files on main window
     setAcceptDrops( true );

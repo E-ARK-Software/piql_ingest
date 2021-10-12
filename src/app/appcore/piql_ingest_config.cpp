@@ -59,6 +59,7 @@ DPiqlIngestConfig::DPiqlIngestConfig( const std::string& filename )
     m_AutoOpenPackageMetadataEdit = settings.value("AUTO_OPEN_PACKAGE_METADATA_EDIT", false).toBool();
     m_CommitSinglePackage = settings.value( "COMMIT_SINGLE_PACKAGE", false ).toBool();
     m_EnableFileMetadataEdit = settings.value( "ENABLE_FILE_METADATA_EDIT", true ).toBool();
+    m_ShowAddFilesButton = settings.value("SHOW_ADD_FILES_BUTTON", true).toBool();
     m_AutofillLastInputPackageMetadata = settings.value( "AUTOFILL_LAST_INPUT_PACKAGE_METADATA", false ).toBool();
     m_ApplicationStyleSheet = settings.value( "APPLICATION_STYLE_SHEET", "").toString().toStdString();
     m_TempFilesDirectory = settings.value("TEMP_FILES_DIRECTORY", QStandardPaths::writableLocation(QStandardPaths::TempLocation)).toString().append(QDir::separator()).append("piql_ingest").toLocal8Bit().toStdString();
@@ -154,6 +155,16 @@ bool DPiqlIngestConfig::commitSinglePackage()
 bool DPiqlIngestConfig::enableFileMetadataEdit()
 {
     return m_EnableFileMetadataEdit;
+}
+
+//----------------------------------------------------------------------------
+/*!
+*  Enable the user to add files using a file explorer
+*/
+
+bool DPiqlIngestConfig::showAddFilesButton()
+{
+    return m_ShowAddFilesButton;
 }
 
 //----------------------------------------------------------------------------
