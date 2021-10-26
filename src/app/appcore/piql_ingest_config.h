@@ -45,6 +45,7 @@ public:
     bool                        autoOpenPackageMetadataEdit();
     bool                        commitSinglePackage();
     bool                        enableFileMetadataEdit();
+    bool                        showAddFilesButton();
     bool                        autofillLastInputPackageMetadata();
     unsigned int                maxBundleSize();
     std::string                 applicationStyleSheet();
@@ -70,6 +71,7 @@ private:
     bool                        m_AutoOpenPackageMetadataEdit;
     bool                        m_CommitSinglePackage;
     bool                        m_EnableFileMetadataEdit;
+    bool                        m_ShowAddFilesButton;
     bool                        m_AutofillLastInputPackageMetadata;
     unsigned int                m_MaxBundleSize;
     std::string                 m_ApplicationStyleSheet;

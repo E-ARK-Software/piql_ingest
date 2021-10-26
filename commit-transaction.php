@@ -404,6 +404,7 @@ try {
             //     xml.xsd
             //    documentation/
             //     submissionagreement.pdf
+            //     submissionagreement_old.pdf
             //    representations/
             //     Patientrecord_{ID}
             //      mets.xml
@@ -418,6 +419,7 @@ try {
             //   eHealth1_Transfer_{ID}
             //    Patients.xml
             //    submissionagreement.pdf
+            //    submissionagreement_old.pdf
             //    patientrecord_1/
             //     Patient1_condition.xml
             //     Patient1Case1/
@@ -581,9 +583,9 @@ try {
 
             // Check that SIP contains exactly one submission agreement
             $submissionAgreementCount = count($sip->submissionAgreements());
-            if ($submissionAgreementCount != 1)
+            if ($submissionAgreementCount < 1 || $submissionAgreementCount > 2)
             {
-                exitWithError("One submission agreement expected, {$submissionAgreementCount} found");
+                exitWithError("One or two submission agreements expected, {$submissionAgreementCount} found");
             }
 
             // Check that SIP contains exactly one document of descriptive metadata

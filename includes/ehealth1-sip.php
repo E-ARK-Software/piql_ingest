@@ -407,19 +407,21 @@ class Ehealth1Sip
     public function isSubmissionAgreement($path)
     {
         // Expects filename like submissionagreement.{xml|pdf|jpg|jpeg}
-        $expectedBaseName = "submissionagreement";
+        $expectedBaseNames = ['submissionagreement', 'submissionagreement_old'];
         $allowedExtensions = ['xml', 'pdf', 'jpg', 'jpeg'];
 
-        if (substr(pathinfo($path, PATHINFO_FILENAME), 0, strlen($expectedBaseName)) != $expectedBaseName)
+        foreach ($expectedBaseNames as $expectedBaseName)
         {
-            return false;
-        }
-        if (!in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), $allowedExtensions))
-        {
-            return false;
+            if (substr(pathinfo($path, PATHINFO_FILENAME), 0, strlen($expectedBaseName)) == $expectedBaseName)
+            {
+                if (in_array(strtolower(pathinfo($path, PATHINFO_EXTENSION)), $allowedExtensions))
+                {
+                    return true;
+                }
+            }
         }
 
-        return true;
+        return false;
     }
 
     public function isDescriptiveMetadata($path)
