@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<?xml-stylesheet type="text/xsl" href="manifest.xslt"?>
+<JournalArchiveManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://journal.prorenata.se/static/xml/journal_archive/1.0.3/manifest">
+  <organization>Eslövs kommun</organization>
+  <created_by>
+    <first_name>Nr</first_name>
+    <last_name>Tva</last_name>
+    <title>Skolsköterska</title>
+  </created_by>
+  <created_date_time>2020-06-18T11:26:20.854060</created_date_time>
+  <health_care_unit_types>
+    <health_care_unit_type>
+      <label>Medicinsk Elevhälsa</label>
+    </health_care_unit_type>
+  </health_care_unit_types>
+  <criteria>
+    <criterion>
+      <type_id>by_id</type_id>
+      <options>
+        <patient>
+          <personal_id>20090514GR82</personal_id>
+          <external_id/>
+          <first_name>Alicia</first_name>
+          <last_name>Svensson</last_name>
+          <prorenata_id>1047284</prorenata_id>
+        </patient>
+      </options>
+    </criterion>
+  </criteria>
+  <exclude_confidential>false</exclude_confidential>
+  <exclude_empty_journals>false</exclude_empty_journals>
+  <report/>
+  <errors/>
+  <warnings/>
+  <patients>
+    <patient>
+      <first_name>Alicia</first_name>
+      <last_name>Svensson</last_name>
+      <personal_id>20090514GR82</personal_id>
+      <organization_unit>Testskola</organization_unit>
+      <archive_path>20090514GR82 alicia-svensson, testskola/20090514GR82 alicia-svensson, testskola.xml</archive_path>
+    </patient>
+  </patients>
+</JournalArchiveManifest>
